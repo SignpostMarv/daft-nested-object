@@ -72,7 +72,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     */
     public function RecallDaftNestedObjectPathToId($id, bool $includeLeaf) : array;
 
-    /*
+    /**
     * @param mixed $id
     */
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int;
