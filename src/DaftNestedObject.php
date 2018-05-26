@@ -17,7 +17,12 @@ interface DaftNestedObject extends DefinesOwnUntypedIdInterface
     public function GetIntNestedLevel() : int;
 
     /**
-    * @return mixed
+    * @return mixed[]
     */
-    public function GetDaftNestedObjectParentId();
+    public function ObtainDaftNestedObjectParentId() : array;
+
+    /**
+    * @return array<int, string>
+    */
+    public static function DaftNestedObjectParentIdProperties() : array;
 }

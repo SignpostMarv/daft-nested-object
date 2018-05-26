@@ -39,8 +39,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             if ( ! ($alter instanceof DaftNestedWriteableObject)) {
                 throw new RuntimeException('Tree contains non-writeable objects!');
             }
-            if ($alter->GetDaftNestedObjectParentId() === $referenceLeaf->GetId()) {
-                $alter->SetDaftNestedObjectParentId($newLeaf->GetId());
+            if ($alter->ObtainDaftNestedObjectParentId() === $referenceLeaf->GetId()) {
+                $alter->AlterDaftNestedObjectParentId($newLeaf->GetId());
 
                 $this->RememberDaftObject($alter);
             }
@@ -53,10 +53,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : DaftNestedWriteableObject {
-        $referenceLeaf->SetDaftNestedObjectParentId($newLeaf->GetId());
+        $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
         $this->RememberDaftObject($referenceLeaf);
 
-        $referenceParent = $this->RecallDaftObject($referenceLeaf->GetDaftNestedObjectParentId());
+        $referenceParent = $this->RecallDaftObject($referenceLeaf->ObtainDaftNestedObjectParentId());
 
         if ($referenceParent instanceof DaftNestedWriteableObject) {
             return $this->ModifyDaftNestedObjectTreeInsertAfter($newLeaf, $referenceParent);
@@ -142,7 +142,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                     'Tree for specified root contains non-writeable objects!'
                 );
             }
-            $alter->SetDaftNestedObjectParentId($replacementRoot);
+            $alter->AlterDaftNestedObjectParentId($replacementRoot);
             $this->RememberDaftObject($alter);
         }
 
@@ -196,7 +196,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 : $referenceLeaf->GetIntNestedRight();
         $newRight = $newLeft + 1;
 
-        $newLeaf->SetDaftNestedObjectParentId($referenceLeaf->GetDaftNestedObjectParentId());
+        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
         $newLeaf->SetIntNestedLevel($referenceLeaf->GetIntNestedLevel());
 
         $this->ForgetDaftObjectById($newLeaf->GetId());

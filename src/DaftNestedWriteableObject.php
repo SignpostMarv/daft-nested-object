@@ -19,5 +19,5 @@ interface DaftNestedWriteableObject extends DaftNestedObject
     /**
     * @param mixed $id
     */
-    public function SetDaftNestedObjectParentId($id);
+    public function AlterDaftNestedObjectParentId($id) : void;
 }
