@@ -177,6 +177,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         int $argument,
         string $function
     ) : void {
+        parent::ThrowIfNotType($object, $type, $argument, $function);
+
         if ( ! is_a($object, DaftNestedObject::class, is_string($object))) {
             throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
                 $argument,
@@ -186,7 +188,5 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                 is_string($object) ? $object : get_class($object)
             );
         }
-
-        parent::ThrowIfNotType($object, $type, $argument, $function);
     }
 }

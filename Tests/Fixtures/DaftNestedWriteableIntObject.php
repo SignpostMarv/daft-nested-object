@@ -17,4 +17,9 @@ class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNe
     {
         $this->NudgePropertyValue('intNestedParentId', $value);
     }
+
+    public function SetId(int $value) : void
+    {
+        $this->NudgePropertyValue('id', $value);
+    }
 }
