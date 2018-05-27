@@ -58,7 +58,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
             $relativeDepthLimit = $root->GetIntNestedLevel() + $relativeDepthLimit;
         }
 
-        return array_filter(
+        return array_values(array_filter(
             $this->RecallDaftNestedObjectFullTree(),
             function (DaftNestedObject $e) use ($left, $right, $relativeDepthLimit) : bool {
                 if (
@@ -70,7 +70,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
                 return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;
             }
-        );
+        ));
     }
 
     public function CountDaftNestedObjectTreeWithObject(
@@ -79,11 +79,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         ? int $relativeDepthLimit
     ) : int {
         return count(
-            $this->RecallDaftNestedObjectTreeWithObject(
-                $root,
-                $includeRoot,
-                $relativeDepthLimit
-            )
+            $this->RecallDaftNestedObjectTreeWithObject($root, $includeRoot, $relativeDepthLimit)
         );
     }
 
@@ -124,16 +120,16 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         $right = $leaf->GetIntNestedRight();
 
         if ( ! $includeLeaf) {
-            ++$left;
-            --$right;
+            --$left;
+            ++$right;
         }
 
-        return array_filter(
+        return array_values(array_filter(
             $this->RecallDaftNestedObjectFullTree(),
             function (DaftNestedObject $e) use ($left, $right) : bool {
                 return $e->GetIntNestedLeft() <= $left && $e->GetIntNestedRight() >= $right;
             }
-        );
+        ));
     }
 
     public function CountDaftNestedObjectPathToObject(

@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8df43eed1b3354bc5426380e1ef2df76",
+    "content-hash": "2b8c1f1e41568e132a9007c31ce6bbd3",
     "packages": [
         {
             "name": "signpostmarv/daft-object",
-            "version": "v0.10.4",
+            "version": "v0.10.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "fb0ce168bd317db22b5f5b2b29156c2efadbb3e9"
+                "reference": "bbb2af176cef4bf76d7665c1b3f167f0f6b4526d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/fb0ce168bd317db22b5f5b2b29156c2efadbb3e9",
-                "reference": "fb0ce168bd317db22b5f5b2b29156c2efadbb3e9",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/bbb2af176cef4bf76d7665c1b3f167f0f6b4526d",
+                "reference": "bbb2af176cef4bf76d7665c1b3f167f0f6b4526d",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2018-05-27T11:37:03+00:00"
+            "time": "2018-05-27T17:27:02+00:00"
         }
     ],
     "packages-dev": [
