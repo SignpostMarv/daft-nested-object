@@ -50,25 +50,29 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $this->assertNotSame($c0, $c1);
         $this->assertNotSame($d0, $d1);
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(0, $b0->GetIntNestedLeft());
-        $this->assertSame(0, $c0->GetIntNestedLeft());
-        $this->assertSame(0, $d0->GetIntNestedLeft());
+        $this->AssertTreeState(
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
-        $this->assertSame(0, $a0->GetIntNestedRight());
-        $this->assertSame(0, $b0->GetIntNestedRight());
-        $this->assertSame(0, $c0->GetIntNestedRight());
-        $this->assertSame(0, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(0, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
-
-        $this->assertSame(0, $a0->GetIntNestedParentId());
-        $this->assertSame(0, $b0->GetIntNestedParentId());
-        $this->assertSame(0, $c0->GetIntNestedParentId());
-        $this->assertSame(0, $d0->GetIntNestedParentId());
+        $this->assertSame(
+            (array) $repo->GetNestedObjectTreeRootId(),
+            $a0->ObtainDaftNestedObjectParentId()
+        );
+        $this->assertSame(
+            (array) $repo->GetNestedObjectTreeRootId(),
+            $b0->ObtainDaftNestedObjectParentId()
+        );
+        $this->assertSame(
+            (array) $repo->GetNestedObjectTreeRootId(),
+            $c0->ObtainDaftNestedObjectParentId()
+        );
+        $this->assertSame(
+            (array) $repo->GetNestedObjectTreeRootId(),
+            $d0->ObtainDaftNestedObjectParentId()
+        );
 
         $repo->RememberDaftObject($a0);
         $repo->RememberDaftObject($b0);
@@ -90,20 +94,12 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($c0, 0);
         $d0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($d0, 0);
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(4, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(3, $b0->GetIntNestedRight());
-        $this->assertSame(5, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(0, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 4, 6],
+            [1, 3, 5, 7],
+            [0, 0, 0, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         /**
         * @var DaftNestedWriteableObjectTree $repo
@@ -120,20 +116,12 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c0 = $repo->ModifyDaftNestedObjectTreeInsertAboveId($c0, 0);
         $d0 = $repo->ModifyDaftNestedObjectTreeInsertAboveId($d0, 0);
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(4, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(3, $b0->GetIntNestedRight());
-        $this->assertSame(5, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(0, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 4, 6],
+            [1, 3, 5, 7],
+            [0, 0, 0, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         /**
         * @var DaftNestedWriteableObjectTree $repo
@@ -150,37 +138,22 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($c0, 0);
         $d0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($d0, 0);
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(4, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(3, $b0->GetIntNestedRight());
-        $this->assertSame(5, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(0, $c0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 4, 6],
+            [1, 3, 5, 7],
+            [0, 0, 0, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         $c0 = $repo->ModifyDaftNestedObjectTreeInsertBelow($c0, $b0);
         $b0 = $repo->RecallDaftObject($b0->GetId());
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(3, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(5, $b0->GetIntNestedRight());
-        $this->assertSame(4, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(1, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 3, 6],
+            [1, 5, 4, 7],
+            [0, 0, 1, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         /**
         * @var DaftNestedWriteableObjectTree $repo
@@ -197,55 +170,31 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c0 = $repo->ModifyDaftNestedObjectTreeInsertBelowId($c0, 0);
         $d0 = $repo->ModifyDaftNestedObjectTreeInsertBelowId($d0, 0);
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(4, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(3, $b0->GetIntNestedRight());
-        $this->assertSame(5, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(0, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 4, 6],
+            [1, 3, 5, 7],
+            [0, 0, 0, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         $b0 = $repo->ModifyDaftNestedObjectTreeInsertAfter($b0, $a0);
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(4, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(3, $b0->GetIntNestedRight());
-        $this->assertSame(5, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(0, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 4, 6],
+            [1, 3, 5, 7],
+            [0, 0, 0, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         $b0 = $repo->ModifyDaftNestedObjectTreeInsertAbove($b0, $c0);
         $c0 = $repo->RecallDaftObject($c0->GetId());
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(3, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(5, $b0->GetIntNestedRight());
-        $this->assertSame(4, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(1, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 3, 6],
+            [1, 5, 4, 7],
+            [0, 0, 1, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         /**
         * @var DaftNestedWriteableObjectTree $repo
@@ -262,55 +211,38 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c0 = $repo->ModifyDaftNestedObjectTreeInsertBelowId($c0, 0);
         $d0 = $repo->ModifyDaftNestedObjectTreeInsertBelowId($d0, 0);
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(4, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(3, $b0->GetIntNestedRight());
-        $this->assertSame(5, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(0, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 4, 6],
+            [1, 3, 5, 7],
+            [0, 0, 0, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         $b0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($b0->GetId(), $a0->GetId());
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(4, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
-
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(3, $b0->GetIntNestedRight());
-        $this->assertSame(5, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
-
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(0, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 4, 6],
+            [1, 3, 5, 7],
+            [0, 0, 0, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         $b0 = $repo->ModifyDaftNestedObjectTreeInsertAboveId($b0->GetId(), $c0->GetId());
         $c0 = $repo->RecallDaftObject($c0->GetId());
 
-        $this->assertSame(0, $a0->GetIntNestedLeft());
-        $this->assertSame(2, $b0->GetIntNestedLeft());
-        $this->assertSame(3, $c0->GetIntNestedLeft());
-        $this->assertSame(6, $d0->GetIntNestedLeft());
+        $this->assertInstanceOf($leafClass, $c0);
 
-        $this->assertSame(1, $a0->GetIntNestedRight());
-        $this->assertSame(5, $b0->GetIntNestedRight());
-        $this->assertSame(4, $c0->GetIntNestedRight());
-        $this->assertSame(7, $d0->GetIntNestedRight());
+        /**
+        * @var DaftNestedWriteableObject $c0
+        */
+        $c0 = $c0;
 
-        $this->assertSame(0, $a0->GetIntNestedLevel());
-        $this->assertSame(0, $b0->GetIntNestedLevel());
-        $this->assertSame(1, $c0->GetIntNestedLevel());
-        $this->assertSame(0, $d0->GetIntNestedLevel());
+        $this->AssertTreeState(
+            [0, 2, 3, 6],
+            [1, 5, 4, 7],
+            [0, 0, 1, 0],
+            [$a0, $b0, $c0, $d0]
+        );
 
         /**
         * @var DaftNestedWriteableObjectTree $repo
