@@ -19,11 +19,33 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
     ) : DaftNestedWriteableObject;
 
     /**
+    * @param mixed $newLeaf
+    * @param mixed $referenceLeaf
+    *
+    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
+    */
+    public function ModifyDaftNestedObjectTreeInsertBeforeId(
+        $newLeaf,
+        $referenceLeaf
+    ) : DaftNestedWriteableObject;
+
+    /**
     * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
     */
     public function ModifyDaftNestedObjectTreeInsertAfter(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
+    ) : DaftNestedWriteableObject;
+
+    /**
+    * @param mixed $newLeaf
+    * @param mixed $referenceLeaf
+    *
+    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
+    */
+    public function ModifyDaftNestedObjectTreeInsertAfterId(
+        $newLeaf,
+        $referenceLeaf
     ) : DaftNestedWriteableObject;
 
     /**
@@ -35,11 +57,33 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
     ) : DaftNestedWriteableObject;
 
     /**
+    * @param mixed $newLeaf
+    * @param mixed $referenceLeaf
+    *
+    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
+    */
+    public function ModifyDaftNestedObjectTreeInsertBelowId(
+        $newLeaf,
+        $referenceLeaf
+    ) : DaftNestedWriteableObject;
+
+    /**
     * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
     */
     public function ModifyDaftNestedObjectTreeInsertAbove(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
+    ) : DaftNestedWriteableObject;
+
+    /**
+    * @param mixed $newLeaf
+    * @param mixed $referenceLeaf
+    *
+    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
+    */
+    public function ModifyDaftNestedObjectTreeInsertAboveId(
+        $newLeaf,
+        $referenceLeaf
     ) : DaftNestedWriteableObject;
 
     /**

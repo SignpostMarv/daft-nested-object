@@ -14,6 +14,7 @@ use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedIntObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedObjectIntTree;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
+use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftObjectRepositoryTypeByClassMethodAndTypeException;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
@@ -265,7 +266,11 @@ class NestedTreeTest extends Base
             1,
             $treeClass,
             'DaftObjectRepositoryByType',
-            DaftNestedObject::class,
+            (
+                is_a($leafClass, DaftNestedWriteableObject::class, true)
+                    ? DaftNestedWriteableObject::class
+                    : DaftNestedObject::class
+            ),
             AbstractArrayBackedDaftObject::class
         ));
 

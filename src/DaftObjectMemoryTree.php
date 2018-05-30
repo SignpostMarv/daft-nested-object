@@ -12,10 +12,31 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 {
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array
     {
+        $props = $this->type::DaftObjectIdProperties();
+
         /**
         * @var DaftNestedObject[] $out
         */
-        $out = array_values($this->memory);
+        $out = array_map(
+            function (array $id) : DaftNestedObject {
+                return $this->RecallDaftObject($id);
+            },
+            array_map(
+                function (array $row) use ($props) : array {
+                    $out = [];
+
+                    /**
+                    * @var string $prop
+                    */
+                    foreach ($props as $prop) {
+                        $out[$prop] = $row[$prop] ?? null;
+                    }
+
+                    return $out;
+                },
+                (array) $this->data
+            )
+        );
 
         usort($out, function (DaftNestedObject $a, DaftNestedObject $b) : int {
             return $a->GetIntNestedLeft() <=> $b->GetIntNestedLeft();
@@ -49,23 +70,20 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         $left = $root->GetIntNestedLeft();
         $right = $root->GetIntNestedRight();
 
-        if ($includeRoot) {
-            --$left;
-            ++$right;
-        }
-
         if (is_int($relativeDepthLimit)) {
             $relativeDepthLimit = $root->GetIntNestedLevel() + $relativeDepthLimit;
         }
 
         return array_values(array_filter(
             $this->RecallDaftNestedObjectFullTree(),
-            function (DaftNestedObject $e) use ($left, $right, $relativeDepthLimit) : bool {
+            function (DaftNestedObject $e) use ($includeRoot, $left, $right, $relativeDepthLimit) : bool {
                 if (
                     is_int($relativeDepthLimit) &&
                     $e->GetIntNestedLevel() > $relativeDepthLimit
                 ) {
                     return false;
+                } elseif ($includeRoot) {
+                    return $e->GetIntNestedLeft() >= $left && $e->GetIntNestedRight() <= $right;
                 }
 
                 return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;

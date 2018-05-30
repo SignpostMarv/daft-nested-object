@@ -3,4 +3,4 @@ includes:
     - ./vendor/phpstan/phpstan-strict-rules/rules.neon
     - ./vendor/phpstan/phpstan-phpunit/extension.neon
     - ./vendor/phpstan/phpstan-phpunit/rules.neon
-    - ./vendor/signpostmarv/daft-object/PHPStan/config.neon
+    - ./PHPStan/config.neon
