@@ -171,9 +171,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $referenceLeaf->SetIntNestedLeft($last + 1);
                 $referenceLeaf->SetIntNestedRight($last + 2);
                 $referenceLeaf->SetIntNestedLevel(0);
-                $referenceLeaf->AlterDaftNestedObjectParentId(
-                    $this->GetNestedObjectTreeRootId()
-                );
+                $referenceLeaf->AlterDaftNestedObjectParentId($this->GetNestedObjectTreeRootId());
 
                 return $this->StoreThenRetrieveFreshCopy($referenceLeaf);
             }
@@ -258,7 +256,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DaftNestedWriteableObject $root,
         ? DaftNestedWriteableObject $replacementRoot
     ) : int {
-        if ($this->CountDaftNestedObjectTreeWithObject($root, false, null) > 0 && is_null($replacementRoot)) {
+        if (
+            $this->CountDaftNestedObjectTreeWithObject($root, false, null) > 0 &&
+            is_null($replacementRoot)
+        ) {
             throw new BadMethodCallException('Cannot leave orphan objects in a tree');
         }
 
