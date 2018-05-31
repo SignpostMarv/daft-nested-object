@@ -412,68 +412,15 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             }
         }
 
-        if (true === $above) {
-            $newLeft = $referenceLeaf->GetIntNestedLeft() - 2;
+        if ( ! is_null($above)) {
+            $newLeft =
+                $above
+                    ? ($referenceLeaf->GetIntNestedLeft() - 2)
+                    : ($referenceLeaf->GetIntNestedRight() + 1);
             $referenceWidth = $referenceLeaf->GetIntNestedRight() - $newLeft - 2;
             $newRight = $newLeft + $referenceWidth + $width;
 
             $referenceParent = $referenceLeaf->ObtainDaftNestedObjectParentId();
-
-            $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
-
-            $referenceLeaf = $this->StoreThenRetrieveFreshCopy($referenceLeaf);
-
-            /**
-            * @var DaftNestedWriteableObject $alter
-            */
-            foreach (
-                $this->RecallDaftNestedObjectTreeWithObject($referenceLeaf, true, null) as $alter
-            ) {
-                $level = $alter->GetIntNestedLevel();
-
-                $alter->SetIntNestedLevel($level + 1);
-
-                $this->StoreThenRetrieveFreshCopy($alter);
-            }
-
-            /**
-            * @var DaftNestedWriteableObject $alter
-            */
-            foreach ($this->RecallDaftNestedObjectFullTree() as $alter) {
-                $alterLeft = $alter->GetIntNestedLeft();
-                if ($alterLeft >= $referenceLeaf->GetIntNestedLeft()) {
-                    $alter->SetIntNestedLeft($alterLeft - 1);
-                    $alter->SetIntNestedRight($alter->GetIntNestedRight() - 1);
-                }
-
-                $this->StoreThenRetrieveFreshCopy($alter);
-            }
-
-            $referenceLeaf = $this->RecallDaftObject($referenceLeaf->GetId());
-
-            if ( ! ($referenceLeaf instanceof DaftNestedWriteableObject)) {
-                throw new RuntimeException(
-                    'Reference leaf could not be freshly recalled from tree!'
-                );
-            }
-
-            $newLeaf->SetIntNestedLeft($newLeft);
-            $newLeaf->SetIntNestedRight($newRight + 1);
-            $newLeaf->SetIntNestedLevel($referenceLeaf->GetIntNestedLevel() - 1);
-
-            if ($newLeaf->ObtainDaftNestedObjectParentId() === $referenceLeaf->GetId()) {
-                $newLeaf->AlterDaftNestedObjectParentId(
-                    $referenceLeaf->ObtainDaftNestedObjectParentId()
-                );
-            }
-        } elseif (false === $above) {
-            $newLeft = $referenceLeaf->GetIntNestedRight() + 1;
-            $referenceWidth = $referenceLeaf->GetIntNestedRight() - $newLeft - 2;
-            $newRight = $newLeft + $referenceWidth + $width;
-
-            $referenceParent = $referenceLeaf->ObtainDaftNestedObjectParentId();
-
-            $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
 
             $referenceLeaf = $this->StoreThenRetrieveFreshCopy($referenceLeaf);
 

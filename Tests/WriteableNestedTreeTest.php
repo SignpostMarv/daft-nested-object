@@ -101,6 +101,17 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [$a0, $b0, $c0, $d0]
         );
 
+        $this->AssertTreeStateFlipTwo(
+            false,
+            2,
+            1,
+            $repo,
+            [0, 2, 3, 6],
+            [1, 5, 4, 7],
+            [0, 0, 1, 0],
+            [$a0, $b0, $c0, $d0]
+        );
+
         /**
         * @var DaftNestedWriteableObjectTree $repo
         */
@@ -120,41 +131,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [0, 2, 4, 6],
             [1, 3, 5, 7],
             [0, 0, 0, 0],
-            [$a0, $b0, $c0, $d0]
-        );
-
-        /**
-        * @var DaftNestedWriteableObjectTree $repo
-        */
-        $repo = $treeClass::DaftObjectRepositoryByType($leafClass);
-
-        $a0 = static::InitLeafClass($leafClass, ['id' => 1]);
-        $b0 = static::InitLeafClass($leafClass, ['id' => 2]);
-        $c0 = static::InitLeafClass($leafClass, ['id' => 3]);
-        $d0 = static::InitLeafClass($leafClass, ['id' => 4]);
-
-        $a0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($a0, 0);
-        $b0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($b0, 0);
-        $c0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($c0, 0);
-        $d0 = $repo->ModifyDaftNestedObjectTreeInsertAfterId($d0, 0);
-
-        $this->AssertTreeState(
-            [0, 2, 4, 6],
-            [1, 3, 5, 7],
-            [0, 0, 0, 0],
-            [$a0, $b0, $c0, $d0]
-        );
-
-        $c0 = $repo->ModifyDaftNestedObjectTreeInsertBelow($c0, $b0);
-        /**
-        * @var DaftNestedWriteableObject $b0
-        */
-        $b0 = $repo->RecallDaftObject($b0->GetId());
-
-        $this->AssertTreeState(
-            [0, 2, 3, 6],
-            [1, 5, 4, 7],
-            [0, 0, 1, 0],
             [$a0, $b0, $c0, $d0]
         );
 
@@ -189,14 +165,11 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [$a0, $b0, $c0, $d0]
         );
 
-        $b0 = $repo->ModifyDaftNestedObjectTreeInsertAbove($b0, $c0);
-
-        /**
-        * @var DaftNestedWriteableObject $c0
-        */
-        $c0 = $repo->RecallDaftObject($c0->GetId());
-
-        $this->AssertTreeState(
+        $this->AssertTreeStateFlipTwo(
+            true,
+            1,
+            2,
+            $repo,
             [0, 2, 3, 6],
             [1, 5, 4, 7],
             [0, 0, 1, 0],
@@ -299,22 +272,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
         $repo->ModifyDaftNestedObjectTreeRemoveWithObject($c0, null);
 
-        /**
-        * @var DaftNestedWriteableObject $a0
-        */
-        $a0 = $repo->RecallDaftObject($a0->GetId());
-
-        /**
-        * @var DaftNestedWriteableObject $b0
-        */
-        $b0 = $repo->RecallDaftObject($b0->GetId());
-
-        /**
-        * @var DaftNestedWriteableObject $d0
-        */
-        $d0 = $repo->RecallDaftObject($d0->GetId());
-
-        $this->AssertTreeState(
+        $this->AssertTreeStateRecallLeaves(
+            $repo,
             [0, 2, 4],
             [1, 3, 5],
             [0, 0, 0],
@@ -323,22 +282,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
         $repo->ModifyDaftNestedObjectTreeRemoveWithId($c0->GetId(), null);
 
-        /**
-        * @var DaftNestedWriteableObject $a0
-        */
-        $a0 = $repo->RecallDaftObject($a0->GetId());
-
-        /**
-        * @var DaftNestedWriteableObject $b0
-        */
-        $b0 = $repo->RecallDaftObject($b0->GetId());
-
-        /**
-        * @var DaftNestedWriteableObject $d0
-        */
-        $d0 = $repo->RecallDaftObject($d0->GetId());
-
-        $this->AssertTreeState(
+        $this->AssertTreeStateRecallLeaves(
+            $repo,
             [0, 2, 4],
             [1, 3, 5],
             [0, 0, 0],
@@ -387,6 +332,82 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [0, 0],
             [$a0, $d0]
         );
+    }
+
+    /**
+    * @param array<int, int> $left
+    * @param array<int, int> $right
+    * @param array<int, int> $level
+    * @param array<int, DaftNestedWriteableObject> $leaves
+    */
+    protected function AssertTreeStateFlipTwo(
+        bool $above,
+        int $a,
+        int $b,
+        DaftNestedWriteableObjectTree $repo,
+        array $left,
+        array $right,
+        array $level,
+        array $leaves
+    ) : void {
+
+        /**
+        * @var DaftNestedWriteableObject $leafA
+        */
+        $leafA =
+            $above
+                ? $repo->ModifyDaftNestedObjectTreeInsertAbove($leaves[$a], $leaves[$b])
+                : $repo->ModifyDaftNestedObjectTreeInsertBelow($leaves[$a], $leaves[$b]);
+
+        /**
+        * @var DaftNestedWriteableObject $leafB
+        */
+        $leafB = $repo->RecallDaftObject($leaves[$b]->GetId());
+
+        $leaves[$a] = $leafA;
+        $leaves[$b] = $leafB;
+
+        $this->AssertTreeState($left, $right, $level, $leaves);
+    }
+
+    /**
+    * @param array<int, int> $left
+    * @param array<int, int> $right
+    * @param array<int, int> $level
+    * @param array<int, DaftNestedWriteableObject> $leaves
+    */
+    protected function AssertTreeStateRecallLeaves(
+        DaftNestedWriteableObjectTree $repo,
+        array $left,
+        array $right,
+        array $level,
+        array $leaves
+    ) : void {
+        /**
+        * @var array<int, DaftNestedWriteableObject> $leaves
+        */
+        $leaves = array_map(
+            function (DaftNestedWriteableObject $leaf) use ($repo) : DaftNestedWriteableObject {
+                $out = $repo->RecallDaftObject($leaf->GetId());
+
+                if ( ! ($out instanceof DaftNestedWriteableObject)) {
+                    throw new RuntimeException('Could not recall leaf from tree!');
+                }
+
+                return $out;
+            },
+            array_filter(
+                $leaves,
+                /**
+                * @param mixed $maybe
+                */
+                function ($maybe) : bool {
+                    return $maybe instanceof DaftNestedWriteableObject;
+                }
+            )
+        );
+
+        $this->AssertTreeState($left, $right, $level, $leaves);
     }
 
     /**
