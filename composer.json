@@ -33,6 +33,7 @@
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests",
             "psalm",
             "phpcpd src",
+            "phpcpd Tests",
             "phpmnd src",
             "phpmnd Tests",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
