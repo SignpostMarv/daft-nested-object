@@ -350,7 +350,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array $level,
         array $leaves
     ) : void {
-
         /**
         * @var DaftNestedWriteableObject $leafA
         */
@@ -450,7 +449,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $this->assertSame($level, $leaf->GetIntNestedLevel());
     }
 
-    protected static function InitLeafClass(string $type, array $cargs = [], ... $additionalArgs) : DaftNestedWriteableObject
+    protected static function InitLeafClass(string $type, array $cargs = [], ...$additionalArgs) : DaftNestedWriteableObject
     {
         if ( ! is_a($type, DaftNestedWriteableObject::class, true)) {
             throw new RuntimeException(
