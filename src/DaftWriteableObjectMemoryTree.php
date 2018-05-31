@@ -56,7 +56,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     ) : DaftNestedWriteableObject {
         $this->ModifyDaftNestedObjectTreeInsert($referenceLeaf, $newLeaf, true, true);
 
-        return $this->RecallDaftObject($newLeaf->GetId());
+        $newLeaf = $this->RecallDaftObject($newLeaf->GetId());
+
+        if ( ! ($newLeaf instanceof DaftNestedWriteableObject)) {
+            throw new RuntimeException('Could not recall fresh copy of argument 1!');
+        }
+
+        return $newLeaf;
     }
 
     /**
@@ -73,9 +79,20 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         ) {
             throw new InvalidArgumentException('Cannot use both root ids!');
         }
+
+        /**
+        * @var DaftNestedWriteableObject|scalar|array $wasId
+        */
         $wasId = $newLeafId;
+
+        /**
+        * @var DaftNestedWriteableObject|scalar|array $wasReferenceId
+        */
         $wasReferenceId = $referenceLeafId;
 
+        /**
+        * @var scalar|scalar[]
+        */
         $newLeafId =
             ($newLeafId instanceof DaftNestedWriteableObject)
                 ? $newLeafId->GetId()
@@ -83,13 +100,16 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $newLeaf = $this->RecallDaftObject($newLeafId);
         $referenceLeaf = null;
 
+        /**
+        * @var DaftNestedWriteableObject|array $newLeaf
+        */
         $newLeaf =
             ($newLeaf instanceof DaftNestedWriteableObject)
                 ? $newLeaf
                 : $wasId;
 
         if ($referenceLeafId instanceof DaftNestedWriteableObject) {
-            $referenceLeafId = $referenceLeafId->GetId();
+            $referenceLeafId = (array) $referenceLeafId->GetId();
         }
 
         if (
@@ -106,9 +126,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         if ($referenceLeafId === $this->GetNestedObjectTreeRootId()) {
             return $this->ModifyDaftNestedObjectTreeInsertAfterId($newLeaf, 0);
         } else {
-            /**
-            * @var DaftNestedWriteableObject $referenceLeaf
-            */
             $referenceLeaf = $this->RecallDaftObject($referenceLeafId);
 
             if (
@@ -144,7 +161,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                     return $this->StoreThenRetrieveFreshCopy($referenceLeaf);
                 }
 
-                $last = end($tree)->GetIntNestedRight();
+                /**
+                * @var DaftNestedWriteableObject $treeEnd
+                */
+                $treeEnd = end($tree);
+
+                $last = $treeEnd->GetIntNestedRight();
 
                 $referenceLeaf->SetIntNestedLeft($last + 1);
                 $referenceLeaf->SetIntNestedRight($last + 2);
@@ -154,6 +176,14 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 );
 
                 return $this->StoreThenRetrieveFreshCopy($referenceLeaf);
+            }
+
+            if (! ($newLeaf instanceof DaftNestedWriteableObject)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Argument 1 passed to %s was not found to be in this instance of %s',
+                    __METHOD__,
+                    static::class
+                ));
             }
 
             $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
@@ -243,7 +273,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $replacementRoot = $this->StoreThenRetrieveFreshCopy($replacementRoot);
 
             /**
-            * @var DaftNestedObject $alter
+            * @var DaftNestedWriteableObject $alter
             */
             foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
                 $alter = $this->StoreThenRetrieveFreshCopy($alter);
@@ -293,7 +323,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         }
 
         /**
-        * @var DaftNestedObject $alter
+        * @var DaftNestedWriteableObject $alter
         */
         foreach ($this->RecallDaftNestedObjectTreeWithObject($rootObject, false, null) as $alter) {
             $alter = $this->StoreThenRetrieveFreshCopy($alter);
@@ -359,6 +389,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $diff = $newLeft - $newLeaf->GetIntNestedLeft();
 
+        /**
+        * @var DaftNestedWriteableObject $alter
+        */
         foreach ($this->RecallDaftNestedObjectTreeWithObject($newLeaf, false, null) as $alter) {
             $alterLeft = $alter->GetIntNestedLeft();
             $alterRight = $alter->GetIntNestedRight();
@@ -370,6 +403,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         if ( ! is_null($above)) {
             $referenceLeaf = $this->RecallDaftObject($referenceLeaf->GetId());
+
+
+            if ( ! ($referenceLeaf instanceof DaftNestedWriteableObject)) {
+                throw new RuntimeException(
+                    'Reference leaf could not be freshly recalled from tree!'
+                );
+            }
         }
 
         if (true === $above) {
@@ -383,6 +423,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
             $referenceLeaf = $this->StoreThenRetrieveFreshCopy($referenceLeaf);
 
+            /**
+            * @var DaftNestedWriteableObject $alter
+            */
             foreach (
                 $this->RecallDaftNestedObjectTreeWithObject($referenceLeaf, true, null) as $alter
             ) {
@@ -393,6 +436,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $this->StoreThenRetrieveFreshCopy($alter);
             }
 
+            /**
+            * @var DaftNestedWriteableObject $alter
+            */
             foreach ($this->RecallDaftNestedObjectFullTree() as $alter) {
                 $alterLeft = $alter->GetIntNestedLeft();
                 if ($alterLeft >= $referenceLeaf->GetIntNestedLeft()) {
@@ -404,6 +450,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             }
 
             $referenceLeaf = $this->RecallDaftObject($referenceLeaf->GetId());
+
+            if ( ! ($referenceLeaf instanceof DaftNestedWriteableObject)) {
+                throw new RuntimeException(
+                    'Reference leaf could not be freshly recalled from tree!'
+                );
+            }
 
             $newLeaf->SetIntNestedLeft($newLeft);
             $newLeaf->SetIntNestedRight($newRight + 1);
@@ -425,6 +477,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
             $referenceLeaf = $this->StoreThenRetrieveFreshCopy($referenceLeaf);
 
+            /**
+            * @var DaftNestedWriteableObject $alter
+            */
             foreach (
                 $this->RecallDaftNestedObjectTreeWithObject($referenceLeaf, true, null) as $alter
             ) {
@@ -435,6 +490,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $this->StoreThenRetrieveFreshCopy($alter);
             }
 
+            /**
+            * @var DaftNestedWriteableObject $alter
+            */
             foreach ($this->RecallDaftNestedObjectFullTree() as $alter) {
                 $alterLeft = $alter->GetIntNestedLeft();
                 if ($alterLeft >= $referenceLeaf->GetIntNestedLeft()) {
@@ -446,6 +504,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             }
 
             $referenceLeaf = $this->RecallDaftObject($referenceLeaf->GetId());
+
+            if ( ! ($referenceLeaf instanceof DaftNestedWriteableObject)) {
+                throw new RuntimeException(
+                    'Reference leaf could not be freshly recalled from tree!'
+                );
+            }
 
             $newLeaf->SetIntNestedLeft($newLeft);
             $newLeaf->SetIntNestedRight($newRight + 1);
@@ -482,6 +546,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
             $diff = abs($maxnegative->GetIntNestedLeft());
 
+            /**
+            * @var DaftNestedWriteableObject $leaf
+            */
             foreach ($this->RecallDaftNestedObjectFullTree() as $leaf) {
                 $leaf->SetIntNestedLeft($leaf->GetIntNestedLeft() + $diff);
                 $leaf->SetIntNestedRight($leaf->GetIntNestedRight() + $diff);
@@ -490,7 +557,15 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             }
         }
 
-        return $this->RecallDaftObject($newLeaf->GetId());
+        $newLeaf = $this->RecallDaftObject($newLeaf->GetId());
+
+        if ( ! ($newLeaf instanceof DaftNestedWriteableObject)) {
+            throw new RuntimeException(
+                'Reference leaf could not be freshly recalled from tree!'
+            );
+        }
+
+        return $newLeaf;
 
         $newRight = $newLeft + $width;
 
@@ -525,7 +600,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         );
 
         /**
-        * @var DaftNestedObject $alter
+        * @var DaftNestedWriteableObject $alter
         */
         foreach ($this->RecallDaftNestedObjectFullTree() as $alter) {
             $alter = $this->StoreThenRetrieveFreshCopy($alter);
@@ -574,21 +649,20 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         /**
         * @var DaftNestedWriteableObject|null $newLeaf
         */
-        $newLeaf = $this->StoreThenRetrieveFreshCopy(
+        $newLeaf =
             ($newLeafId instanceof DaftNestedWriteableObject)
                 ? $newLeafId
-                : $this->RecallDaftObject($newLeafId)
-        );
+                : $this->RecallDaftObject($newLeafId);
+
+        if ( ! ($newLeaf instanceof DaftNestedWriteableObject)) {
+            throw new RuntimeException('Leaf could not be retrieved from argument 1!');
+        }
+
+        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
 
         $referenceLeaf = null;
 
-        if ( ! ($newLeaf instanceof DaftNestedWriteableObject)) {
-            throw new InvalidArgumentException(sprintf(
-                'Argument 1 passed to %s was not found to be in this instance of %s',
-                __METHOD__,
-                DaftNestedWriteableObject::class
-            ));
-        } elseif ($referenceLeafId === $this->GetNestedObjectTreeRootId()) {
+        if ($referenceLeafId === $this->GetNestedObjectTreeRootId()) {
             $tree = array_filter(
                 $this->RecallDaftNestedObjectFullTree(0),
                 function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
@@ -598,6 +672,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
             if (count($tree) > 0) {
                 if ($before) {
+                    /**
+                    * @var DaftNestedWriteableObject $leaf
+                    */
                     foreach ($this->RecallDaftNestedObjectFullTree() as $leaf) {
                         $leaf->SetIntNestedLeft($leaf->GetIntNestedLeft() + 2);
                         $leaf->SetIntNestedRight($leaf->GetIntNestedLeft() + 2);
@@ -613,7 +690,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                     return $this->StoreThenRetrieveFreshCopy($newLeaf);
                 }
 
-                $reference = end($tree)->GetIntNestedRight();
+                /**
+                * @var DaftNestedWriteableObject $treeEnd
+                */
+                $treeEnd = end($tree);
+
+                $reference = $treeEnd->GetIntNestedRight();
 
                 $newLeaf->SetIntNestedLeft($reference + 1);
                 $newLeaf->SetIntNestedRight($reference + 2);
@@ -646,7 +728,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     protected function ModifyDaftNestedObjectTreeForRemoval(int $right, int $width) : void
     {
         /**
-        * @var DaftNestedObject $alter
+        * @var DaftNestedWriteableObject $alter
         */
         foreach ($this->RecallDaftNestedObjectFullTree() as $alter) {
             $alter = $this->StoreThenRetrieveFreshCopy($alter);

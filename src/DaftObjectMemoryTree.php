@@ -8,10 +8,15 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+use RuntimeException;
+
 abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
 {
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array
     {
+        /**
+        * @var string[] $props
+        */
         $props = $this->type::DaftObjectIdProperties();
 
         /**
@@ -19,10 +24,22 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         */
         $out = array_map(
             function (array $id) : DaftNestedObject {
-                return $this->RecallDaftObject($id);
+                $out = $this->RecallDaftObject($id);
+
+                if ( ! ($out instanceof DaftNestedObject)) {
+                    throw new RuntimeException('Could not retrieve leaf from tree!');
+                }
+
+                return $out;
             },
             array_map(
+                /**
+                * @param array<string, scalar|null> $row
+                */
                 function (array $row) use ($props) : array {
+                    /**
+                    * @var array<string, scalar|null> $out
+                    */
                     $out = [];
 
                     /**
