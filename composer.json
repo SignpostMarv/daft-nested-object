@@ -32,7 +32,7 @@
             "phpunit -vvvv --coverage-clover=phpunit.clover",
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests",
             "psalm",
-            "phpcpd src Tests",
+            "phpcpd src",
             "phpmnd src",
             "phpmnd Tests",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
