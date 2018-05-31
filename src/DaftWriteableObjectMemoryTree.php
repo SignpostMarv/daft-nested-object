@@ -97,6 +97,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             ($newLeafId instanceof DaftNestedWriteableObject)
                 ? $newLeafId->GetId()
                 : $newLeafId;
+
         $newLeaf = $this->RecallDaftObject($newLeafId);
         $referenceLeaf = null;
 
@@ -126,13 +127,14 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         if ($referenceLeafId === $this->GetNestedObjectTreeRootId()) {
             return $this->ModifyDaftNestedObjectTreeInsertAfterId($newLeaf, 0);
         }
+
         $referenceLeaf = $this->RecallDaftObject($referenceLeafId);
 
         if (
-                ! ($referenceLeaf instanceof DaftNestedWriteableObject) &&
-                $newLeafId === $this->GetNestedObjectTreeRootId() &&
-                ($wasReferenceId instanceof DaftNestedWriteableObject)
-            ) {
+            ! ($referenceLeaf instanceof DaftNestedWriteableObject) &&
+            $newLeafId === $this->GetNestedObjectTreeRootId() &&
+            ($wasReferenceId instanceof DaftNestedWriteableObject)
+        ) {
             $referenceLeaf = $wasReferenceId;
         }
 
@@ -144,19 +146,17 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         if ($newLeafId === $this->GetNestedObjectTreeRootId()) {
             $tree = array_filter(
-                    $this->RecallDaftNestedObjectFullTree(0),
-                    function (DaftNestedWriteableObject $leaf) use ($referenceLeaf) : bool {
-                        return $leaf->GetId() !== $referenceLeaf->GetId();
-                    }
-                );
+                $this->RecallDaftNestedObjectFullTree(0),
+                function (DaftNestedWriteableObject $leaf) use ($referenceLeaf) : bool {
+                    return $leaf->GetId() !== $referenceLeaf->GetId();
+                }
+            );
 
             if (count($tree) < 1) {
                 $referenceLeaf->SetIntNestedLeft(0);
                 $referenceLeaf->SetIntNestedRight(1);
                 $referenceLeaf->SetIntNestedLevel(0);
-                $referenceLeaf->AlterDaftNestedObjectParentId(
-                        $this->GetNestedObjectTreeRootId()
-                    );
+                $referenceLeaf->AlterDaftNestedObjectParentId($this->GetNestedObjectTreeRootId());
 
                 return $this->StoreThenRetrieveFreshCopy($referenceLeaf);
             }
@@ -178,17 +178,15 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         if ( ! ($newLeaf instanceof DaftNestedWriteableObject)) {
             throw new InvalidArgumentException(sprintf(
-                    'Argument 1 passed to %s was not found to be in this instance of %s',
-                    __METHOD__,
-                    static::class
-                ));
+                'Argument 1 passed to %s was not found to be in this instance of %s',
+                __METHOD__,
+                static::class
+            ));
         }
 
         $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
 
-        $newLeaf->AlterDaftNestedObjectParentId(
-                $referenceLeaf->ObtainDaftNestedObjectParentId()
-            );
+        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
 
         if ($referenceLeaf instanceof DaftNestedWriteableObject) {
             $this->ModifyDaftNestedObjectTreeInsertBelow($newLeaf, $referenceLeaf);
@@ -416,6 +414,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $above
                     ? ($referenceLeaf->GetIntNestedLeft() - 2)
                     : ($referenceLeaf->GetIntNestedRight() + 1);
+
             $referenceWidth = $referenceLeaf->GetIntNestedRight() - $newLeft - 2;
             $newRight = $newLeft + $referenceWidth + $width;
 
@@ -441,6 +440,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             */
             foreach ($this->RecallDaftNestedObjectFullTree() as $alter) {
                 $alterLeft = $alter->GetIntNestedLeft();
+
                 if ($alterLeft >= $referenceLeaf->GetIntNestedLeft()) {
                     $alter->SetIntNestedLeft($alterLeft - 1);
                     $alter->SetIntNestedRight($alter->GetIntNestedRight() - 1);
