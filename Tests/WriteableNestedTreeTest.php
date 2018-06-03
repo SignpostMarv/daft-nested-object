@@ -15,7 +15,6 @@ use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedWriteableI
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftWriteableNestedObjectIntTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
-use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
 class WriteableNestedTreeTest extends NestedTreeTest
 {
