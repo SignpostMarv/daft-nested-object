@@ -396,6 +396,40 @@ class WriteableNestedTreeTest extends NestedTreeTest
                 [1, 3, 5, 7],
                 [0, 0, 0, 0],
             ],
+            [
+                function (DaftNestedWriteableObjectTree $repo, string $leafClass) : array {
+                    return static::InitLeafClassInsertAfterId($repo, $leafClass, 0, range(1, 10));
+                },
+                function (
+                    WriteableNestedTreeTest $testCase,
+                    DaftNestedWriteableObjectTree $repo,
+                    string $leafClass,
+                    DaftNestedWriteableObject ...$leaves
+                ) : void {
+                    $repo->ModifyDaftNestedObjectTreeInsertAboveId(1, 2);
+                    /*
+                    $repo->ModifyDaftNestedObjectTreeInsertAboveId(3, 4);
+                    $repo->ModifyDaftNestedObjectTreeInsertAboveId(5, 6);
+                    $repo->ModifyDaftNestedObjectTreeInsertAboveId(7, 8);
+                    $repo->ModifyDaftNestedObjectTreeInsertAboveId(9, 10);
+                    */
+
+                    /**
+                    * @var DaftNestedWriteableObject[] $tree
+                    */
+                    $tree = $repo->RecallDaftNestedObjectFullTree();
+
+                    $this->AssertTreeState(
+                        [0, 1, 4, 6, 8, 10, 12, 14, 16, 18],
+                        [3, 2, 5, 7, 9, 11, 13, 15, 17, 19],
+                        [0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                        $tree
+                    );
+                },
+                [0, 2, 4, 6, 8, 10, 12, 14, 16, 18],
+                [1, 3, 5, 7, 9, 11, 13, 15, 17, 19],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            ],
         ];
     }
 

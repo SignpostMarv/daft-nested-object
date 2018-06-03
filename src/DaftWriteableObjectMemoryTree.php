@@ -368,12 +368,71 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         parent::ThrowIfNotType($object, $type, $argument, $function);
     }
 
+    protected function ModifyDaftNestedObjectTreeInsertAlt(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before,
+        ? bool $above
+    ) : DaftNestedWriteableObject {
+        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+        $referenceLeaf = $this->StoreThenRetrieveFreshCopy($referenceLeaf);
+
+        if (true === $above) {
+            $refLeft = $referenceLeaf->GetIntNestedLeft();
+            $refRight = $referenceLeaf->GetIntNestedRight();
+            $refWidth = ($referenceLeaf->GetIntNestedRight() - $refLeft);
+            $refLevel = $referenceLeaf->GetIntNestedLevel();
+
+            $newLeft = $newLeaf->GetIntNestedLeft();
+            $newRight = $newLeaf->GetIntNestedRight();
+            $newLevel = $newLeaf->GetIntNestedLevel();
+
+            /**
+            * @var DaftNestedWriteableObject $alter
+            */
+            foreach (
+                $this->RecallDaftNestedObjectTreeWithObject($referenceLeaf, true, null) as $alter
+            ) {
+                $alterLeft = $alter->GetIntNestedLeft();
+                $alterRight = $alter->GetIntNestedRight();
+                $alterWidth = $alterRight - $alterLeft;
+                $alterLevel = $alter->GetIntNestedLevel();
+
+                $alterLeftNew = ($newLeft + 1 + ($alterLeft - $refLeft));
+
+                $alter->SetIntNestedLeft($alterLeftNew);
+                $alter->SetIntNestedRight($alterLeftNew + $alterWidth);
+                $alter->SetIntNestedLevel($newLevel + ($alterLevel - $refLevel) + 1);
+
+                $this->StoreThenRetrieveFreshCopy($alter);
+            }
+
+            $newLeaf->SetIntNestedRight($newRight + $refWidth + 1);
+            $referenceLeaf = $this->RecallDaftObject($referenceLeaf->GetId());
+
+            if ( ! ($referenceLeaf instanceof DaftNestedWriteableObject)) {
+                throw new RuntimeException('Could not recall leaf from tree!');
+            }
+
+            $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
+            $this->StoreThenRetrieveFreshCopy($referenceLeaf);
+        }
+
+        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+
+        return $newLeaf;
+    }
+
     protected function ModifyDaftNestedObjectTreeInsert(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
         bool $before,
         ? bool $above
     ) : DaftNestedWriteableObject {
+        if (true === $above) {
+            return $this->ModifyDaftNestedObjectTreeInsertAlt($newLeaf, $referenceLeaf, $before, $above);
+        }
+
         $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
         $referenceLeaf = $this->StoreThenRetrieveFreshCopy($referenceLeaf);
 

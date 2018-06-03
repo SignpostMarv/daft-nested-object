@@ -81,4 +81,6 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     * @return mixed
     */
     public function GetNestedObjectTreeRootId();
+
+    public function __debugInfo() : array;
 }
