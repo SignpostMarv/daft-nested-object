@@ -415,7 +415,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     */
 
                     /**
-                    * @var DaftNestedWriteableObject[] $tree
+                    * @var array<int, DaftNestedWriteableObject> $tree
                     */
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 

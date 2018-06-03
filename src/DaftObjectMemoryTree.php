@@ -220,37 +220,4 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
             );
         }
     }
-
-    public function __debugInfo() : array
-    {
-        $out = [
-            'id' => [],
-            'left' => [],
-            'right' => [],
-            'level' => [],
-            'parent' => [],
-            'data' => $this->RecallDaftNestedObjectFullTree(),
-        ];
-
-        foreach ($out['data'] as $leaf) {
-            $out['id'][] = $leaf->GetId();
-            $out['left'][] = $leaf->GetIntNestedLeft();
-            $out['right'][] = $leaf->GetIntNestedRight();
-            $out['level'][] = $leaf->GetIntNestedLevel();
-            $out['parent'][] = $leaf->ObtainDaftNestedObjectParentId();
-        }
-
-        $out['data'] = array_map(
-            function(DaftNestedWriteableObject $leaf) : string {
-                return sprintf('%s<%s>', get_class($leaf), (string) $leaf->GetId());
-            },
-            $out['data']
-        );
-
-        foreach (['left', 'right', 'level'] as $k) {
-            $out[$k] = json_encode($out[$k]);
-        }
-
-        return $out;
-    }
 }

@@ -459,6 +459,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         }
 
         if ( ! is_null($above)) {
+            /**
+            * @var DaftNestedWriteableObject|null $referenceLeaf
+            */
             $referenceLeaf = $this->RecallDaftObject($referenceLeaf->GetId());
 
             if ( ! ($referenceLeaf instanceof DaftNestedWriteableObject)) {
@@ -469,10 +472,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         }
 
         if ( ! is_null($above)) {
-            $newLeft =
-                $above
-                    ? ($referenceLeaf->GetIntNestedLeft() - 2)
-                    : ($referenceLeaf->GetIntNestedRight() + 1);
+            $newLeft = ($referenceLeaf->GetIntNestedRight() + 1);
 
             $referenceWidth = $referenceLeaf->GetIntNestedRight() - $newLeft - 2;
             $newRight = $newLeft + $referenceWidth + $width;
