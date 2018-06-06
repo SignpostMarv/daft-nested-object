@@ -398,7 +398,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $alterWidth = $alterRight - $alterLeft;
                 $alterLevel = $alter->GetIntNestedLevel();
 
-                $alterLeftNew = ($newLeft + 1 + ($alterLeft - $refLeft));
+                $alterLeftNew = ($newRight + ($alterLeft - $refLeft));
 
                 $alter->SetIntNestedLeft($alterLeftNew);
                 $alter->SetIntNestedRight($alterLeftNew + $alterWidth);
