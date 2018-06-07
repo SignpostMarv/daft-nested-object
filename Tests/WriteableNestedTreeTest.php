@@ -437,6 +437,20 @@ class WriteableNestedTreeTest extends NestedTreeTest
                         [0, 1, 1, 2, 0, 1, 1, 2, 0, 1],
                         $tree
                     );
+
+                    $repo->ModifyDaftNestedObjectTreeInsertBeforeId(10, 1);
+
+                    /**
+                    * @var array<int, DaftNestedWriteableObject> $tree
+                    */
+                    $tree = $repo->RecallDaftNestedObjectFullTree();
+
+                    $this->AssertTreeState(
+                        [0, 2, 3, 5, 6, 10, 11, 13, 14, 18],
+                        [1, 9, 4, 8, 7, 17, 12, 16, 15, 19],
+                        [0, 0, 1, 1, 2, 0, 1, 1, 2, 0],
+                        $tree
+                    );
                 },
                 [0, 2, 4, 6, 8, 10, 12, 14, 16, 18],
                 [1, 3, 5, 7, 9, 11, 13, 15, 17, 19],
@@ -555,9 +569,27 @@ class WriteableNestedTreeTest extends NestedTreeTest
         int $level,
         DaftNestedWriteableObject $leaf
     ) : void {
-        $this->assertSame($left, $leaf->GetIntNestedLeft());
-        $this->assertSame($right, $leaf->GetIntNestedRight());
-        $this->assertSame($level, $leaf->GetIntNestedLevel());
+        $this->assertSame($left, $leaf->GetIntNestedLeft(), sprintf(
+            'Left does not match state %u (%u), %u, %u',
+            $left,
+            $leaf->GetIntNestedLeft(),
+            $right,
+            $level
+        ));
+        $this->assertSame($right, $leaf->GetIntNestedRight(), sprintf(
+            'Right does not match state %u, %u (%u), %u',
+            $left,
+            $right,
+            $leaf->GetIntNestedRight(),
+            $level
+        ));
+        $this->assertSame($level, $leaf->GetIntNestedLevel(), sprintf(
+            'Level does not match state %u, %u, %u (%u)',
+            $left,
+            $right,
+            $level,
+            $leaf->GetIntNestedLevel()
+        ));
     }
 
     protected static function InitLeafClass(string $type, array $cargs = [], ...$additionalArgs) : DaftNestedWriteableObject
