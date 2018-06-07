@@ -594,9 +594,48 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             throw new RuntimeException('Leaf could not be retrieved from argument 1!');
         }
 
-        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
-
         $referenceLeaf = null;
+
+        if ($referenceLeafId === $this->GetNestedObjectTreeRootId()) {
+            $tree = array_filter(
+                $this->RecallDaftNestedObjectFullTree(0),
+                function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
+                    return $leaf->GetId() !== $newLeaf->GetId();
+                }
+            );
+
+            if (count($tree) < 1) {
+                $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+
+                $newLeaf->SetIntNestedLeft(0);
+                $newLeaf->SetIntNestedRight(1);
+                $newLeaf->SetIntNestedLevel(0);
+                $newLeaf->AlterDaftNestedObjectParentId($referenceLeafId);
+
+                return $this->StoreThenRetrieveFreshCopy($newLeaf);;
+            } elseif ($before) {
+                $referenceLeaf = current($tree);
+            } else {
+                $referenceLeaf = end($tree);
+            }
+
+            return $this->ModifyDaftNestedObjectTreeInsert(
+                $newLeaf,
+                $referenceLeaf,
+                $before,
+                null
+            );
+        }
+
+        $referenceLeaf = $this->RecallDaftObject($referenceLeafId);
+
+        if ( ! ($referenceLeaf instanceof DaftNestedWriteableObject)) {
+            throw new InvalidArgumentException(
+                'Specified reference id does not correspond to an object in the tree'
+            );
+        }
+
+        return $this->ModifyDaftNestedObjectTreeInsert($newLeaf, $referenceLeaf, $before, null);
 
         if ($referenceLeafId === $this->GetNestedObjectTreeRootId()) {
             $tree = array_filter(
