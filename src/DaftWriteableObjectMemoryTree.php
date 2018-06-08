@@ -494,7 +494,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             );
         }
 
-        return $this->RecallDaftObject($newLeaf->GetId());
+        $newLeaf = $this->RecallDaftObject($newLeaf->GetId());
+
+        if ( ! ($newLeaf instanceof DaftNestedWriteableObject)) {
+            throw new RuntimeException('Was not able to retrieve leaf from tree!');
+        }
+
+        return $newLeaf;
     }
 
     /**
