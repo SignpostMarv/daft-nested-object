@@ -78,7 +78,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         } elseif ($referenceLeafId === $this->GetNestedObjectTreeRootId()) {
             $tree = array_filter(
                 $this->RecallDaftNestedObjectFullTree(0),
-                function (DaftNestedWriteableObject $leaf) use($newLeaf) : bool {
+                function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
                     return $leaf->GetId() !== $newLeaf->GetId();
                 }
             );
@@ -377,8 +377,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $pos = (int) array_search($referenceLeaf->GetId(), $idXref, true);
 
             $j = count($sort);
-            for ($i=$pos;$i<$j;$i+=1) {
-                $sort[$i] += 1;
+            for ($i = $pos; $i < $j; ++$i) {
+                ++$sort[$i];
             }
 
             $newPos = (int) array_search($newLeaf->GetId(), $idXref, true);
@@ -387,7 +387,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $pos = (int) array_search($referenceLeaf->GetId(), $idXref, true);
 
             $j = count($sort);
-            for ($i=$pos + 1;$i<$j;$i+=1) {
+            for ($i = $pos + 1; $i < $j; ++$i) {
                 $sort[$i] += 2;
             }
 
@@ -420,7 +420,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $leafParentId = $leaf->ObtainDaftNestedObjectParentId();
             $pos = array_search($leafParentId, $parentIdXref, true);
 
-            if ($pos === false) {
+            if (false === $pos) {
                 $parentIdXref[] = $leafParentId;
 
                 /**
@@ -448,7 +448,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             array $ids,
             array $children
         ) use (
-            & $rebuild
+            &$rebuild
         ) : int {
             $id = $leaf->GetId();
 
@@ -472,7 +472,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 }
             }
 
-            $n += 1;
+            ++$n;
 
             $leaf->SetIntNestedRight($n);
 
@@ -542,7 +542,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $newLeaf->SetIntNestedLevel(0);
                 $newLeaf->AlterDaftNestedObjectParentId($referenceLeafId);
 
-                return $this->StoreThenRetrieveFreshCopy($newLeaf);;
+                return $this->StoreThenRetrieveFreshCopy($newLeaf);
             }
 
             $referenceLeaf = $before ? current($tree) : end($tree);
