@@ -363,11 +363,36 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $uniqueTree = [];
 
+        $sort = [];
+
         foreach ($tree as $leaf) {
             if ( ! in_array($leaf->GetId(), $idXref, true)) {
                 $idXref[] = $leaf->GetId();
                 $uniqueTree[] = $leaf;
+                $sort[] = count($sort);
             }
+        }
+
+        if ($before) {
+            $pos = (int) array_search($referenceLeaf->GetId(), $idXref, true);
+
+            $j = count($sort);
+            for ($i=$pos;$i<$j;$i+=1) {
+                $sort[$i] += 1;
+            }
+
+            $newPos = (int) array_search($newLeaf->GetId(), $idXref, true);
+            $sort[$newPos] = $sort[$pos] - 1;
+        } else {
+            $pos = (int) array_search($referenceLeaf->GetId(), $idXref, true);
+
+            $j = count($sort);
+            for ($i=$pos + 1;$i<$j;$i+=1) {
+                $sort[$i] += 2;
+            }
+
+            $newPos = (int) array_search($newLeaf->GetId(), $idXref, true);
+            $sort[$newPos] = $sort[$pos] + 1;
         }
 
         $newLeafId = $newLeaf->GetId();
@@ -378,14 +403,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 DaftNestedWriteableObject $a,
                 DaftNestedWriteableObject $b
             ) use (
-                $before,
-                $newLeafId
+                $idXref,
+                $sort
             ) : int {
-                if ($a->GetId() === $newLeafId) {
-                    return $before ? -1 : 1;
-                }
+                $a = (int) array_search($a->GetId(), $idXref, true);
+                $b = (int) array_search($b->GetId(), $idXref, true);
 
-                return 0;
+                return $sort[$a] <=> $sort[$b];
             }
         );
 
