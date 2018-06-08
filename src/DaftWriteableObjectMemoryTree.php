@@ -187,7 +187,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
 
-            $this->ModifyDaftNestedObjectTreeInsertBelow($newLeaf, $referenceLeaf);
+        $this->ModifyDaftNestedObjectTreeInsertBelow($newLeaf, $referenceLeaf);
 
         $this->ForgetDaftObjectById($newLeaf->GetId());
 
