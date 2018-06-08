@@ -13,6 +13,7 @@ use PHPStan\Reflection\BrokerAwareExtension;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertiesClassReflectionExtension;
 use PHPStan\Reflection\PropertyReflection;
+use RuntimeException;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\PHPStan\ClassReflectionExtension as Base;
 
@@ -30,8 +31,6 @@ class ClassReflectionExtension extends Base
 
     public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
     {
-        $className = $classReflection->getName();
-
         $property = ucfirst($propertyName);
 
         return
@@ -46,6 +45,10 @@ class ClassReflectionExtension extends Base
 
     public function getProperty(ClassReflection $ref, string $propertyName) : PropertyReflection
     {
+        if ( ! ($this->broker instanceof Broker)) {
+            throw new RuntimeException('Broker not available!');
+        }
+
         return new PropertyReflectionExtension($ref, $this->broker, $propertyName);
     }
 }
