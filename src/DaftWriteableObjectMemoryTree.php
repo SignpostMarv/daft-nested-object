@@ -31,7 +31,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
 
             $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
-            $referenceLeaf = $this->StoreThenRetrieveFreshCopy($referenceLeaf);
+            $this->StoreThenRetrieveFreshCopy($referenceLeaf);
         } elseif (false === $above) {
             $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
             $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
@@ -103,10 +103,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
         }
 
-        /**
-        * @var scalar|scalar[] DaftNestedWriteableObject $newLeafId
-        */
-        $newLeafId = $newLeaf;
         $newLeaf = (
             ($newLeaf instanceof DaftNestedWriteableObject)
                 ? $newLeaf
@@ -308,8 +304,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $idXref = [];
 
-        $level = 0;
-
         $tree = $this->RecallDaftNestedObjectFullTree();
 
         usort($tree, function (DaftNestedWriteableObject $a, DaftNestedWriteableObject $b) : int {
@@ -367,8 +361,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             * @var scalar|scalar[] $id
             */
             $id = $leaf->GetId();
-
-            $pos = (int) array_search($id, $ids, true);
 
             $leaf->SetIntNestedLevel($level);
             $leaf->SetIntNestedLeft($n);
