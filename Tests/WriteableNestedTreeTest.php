@@ -544,17 +544,28 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $this->assertSame(count($right), count($leaves));
         $this->assertSame(count($leaves), count($level));
 
-        foreach ($left as $k => $v) {
-            $this->assertInternalType('integer', $k);
-            $this->assertTrue(isset($right[$k]));
-            $this->assertInternalType('integer', $right[$k]);
-            $this->assertTrue(isset($level[$k]));
-            $this->assertInternalType('integer', $level[$k]);
-            $this->assertTrue(isset($leaves[$k]));
-            $this->assertInstanceOf(static::leafClass(), $leaves[$k]);
+        $actualLeft = [];
+        $actualRight = [];
+        $actualLevel = [];
 
-            $this->AssertLeafState($v, $right[$k], $level[$k], $leaves[$k]);
+        foreach ($leaves as $leaf) {
+            $actualLeft[] = $leaf->GetIntNestedLeft();
+            $actualRight[] = $leaf->GetIntNestedRight();
+            $actualLevel[] = $leaf->GetIntNestedLevel();
         }
+
+        $this->assertSame(
+            [
+                'left' => $left,
+                'right' => $right,
+                'level' => $level,
+            ],
+            [
+                'left' => $actualLeft,
+                'right' => $actualRight,
+                'level' => $actualLevel,
+            ]
+        );
     }
 
     protected function AssertLeafState(
