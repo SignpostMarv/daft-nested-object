@@ -36,6 +36,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
             $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
         } else {
+            /**
+            * @var array<int, DaftNestedWriteableObject> $siblings
+            */
             $siblings = array_values(array_filter(
                 $this->RecallDaftNestedObjectTreeWithId(
                     $referenceLeaf->ObtainDaftNestedObjectParentId(),
@@ -50,8 +53,15 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $siblingSort = [];
             $j = count($siblings);
 
+            /**
+            * @var DaftNestedWriteableObject $leaf
+            */
             foreach ($siblings as $leaf) {
-                $siblingIds[] = $leaf->GetId();
+                /**
+                * @var scalar|scalar[] $siblingId
+                */
+                $siblingId = $leaf->GetId();
+                $siblingIds[] = $siblingId;
                 $siblingSort[] = $leaf->GetIntNestedSortOrder();
             }
 
@@ -92,6 +102,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         if ($newLeaf === $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
         }
+
+        /**
+        * @var scalar|scalar[] DaftNestedWriteableObject $newLeafId
+        */
         $newLeafId = $newLeaf;
         $newLeaf = (
             ($newLeaf instanceof DaftNestedWriteableObject)
@@ -144,9 +158,14 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             return $this->StoreThenRetrieveFreshCopy($newLeaf);
         }
 
+        /**
+        * @var DaftNestedWriteableObject $referenceLeaf
+        */
+        $referenceLeaf = $before ? current($tree) : end($tree);
+
         return $this->ModifyDaftNestedObjectTreeInsert(
             $newLeaf,
-            $before ? current($tree) : end($tree),
+            $referenceLeaf,
             $before,
             null
         );
@@ -276,9 +295,17 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $parentIdXref = [
             (array) $this->GetNestedObjectTreeRootId(),
         ];
+
+        /**
+        * @var array<int, array<int, DaftNestedWriteableObject>> $xRefChildren
+        */
         $xRefChildren = [
             [],
         ];
+
+        /**
+        * @var array<int, scalar|scalar[]> $idXref
+        */
         $idXref = [];
 
         $level = 0;
@@ -289,6 +316,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             return $this->CompareObjects($a, $b);
         });
 
+        /**
+        * @var DaftNestedWriteableObject $leaf
+        */
         foreach ($tree as $i => $leaf) {
             $leafParentId = $leaf->ObtainDaftNestedObjectParentId();
             $pos = array_search($leafParentId, $parentIdXref, true);
@@ -309,7 +339,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             }
 
             if ( ! in_array($leaf->GetId(), $idXref, true)) {
-                $idXref[] = $leaf->GetId();
+                /**
+                * @var scalar|scalar[] $leafId
+                */
+                $leafId = $leaf->GetId();
+                $idXref[] = $leafId;
             }
 
             $leaf->SetIntNestedLeft(0);
@@ -329,6 +363,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         ) use (
             &$rebuild
         ) : int {
+            /**
+            * @var scalar|scalar[] $id
+            */
             $id = $leaf->GetId();
 
             $pos = (int) array_search($id, $ids, true);
@@ -338,11 +375,17 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
             $n += 1;
 
+            /**
+            * @var int|false $parentPos
+            */
             $parentPos = array_search((array) $id, $parentIds, true);
 
             if (false !== $parentPos) {
-                foreach ($children[$parentPos] as $childLeaf) {
-                    $n = $rebuild(
+                /**
+                * @var DaftNestedWriteableObject $childLeaf
+                */
+                foreach ($children[(int) $parentPos] as $childLeaf) {
+                    $n = (int) $rebuild(
                         $childLeaf,
                         $level + 1,
                         $n,
@@ -362,6 +405,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $n = 0;
 
+        /**
+        * @var DaftNestedWriteableObject $rootLeaf
+        */
         foreach ($xRefChildren[0] as $rootLeaf) {
             $n = $rebuild(
                 $rootLeaf,
