@@ -29,8 +29,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $referenceLeaf->ObtainDaftNestedObjectParentId()
             );
             $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
+
+            $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+            $referenceLeaf = $this->StoreThenRetrieveFreshCopy($referenceLeaf);
         } elseif (false === $above) {
             $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
+            $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
         } else {
             $siblings = array_values(array_filter(
                 $this->RecallDaftNestedObjectTreeWithId(
@@ -65,7 +69,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             }
             $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
 
-            $this->StoreThenRetrieveFreshCopy($newLeaf);
+            $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
         }
 
         $this->RebuildTreeInefficiently();
@@ -285,7 +289,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             return $this->CompareObjects($a, $b);
         });
 
-        foreach ($tree as $leaf) {
+        foreach ($tree as $i => $leaf) {
             $leafParentId = $leaf->ObtainDaftNestedObjectParentId();
             $pos = array_search($leafParentId, $parentIdXref, true);
 
@@ -307,6 +311,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             if ( ! in_array($leaf->GetId(), $idXref, true)) {
                 $idXref[] = $leaf->GetId();
             }
+
+            $leaf->SetIntNestedLeft(0);
+            $leaf->SetIntNestedRight(0);
+            $leaf->SetIntNestedLevel(0);
+
+            $tree[$i] = $this->StoreThenRetrieveFreshCopy($leaf);
         }
 
         $rebuild = function (
@@ -326,9 +336,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $leaf->SetIntNestedLevel($level);
             $leaf->SetIntNestedLeft($n);
 
-            ++$n;
+            $n += 1;
 
-            $parentPos = array_search($id, $parentIds, true);
+            $parentPos = array_search((array) $id, $parentIds, true);
 
             if (false !== $parentPos) {
                 foreach ($children[$parentPos] as $childLeaf) {

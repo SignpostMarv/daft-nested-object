@@ -317,6 +317,62 @@ class WriteableNestedTreeTest extends NestedTreeTest
             ],
             [
                 function (DaftNestedWriteableObjectTree $repo, string $leafClass) : array {
+                    return static::InitLeafClassInsertAfterId($repo, $leafClass, 0, [99, 2, 3, 4]);
+                },
+                function (
+                    WriteableNestedTreeTest $testCase,
+                    DaftNestedWriteableObjectTree $repo,
+                    string $leafClass,
+                    DaftNestedWriteableObject ...$leaves
+                ) : void {
+                    $testCase->AssertTreeState(
+                        [0, 2, 4, 6],
+                        [1, 3, 5, 7],
+                        [0, 0, 0, 0],
+                        $leaves
+                    );
+
+                    $leaves = $this->RecallFreshObjects($repo, ...$leaves);
+
+                    $leaf = $repo->ModifyDaftNestedObjectTreeInsert($leaves[1], $leaves[0], true);
+
+                    $leaves = $this->RecallFreshObjects($repo, ...$leaves);
+
+                    $this->AssertTreeState(
+                        [2, 0, 4, 6],
+                        [3, 1, 5, 7],
+                        [0, 0, 0, 0],
+                        $leaves
+                    );
+
+                    $leaf = $repo->ModifyDaftNestedObjectTreeInsert($leaves[1], $leaves[0], false);
+
+                    $leaves = $this->RecallFreshObjects($repo, ...$leaves);
+
+                    $this->AssertTreeState(
+                        [0, 2, 4, 6],
+                        [1, 3, 5, 7],
+                        [0, 0, 0, 0],
+                        $leaves
+                    );
+
+                    $leaf = $repo->ModifyDaftNestedObjectTreeInsert($leaves[0], $leaves[1], false, true);
+
+                    $leaves = $this->RecallFreshObjects($repo, ...$leaves);
+
+                    $this->AssertTreeState(
+                        [0, 1, 4, 6],
+                        [3, 2, 5, 7],
+                        [0, 1, 0, 0],
+                        $leaves
+                    );
+                },
+                [0, 2, 4, 6],
+                [1, 3, 5, 7],
+                [0, 0, 0, 0],
+            ],
+            [
+                function (DaftNestedWriteableObjectTree $repo, string $leafClass) : array {
                     return static::InitLeafClassInsertBelowId($repo, $leafClass, 0, [1, 2, 3, 4]);
                 },
                 function (
