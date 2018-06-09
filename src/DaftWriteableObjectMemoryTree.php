@@ -20,7 +20,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         bool $before = false,
         bool $above = null
     ) : DaftNestedWriteableObject {
-        if($newLeaf->GetId() === $referenceLeaf->GetId()) {
+        if ($newLeaf->GetId() === $referenceLeaf->GetId()) {
             throw new InvalidArgumentException('Cannot modify leaf relative to itself!');
         }
 
@@ -55,18 +55,17 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
             if (false === $pos) {
                 throw new RuntimeException('Reference leaf not found in siblings tree!');
-            } else {
-                for ($i = 0; $i < $j; $i += 1) {
-                    $siblings[$i]->SetIntNestedSortOrder(
+            }
+            for ($i = 0; $i < $j; ++$i) {
+                $siblings[$i]->SetIntNestedSortOrder(
                         $siblingSort[$i] +
                         (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
                     );
-                    $this->StoreThenRetrieveFreshCopy($siblings[$i]);
-                }
-                $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
-
-                $this->StoreThenRetrieveFreshCopy($newLeaf);
+                $this->StoreThenRetrieveFreshCopy($siblings[$i]);
             }
+            $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
+
+            $this->StoreThenRetrieveFreshCopy($newLeaf);
         }
 
         $this->RebuildTreeInefficiently();
