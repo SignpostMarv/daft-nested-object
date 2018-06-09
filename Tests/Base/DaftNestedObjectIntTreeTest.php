@@ -91,6 +91,7 @@ class DaftNestedObjectIntTreeTest extends BaseTest
                 'intNestedRight' => 0,
                 'intNestedParentId' => 0,
                 'intNestedLevel' => 0,
+                'intNestedSortOrder' => 0,
             ],
             [
                 'id' => 2,
@@ -98,6 +99,7 @@ class DaftNestedObjectIntTreeTest extends BaseTest
                 'intNestedRight' => 0,
                 'intNestedParentId' => 0,
                 'intNestedLevel' => 0,
+                'intNestedSortOrder' => 0,
             ],
             [
                 'id' => 3,
@@ -105,6 +107,7 @@ class DaftNestedObjectIntTreeTest extends BaseTest
                 'intNestedRight' => 0,
                 'intNestedParentId' => 0,
                 'intNestedLevel' => 0,
+                'intNestedSortOrder' => 0,
             ],
         ];
     }

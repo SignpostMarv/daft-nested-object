@@ -51,6 +51,7 @@ class NestedTreeTest extends Base
             'intNestedRight' => 1,
             'intNestedLevel' => 0,
             'intNestedParentId' => 0,
+            'intNestedSortOrder' => 0,
         ]);
 
         $b = new $leafClass([
@@ -59,6 +60,7 @@ class NestedTreeTest extends Base
             'intNestedRight' => 5,
             'intNestedLevel' => 0,
             'intNestedParentId' => 0,
+            'intNestedSortOrder' => 0,
         ]);
 
         $c = new $leafClass([
@@ -67,6 +69,7 @@ class NestedTreeTest extends Base
             'intNestedRight' => 4,
             'intNestedLevel' => 1,
             'intNestedParentId' => 2,
+            'intNestedSortOrder' => 0,
         ]);
 
         $this->assertSame(0, $repo->CountDaftNestedObjectFullTree());

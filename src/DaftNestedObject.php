@@ -16,6 +16,8 @@ interface DaftNestedObject extends DefinesOwnUntypedIdInterface
 
     public function GetIntNestedLevel() : int;
 
+    public function GetIntNestedSortOrder() : int;
+
     /**
     * @return mixed[]
     */

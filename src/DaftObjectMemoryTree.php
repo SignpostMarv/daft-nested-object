@@ -132,7 +132,11 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                     $includeRoot,
                     $relativeDepthLimit
                 )
-                : [];
+                : (
+                    ((array) $id === (array) $this->GetNestedObjectTreeRootId())
+                        ? $this->RecallDaftNestedObjectFullTree(0)
+                        : []
+                );
     }
 
     public function CountDaftNestedObjectTreeWithId(
@@ -190,6 +194,11 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int
     {
         return count($this->RecallDaftNestedObjectPathToId($id, $includeLeaf));
+    }
+
+    public function CompareObjects(DaftNestedObject $a, DaftNestedObject $b) : int
+    {
+        return $a->GetIntNestedSortOrder() <=> $b->GetIntNestedSortOrder();
     }
 
     protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void

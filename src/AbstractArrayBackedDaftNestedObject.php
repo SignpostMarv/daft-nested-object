@@ -25,6 +25,11 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         return (int) ($this->RetrievePropertyValueFromData('intNestedLevel') ?? null);
     }
 
+    public function GetIntNestedSortOrder() : int
+    {
+        return (int) ($this->RetrievePropertyValueFromData('intNestedSortOrder') ?? null);
+    }
+
     public function ObtainDaftNestedObjectParentId() : array
     {
         /**
@@ -77,6 +82,18 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         }
 
         $this->NudgePropertyValue('intNestedLevel', $value);
+    }
+
+    public function SetIntNestedSortOrder(int $value) : void
+    {
+        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
+            throw new ClassDoesNotImplementClassException(
+                static::class,
+                DaftNestedWriteableObject::class
+            );
+        }
+
+        $this->NudgePropertyValue('intNestedSortOrder', $value);
     }
 
     /**

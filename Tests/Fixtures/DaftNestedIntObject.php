@@ -21,6 +21,7 @@ class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject
         'intNestedLevel',
         'id',
         'intNestedParentId',
+        'intNestedSortOrder',
     ];
 
     const EXPORTABLE_PROPERTIES = self::PROPERTIES;

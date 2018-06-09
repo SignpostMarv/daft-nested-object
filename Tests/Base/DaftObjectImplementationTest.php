@@ -192,6 +192,7 @@ class DaftObjectImplementationTest extends BaseTest
                     'intNestedLevel' => 0,
                     'id' => 0,
                     'intNestedParentId' => 0,
+                    'intNestedSortOrder' => 0,
                 ],
             ],
         ];

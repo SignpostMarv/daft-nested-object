@@ -16,6 +16,8 @@ interface DaftNestedWriteableObject extends DaftNestedObject
 
     public function SetIntNestedLevel(int $value) : void;
 
+    public function SetIntNestedSortOrder(int $value) : void;
+
     /**
     * @param mixed $id
     */

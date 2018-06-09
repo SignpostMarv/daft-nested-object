@@ -13,77 +13,24 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
     /**
     * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
     */
-    public function ModifyDaftNestedObjectTreeInsertBefore(
+    public function ModifyDaftNestedObjectTreeInsert(
         DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before = true,
+        bool $above = null
     ) : DaftNestedWriteableObject;
 
     /**
-    * @param mixed $newLeaf
-    * @param mixed $referenceLeaf
+    * @param mixed $newLeaf can be an object or an id, MUST NOT be a root id
+    * @param mixed $referenceLeaf can be an object, an id, or a root id
     *
     * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
     */
-    public function ModifyDaftNestedObjectTreeInsertBeforeId(
+    public function ModifyDaftNestedObjectTreeInsertLoose(
         $newLeaf,
-        $referenceLeaf
-    ) : DaftNestedWriteableObject;
-
-    /**
-    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
-    */
-    public function ModifyDaftNestedObjectTreeInsertAfter(
-        DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf
-    ) : DaftNestedWriteableObject;
-
-    /**
-    * @param mixed $newLeaf
-    * @param mixed $referenceLeaf
-    *
-    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
-    */
-    public function ModifyDaftNestedObjectTreeInsertAfterId(
-        $newLeaf,
-        $referenceLeaf
-    ) : DaftNestedWriteableObject;
-
-    /**
-    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
-    */
-    public function ModifyDaftNestedObjectTreeInsertBelow(
-        DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf
-    ) : DaftNestedWriteableObject;
-
-    /**
-    * @param mixed $newLeaf
-    * @param mixed $referenceLeaf
-    *
-    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
-    */
-    public function ModifyDaftNestedObjectTreeInsertBelowId(
-        $newLeaf,
-        $referenceLeaf
-    ) : DaftNestedWriteableObject;
-
-    /**
-    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
-    */
-    public function ModifyDaftNestedObjectTreeInsertAbove(
-        DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf
-    ) : DaftNestedWriteableObject;
-
-    /**
-    * @param mixed $newLeaf
-    * @param mixed $referenceLeaf
-    *
-    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
-    */
-    public function ModifyDaftNestedObjectTreeInsertAboveId(
-        $newLeaf,
-        $referenceLeaf
+        $referenceLeaf,
+        bool $before = true,
+        bool $above = null
     ) : DaftNestedWriteableObject;
 
     /**
