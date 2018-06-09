@@ -90,7 +90,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
         }
         $newLeafId = $newLeaf;
-        $newLeaf = $this->StoreThenRetrieveFreshCopy(
+        $newLeaf = (
             ($newLeaf instanceof DaftNestedWriteableObject)
                 ? $newLeaf
                 : $this->RecallDaftObject($newLeaf)
@@ -103,7 +103,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 __METHOD__ .
                 ' did not resolve to a leaf node!'
             );
-        } elseif (
+        }
+
+        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+
+        if (
             ($newLeaf instanceof DaftNestedWriteableObject) &&
             ($referenceLeaf instanceof DaftNestedWriteableObject)
         ) {
@@ -171,7 +175,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             */
             foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
                 $alter = $this->StoreThenRetrieveFreshCopy($alter);
-                $this->ModifyDaftNestedObjectTreeInsertBelow($alter, $replacementRoot);
+                $this->ModifyDaftNestedObjectTreeInsert($alter, $replacementRoot, false, false);
             }
         }
 

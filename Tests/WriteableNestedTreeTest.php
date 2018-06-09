@@ -300,33 +300,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
     protected function DataProviderAdditionalArgs() : Generator
     {
         yield from [
-            /*
-            [
-                function (DaftNestedWriteableObjectTree $repo, string $leafClass) : array {
-                    return static::InitLeafClassInsertAfterId($repo, $leafClass, 0, [1, 2, 3, 4]);
-                },
-                function (
-                    WriteableNestedTreeTest $testCase,
-                    DaftNestedWriteableObjectTree $repo,
-                    string $leafClass,
-                    DaftNestedWriteableObject ...$leaves
-                ) : void {
-                    $testCase->AssertTreeStateFlipTwo(
-                        false,
-                        2,
-                        1,
-                        $repo,
-                        [0, 2, 3, 6],
-                        [1, 5, 4, 7],
-                        [0, 0, 1, 0],
-                        $leaves
-                    );
-                },
-                [0, 2, 4, 6],
-                [1, 3, 5, 7],
-                [0, 0, 0, 0],
-            ],
-            */
             [
                 function (DaftNestedWriteableObjectTree $repo, string $leafClass) : array {
                     return static::InitLeafClassInsertAfterId($repo, $leafClass, 0, [1, 2, 3, 4]);
@@ -457,41 +430,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
             },
             $leaves
         );
-    }
-
-    /**
-    * @param array<int, int> $left
-    * @param array<int, int> $right
-    * @param array<int, int> $level
-    * @param array<int, DaftNestedWriteableObject> $leaves
-    */
-    protected function AssertTreeStateFlipTwo(
-        bool $above,
-        int $a,
-        int $b,
-        DaftNestedWriteableObjectTree $repo,
-        array $left,
-        array $right,
-        array $level,
-        array $leaves
-    ) : void {
-        /**
-        * @var DaftNestedWriteableObject $leafA
-        */
-        $leafA =
-            $above
-                ? $repo->ModifyDaftNestedObjectTreeInsertAbove($leaves[$a], $leaves[$b])
-                : $repo->ModifyDaftNestedObjectTreeInsertBelow($leaves[$a], $leaves[$b]);
-
-        /**
-        * @var DaftNestedWriteableObject $leafB
-        */
-        $leafB = $repo->RecallDaftObject($leaves[$b]->GetId());
-
-        $leaves[$a] = $leafA;
-        $leaves[$b] = $leafB;
-
-        $this->AssertTreeState($left, $right, $level, $leaves);
     }
 
     /**
