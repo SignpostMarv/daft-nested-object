@@ -29,7 +29,7 @@ class PropertyReflectionExtension extends Base
     private $nestedWriteable = false;
 
     /**
-    * @var IntegerType
+    * @var IntegerType|null
     */
     private $nestedType = null;
 
@@ -40,7 +40,9 @@ class PropertyReflectionExtension extends Base
             'intNestedRight',
             'intNestedLevel',
             'intNestedSortOrder',
-        ]);
+            ],
+            true
+        );
     }
 
     public function __construct(ClassReflection $classReflection, Broker $broker, string $property)
