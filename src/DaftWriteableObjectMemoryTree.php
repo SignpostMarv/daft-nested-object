@@ -147,7 +147,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $rootObject = $this->RecallDaftObject($root);
 
         if ($rootObject instanceof DaftNestedWriteableObject) {
-
             if (
                 $this->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
                 is_null($replacementRoot)
