@@ -147,7 +147,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $rootObject = $this->RecallDaftObject($root);
 
         if ($rootObject instanceof DaftNestedWriteableObject) {
+
             if (
+                $this->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
+                is_null($replacementRoot)
+            ) {
+                throw new BadMethodCallException('Cannot leave orphan objects in a tree');
+            } elseif (
                 ! is_null($replacementRoot) &&
                 $replacementRoot !== $this->GetNestedObjectTreeRootId()
             ) {
@@ -163,13 +169,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                     $rootObject,
                     $replacementRootObject
                 );
-            }
-
-            if (
-                $this->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
-                is_null($replacementRoot)
-            ) {
-                throw new BadMethodCallException('Cannot leave orphan objects in a tree');
             }
 
             /**
