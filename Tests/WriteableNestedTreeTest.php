@@ -8,8 +8,10 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests;
 
+use BadMethodCallException;
 use Closure;
 use Generator;
+use InvalidArgumentException;
 use RuntimeException;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedWriteableIntObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftWriteableNestedObjectIntTree;
@@ -190,6 +192,44 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [0, 0],
             [$a0, $d0]
         );
+    }
+
+    /**
+    * @dataProvider DataProviderArgs
+    */
+    public function testTreeRemovalFailure(string $leafClass, string $treeClass) : void
+    {
+        /**
+        * @var DaftNestedWriteableObjectTree $repo
+        */
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass);
+
+        /**
+        * @var array<int, DaftNestedWriteableObject> $leaves
+        */
+        $leaves = static::InitLeafClassInsertAfterId($repo, $leafClass, 0, range(1, 10));
+
+        /**
+        * @var array<int, int> $ids
+        */
+        $ids = range(1, 10);
+        static::InsertLooseChunks($repo, false, true, ...$ids);
+        static::InsertLooseChunks($repo, false, true, 1, 3, 5, 7);
+        $repo->ModifyDaftNestedObjectTreeInsertLoose(10, 1, true, null);
+
+        $leaves = $this->RecallFreshObjects($repo, ...$leaves);
+
+        $this->AssertTreeState(
+            [2, 3, 5, 6, 10, 11, 13, 14, 18, 0],
+            [9, 4, 8, 7, 17, 12, 16, 15, 19, 1],
+            [0, 1, 1, 2, 0, 1, 1, 2, 0, 0],
+            $leaves
+        );
+
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage('Cannot leave orphan objects in a tree');
+
+        $repo->ModifyDaftNestedObjectTreeRemoveWithObject($leaves[0], null);
     }
 
     public function DataProviderAdditionalTreeModification() : Generator
@@ -422,11 +462,11 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
                 ) : void {
-                    $repo->ModifyDaftNestedObjectTreeInsertLoose(1, 2, false, true);
-                    $repo->ModifyDaftNestedObjectTreeInsertLoose(3, 4, false, true);
-                    $repo->ModifyDaftNestedObjectTreeInsertLoose(5, 6, false, true);
-                    $repo->ModifyDaftNestedObjectTreeInsertLoose(7, 8, false, true);
-                    $repo->ModifyDaftNestedObjectTreeInsertLoose(9, 10, false, true);
+                    /**
+                    * @var array<int, int> $ids
+                    */
+                    $ids = range(1, 10);
+                    static::InsertLooseChunks($repo, false, true, ...$ids);
 
                     /**
                     * @var array<int, DaftNestedWriteableObject> $tree
@@ -471,6 +511,23 @@ class WriteableNestedTreeTest extends NestedTreeTest
                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             ],
         ];
+    }
+
+    protected static function InsertLooseChunks(
+        DaftNestedWriteableObjectTree $repo,
+        bool $before,
+        ? bool $above,
+        int ...$ids
+    ) : void {
+        if (0 !== (count($ids) % 2)) {
+            throw new InvalidArgumentException('ids must be of even length, not odd length!');
+        }
+
+        foreach (array_chunk($ids, 2) as $chunk) {
+            list($a, $b) = $chunk;
+
+            $repo->ModifyDaftNestedObjectTreeInsertLoose($a, $b, $before, $above);
+        }
     }
 
     /**
