@@ -206,7 +206,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
         $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
 
-        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+        $this->StoreThenRetrieveFreshCopy($newLeaf);
         $this->StoreThenRetrieveFreshCopy($referenceLeaf);
     }
 
@@ -215,7 +215,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DaftNestedWriteableObject $referenceLeaf
     ) : void {
         $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
-        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+        $this->StoreThenRetrieveFreshCopy($newLeaf);
     }
 
     protected function ModifyDaftNestedObjectTreeInsertAdjacent(
@@ -270,7 +270,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
         $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
 
-        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+        $this->StoreThenRetrieveFreshCopy($newLeaf);
     }
 
     protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
