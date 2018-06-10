@@ -254,9 +254,9 @@ class CoverageTest extends Base
         $a0 = $repo->RecallDaftObject($a0->GetId());
         $b0 = $repo->RecallDaftObject($b0->GetId());
 
-        if ( ! ( $a0 instanceof Fixtures\DaftNestedWriteableIntObject)) {
+        if ( ! ($a0 instanceof Fixtures\DaftNestedWriteableIntObject)) {
             throw new RuntimeException('Could not retrieve fresh object!');
-        } elseif ( ! ( $b0 instanceof Fixtures\DaftNestedWriteableIntObject)) {
+        } elseif ( ! ($b0 instanceof Fixtures\DaftNestedWriteableIntObject)) {
             throw new RuntimeException('Could not retrieve fresh object!');
         }
 
