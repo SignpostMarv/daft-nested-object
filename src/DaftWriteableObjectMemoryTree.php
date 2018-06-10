@@ -388,42 +388,42 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         array $ids,
         array $children
     ) : int {
+        /**
+        * @var scalar|scalar[] $id
+        */
+        $id = $leaf->GetId();
+
+        $leaf->SetIntNestedLevel($level);
+        $leaf->SetIntNestedLeft($n);
+
+        ++$n;
+
+        /**
+        * @var int|false $parentPos
+        */
+        $parentPos = array_search((array) $id, $parentIds, true);
+
+        if (false !== $parentPos) {
             /**
-            * @var scalar|scalar[] $id
+            * @var DaftNestedWriteableObject $childLeaf
             */
-            $id = $leaf->GetId();
-
-            $leaf->SetIntNestedLevel($level);
-            $leaf->SetIntNestedLeft($n);
-
-            ++$n;
-
-            /**
-            * @var int|false $parentPos
-            */
-            $parentPos = array_search((array) $id, $parentIds, true);
-
-            if (false !== $parentPos) {
-                /**
-                * @var DaftNestedWriteableObject $childLeaf
-                */
-                foreach ($children[$parentPos] as $childLeaf) {
-                    $n = $this->InefficientRebuild(
-                        $childLeaf,
-                        $level + 1,
-                        $n,
-                        $parentIds,
-                        $ids,
-                        $children
-                    );
-                }
+            foreach ($children[$parentPos] as $childLeaf) {
+                $n = $this->InefficientRebuild(
+                    $childLeaf,
+                    $level + 1,
+                    $n,
+                    $parentIds,
+                    $ids,
+                    $children
+                );
             }
+        }
 
-            $leaf->SetIntNestedRight($n);
+        $leaf->SetIntNestedRight($n);
 
-            $this->StoreThenRetrieveFreshCopy($leaf);
+        $this->StoreThenRetrieveFreshCopy($leaf);
 
-            return $n + 1;
+        return $n + 1;
     }
 
     protected function StoreThenRetrieveFreshCopy(
