@@ -14,6 +14,9 @@ use RuntimeException;
 
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
+    const EXCEPTION_ARGUMENT_DID_NOT_RESOLVE_TO_A_LEAF_NODE =
+        'Argument %u passed to %s() did not resolve to a leaf node!';
+
     public function ModifyDaftNestedObjectTreeInsert(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
@@ -42,9 +45,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         return $newLeaf;
     }
-
-    const EXCEPTION_ARGUMENT_DID_NOT_RESOLVE_TO_A_LEAF_NODE =
-        'Argument %u passed to %s() did not resolve to a leaf node!';
 
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
