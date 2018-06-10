@@ -11,6 +11,9 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\Tests;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
+use SignpostMarv\DaftObject\DaftNestedObject;
+use SignpostMarv\DaftObject\DaftNestedWriteableObject;
+use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftWriteableObjectMemoryTree;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
@@ -25,16 +28,7 @@ class CoverageTest extends Base
             Fixtures\DaftNestedIntObject::class
         );
 
-        $leaf = new Fixtures\DaftNestedIntObject([
-            'id' => 1,
-            'intNestedLeft' => 0,
-            'intNestedRight' => 1,
-            'intNestedLevel' => 0,
-            'intNestedParentId' => 0,
-            'intNestedSortOrder' => 0,
-        ]);
-
-        $repo->RememberDaftObject($leaf);
+        list($leaf) = static::PrepRepo($repo, Fixtures\DaftNestedIntObject::class, 1);
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Could not retrieve leaf from tree!');
@@ -65,14 +59,11 @@ class CoverageTest extends Base
             Fixtures\DaftNestedWriteableIntObject::class
         );
 
-        $leaf = new Fixtures\DaftNestedWriteableIntObject([
-            'id' => 1,
-            'intNestedLeft' => 0,
-            'intNestedRight' => 1,
-            'intNestedLevel' => 0,
-            'intNestedParentId' => 0,
-            'intNestedSortOrder' => 0,
-        ]);
+        list($leaf) = static::PrepRepoWriteable(
+            $repo,
+            Fixtures\DaftNestedWriteableIntObject::class,
+            1
+        );
 
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot modify leaf relative to itself!');
@@ -94,28 +85,14 @@ class CoverageTest extends Base
             Fixtures\DaftNestedWriteableIntObject::class
         );
 
-        $a0 = new Fixtures\DaftNestedWriteableIntObject([
-            'id' => 1,
-            'intNestedLeft' => 0,
-            'intNestedRight' => 1,
-            'intNestedLevel' => 0,
-            'intNestedParentId' => 0,
-            'intNestedSortOrder' => 0,
-        ]);
-
-        $b0 = new Fixtures\DaftNestedWriteableIntObject([
-            'id' => 2,
-            'intNestedLeft' => 0,
-            'intNestedRight' => 1,
-            'intNestedLevel' => 0,
-            'intNestedParentId' => 0,
-            'intNestedSortOrder' => 0,
-        ]);
-
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
-        $repo->RememberDaftObject($a0);
-        $repo->RememberDaftObject($b0);
+        list($a0, $b0) = static::PrepRepoWriteable(
+            $repo,
+            Fixtures\DaftNestedWriteableIntObject::class,
+            1,
+            2
+        );
 
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Could not retrieve leaf from tree after rebuilding!');
@@ -162,28 +139,14 @@ class CoverageTest extends Base
             Fixtures\DaftNestedWriteableIntObject::class
         );
 
-        $a0 = new Fixtures\DaftNestedWriteableIntObject([
-            'id' => 1,
-            'intNestedLeft' => 0,
-            'intNestedRight' => 1,
-            'intNestedLevel' => 0,
-            'intNestedParentId' => 0,
-            'intNestedSortOrder' => 0,
-        ]);
-
-        $b0 = new Fixtures\DaftNestedWriteableIntObject([
-            'id' => 2,
-            'intNestedLeft' => 0,
-            'intNestedRight' => 1,
-            'intNestedLevel' => 0,
-            'intNestedParentId' => 0,
-            'intNestedSortOrder' => 0,
-        ]);
-
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
-        $repo->RememberDaftObject($a0);
-        $repo->RememberDaftObject($b0);
+        list($a0, $b0) = static::PrepRepoWriteable(
+            $repo,
+            Fixtures\DaftNestedWriteableIntObject::class,
+            1,
+            2
+        );
 
         $repo->ToggleRecallDaftObjectAlwaysNull(true);
 
@@ -216,30 +179,14 @@ class CoverageTest extends Base
             Fixtures\DaftNestedWriteableIntObject::class
         );
 
-        $a0 = new Fixtures\DaftNestedWriteableIntObject([
-            'id' => 1,
-            'intNestedLeft' => 0,
-            'intNestedRight' => 1,
-            'intNestedLevel' => 0,
-            'intNestedParentId' => 0,
-            'intNestedSortOrder' => 0,
-        ]);
-
-        $b0 = new Fixtures\DaftNestedWriteableIntObject([
-            'id' => 2,
-            'intNestedLeft' => 0,
-            'intNestedRight' => 1,
-            'intNestedLevel' => 0,
-            'intNestedParentId' => 0,
-            'intNestedSortOrder' => 0,
-        ]);
-
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
-        $repo->RememberDaftObject($a0);
-        $repo->RememberDaftObject($b0);
-
-        $repo->ToggleRecallDaftObjectAlwaysNull(false);
+        list($a0, $b0) = static::PrepRepoWriteable(
+            $repo,
+            Fixtures\DaftNestedWriteableIntObject::class,
+            1,
+            2
+        );
 
         $repo->ToggleRecallDaftObjectAfterCalls(true, 1);
 
@@ -256,5 +203,56 @@ class CoverageTest extends Base
             $before,
             $above
         );
+    }
+
+    /**
+    * @return array<int, DaftNestedObject>
+    */
+    protected static function PrepRepo(
+        DaftNestedObjectTree $repo,
+        string $type,
+        int ...$ids
+    ) : array {
+        if ( ! is_a($type, DaftNestedObject::class, true)) {
+            throw new InvalidArgumentException('Cannot generate leaves from type!');
+        }
+
+        return array_map(
+            function (int $id) use ($type, $repo) : DaftNestedObject {
+                $leaf = new $type([
+                    'id' => $id,
+                    'intNestedLeft' => 0,
+                    'intNestedRight' => 0,
+                    'intNestedLevel' => 0,
+                    'intNestedParentId' => 0,
+                    'intNestedSortOrder' => 0,
+                ]);
+
+                $repo->RememberDaftObject($leaf);
+
+                return $leaf;
+            },
+            $ids
+        );
+    }
+
+    /**
+    * @return array<int, DaftNestedWriteableObject>
+    */
+    protected static function PrepRepoWriteable(
+        DaftNestedObjectTree $repo,
+        string $type,
+        int ...$ids
+    ) : array {
+        if ( ! is_a($type, DaftNestedWriteableObject::class, true)) {
+            throw new InvalidArgumentException('Cannot generate leaves from type!');
+        }
+
+        /**
+        * @var array<int, DaftNestedWriteableObject> $out
+        */
+        $out = static::PrepRepo($repo, $type, ...$ids);
+
+        return $out;
     }
 }

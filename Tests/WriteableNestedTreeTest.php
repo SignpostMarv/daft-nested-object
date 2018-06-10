@@ -240,7 +240,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $postAssert($this, $repo, $leafClass, ...$leaves);
     }
 
-    protected static function InitLeafClassInsertAfterId(
+    public static function InitLeafClassInsertAfterId(
         DaftNestedWriteableObjectTree $repo,
         string $leafClass,
         int $afterId,
