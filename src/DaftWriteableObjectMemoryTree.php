@@ -85,6 +85,14 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             ));
         }
 
+        return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
+        DaftNestedWriteableObject $leaf,
+        bool $before,
+        ? bool $above
+    ) : DaftNestedWriteableObject {
         $tree = $this->RecallDaftNestedObjectFullTree(0);
         $tree = array_filter($tree, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
             return $e->GetId() !== $leaf->GetId();
