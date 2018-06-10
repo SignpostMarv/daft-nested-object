@@ -14,82 +14,6 @@ use RuntimeException;
 
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
-    protected function ModifyDaftNestedObjectTreeInsertAbove(
-        DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf
-    ) : void {
-            $newLeaf->AlterDaftNestedObjectParentId(
-                $referenceLeaf->ObtainDaftNestedObjectParentId()
-            );
-            $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
-
-            $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
-            $this->StoreThenRetrieveFreshCopy($referenceLeaf);
-    }
-
-    protected function ModifyDaftNestedObjectTreeInsertBelow(
-        DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf
-    ) : void {
-            $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
-            $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
-    }
-
-    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
-        DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf,
-        bool $before
-    ) : void {
-
-            /**
-            * @var array<int, DaftNestedWriteableObject> $siblings
-            */
-            $siblings = array_values(array_filter(
-                $this->RecallDaftNestedObjectTreeWithId(
-                    $referenceLeaf->ObtainDaftNestedObjectParentId(),
-                    false,
-                    0
-                ),
-                function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
-                    return $leaf->GetId() !== $newLeaf->GetId();
-                }
-            ));
-            $siblingIds = [];
-            $siblingSort = [];
-            $j = count($siblings);
-
-            /**
-            * @var DaftNestedWriteableObject $leaf
-            */
-            foreach ($siblings as $leaf) {
-                /**
-                * @var scalar|scalar[] $siblingId
-                */
-                $siblingId = $leaf->GetId();
-                $siblingIds[] = $siblingId;
-                $siblingSort[] = $leaf->GetIntNestedSortOrder();
-            }
-
-            $pos = array_search($referenceLeaf->GetId(), $siblingIds, true);
-
-            if (false === $pos) {
-                throw new RuntimeException('Reference leaf not found in siblings tree!');
-            }
-            for ($i = 0; $i < $j; ++$i) {
-                $siblings[$i]->SetIntNestedSortOrder(
-                        $siblingSort[$i] +
-                        (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
-                    );
-                $this->StoreThenRetrieveFreshCopy($siblings[$i]);
-            }
-            $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
-            $newLeaf->AlterDaftNestedObjectParentId(
-                $referenceLeaf->ObtainDaftNestedObjectParentId()
-            );
-
-            $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
-    }
-
     public function ModifyDaftNestedObjectTreeInsert(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
@@ -278,6 +202,81 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $this->RebuildTreeInefficiently();
 
         return $this->CountDaftNestedObjectFullTree();
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertAbove(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf
+    ) : void {
+        $newLeaf->AlterDaftNestedObjectParentId(
+                $referenceLeaf->ObtainDaftNestedObjectParentId()
+            );
+        $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
+
+        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+        $this->StoreThenRetrieveFreshCopy($referenceLeaf);
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertBelow(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf
+    ) : void {
+        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
+        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before
+    ) : void {
+        /**
+        * @var array<int, DaftNestedWriteableObject> $siblings
+        */
+        $siblings = array_values(array_filter(
+                $this->RecallDaftNestedObjectTreeWithId(
+                    $referenceLeaf->ObtainDaftNestedObjectParentId(),
+                    false,
+                    0
+                ),
+                function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
+                    return $leaf->GetId() !== $newLeaf->GetId();
+                }
+            ));
+        $siblingIds = [];
+        $siblingSort = [];
+        $j = count($siblings);
+
+        /**
+        * @var DaftNestedWriteableObject $leaf
+        */
+        foreach ($siblings as $leaf) {
+            /**
+            * @var scalar|scalar[] $siblingId
+            */
+            $siblingId = $leaf->GetId();
+            $siblingIds[] = $siblingId;
+            $siblingSort[] = $leaf->GetIntNestedSortOrder();
+        }
+
+        $pos = array_search($referenceLeaf->GetId(), $siblingIds, true);
+
+        if (false === $pos) {
+            throw new RuntimeException('Reference leaf not found in siblings tree!');
+        }
+        for ($i = 0; $i < $j; ++$i) {
+            $siblings[$i]->SetIntNestedSortOrder(
+                        $siblingSort[$i] +
+                        (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
+                    );
+            $this->StoreThenRetrieveFreshCopy($siblings[$i]);
+        }
+        $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
+        $newLeaf->AlterDaftNestedObjectParentId(
+                $referenceLeaf->ObtainDaftNestedObjectParentId()
+            );
+
+        $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
     }
 
     protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
