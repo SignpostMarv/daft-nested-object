@@ -106,22 +106,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         ));
     }
 
-    protected function FilterLeaf(
-        bool $includeRoot,
-        int $left,
-        int $right,
-        ? int $relativeDepthLimit,
-        DaftNestedObject $e
-    ) : bool {
-        if (is_int($relativeDepthLimit) && $e->GetIntNestedLevel() > $relativeDepthLimit) {
-            return false;
-        } elseif ($includeRoot) {
-            return $e->GetIntNestedLeft() >= $left && $e->GetIntNestedRight() <= $right;
-        }
-
-        return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;
-    }
-
     public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
@@ -213,6 +197,22 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function CompareObjects(DaftNestedObject $a, DaftNestedObject $b) : int
     {
         return $a->GetIntNestedSortOrder() <=> $b->GetIntNestedSortOrder();
+    }
+
+    protected function FilterLeaf(
+        bool $includeRoot,
+        int $left,
+        int $right,
+        ? int $relativeDepthLimit,
+        DaftNestedObject $e
+    ) : bool {
+        if (is_int($relativeDepthLimit) && $e->GetIntNestedLevel() > $relativeDepthLimit) {
+            return false;
+        } elseif ($includeRoot) {
+            return $e->GetIntNestedLeft() >= $left && $e->GetIntNestedRight() <= $right;
+        }
+
+        return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;
     }
 
     protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
