@@ -35,12 +35,7 @@ class ClassReflectionExtension extends Base
 
         return
             parent::hasProperty($classReflection, $property) ||
-            in_array($property, [
-                'intNestedLeft',
-                'intNestedRight',
-                'intNestedLevel',
-                'intNestedParentId'
-            ]);
+            PropertyReflectionExtension::PropertyIsInt($property);
     }
 
     public function getProperty(ClassReflection $ref, string $propertyName) : PropertyReflection

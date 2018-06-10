@@ -33,7 +33,7 @@ class PropertyReflectionExtension extends Base
     */
     private $nestedType = null;
 
-    protected static function PropertyIsInt(string $property) : bool
+    public static function PropertyIsInt(string $property) : bool
     {
         return in_array($property, [
             'intNestedLeft',
