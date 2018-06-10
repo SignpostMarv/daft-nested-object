@@ -53,11 +53,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
         }
 
-        $leaf = (
-            ($leaf instanceof DaftNestedWriteableObject)
-                ? $leaf
-                : $this->RecallDaftObject($leaf)
-        );
+        if (! ($leaf instanceof DaftNestedWriteableObject)) {
+            $leaf = $this->RecallDaftObject($leaf);
+        } else {
+            $leaf = $this->StoreThenRetrieveFreshCopy($leaf);
+        }
+
         $reference = $this->RecallDaftObject($referenceId);
 
         if ( ! ($leaf instanceof DaftNestedWriteableObject)) {
@@ -68,18 +69,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             );
         }
 
-        $leaf = $this->StoreThenRetrieveFreshCopy($leaf);
-
         if (
             ($leaf instanceof DaftNestedWriteableObject) &&
             ($reference instanceof DaftNestedWriteableObject)
         ) {
-            return $this->ModifyDaftNestedObjectTreeInsert(
-                $leaf,
-                $reference,
-                $before,
-                $above
-            );
+            return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
         } elseif ($referenceId !== $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException(
                 'Arguemnt 2 passed to ' .
@@ -88,12 +82,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             );
         }
 
-        $tree = array_filter(
-            $this->RecallDaftNestedObjectFullTree(0),
-            function (DaftNestedWriteableObject $e) use ($leaf) : bool {
-                return $e->GetId() !== $leaf->GetId();
-            }
-        );
+        $tree = $this->RecallDaftNestedObjectFullTree(0);
+        $tree = array_filter($tree, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
+            return $e->GetId() !== $leaf->GetId();
+        });
 
         if (0 === count($tree)) {
             $leaf->SetIntNestedLeft(0);
