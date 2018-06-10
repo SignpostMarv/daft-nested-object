@@ -166,7 +166,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             return $this->StoreThenRetrieveFreshCopy($leaf);
         }
 
-            return $this->RecallDaftObject($leaf);
+        return $this->RecallDaftObject($leaf);
     }
 
     protected function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
