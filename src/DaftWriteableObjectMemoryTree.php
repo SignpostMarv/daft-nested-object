@@ -103,24 +103,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $this->CountDaftNestedObjectFullTree();
     }
 
-    protected function ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
-        DaftNestedWriteableObject $root,
-        DaftNestedWriteableObject $replacementRoot
-    ) : void {
-        /**
-        * @var scalar|scalar[] $replacementRootId
-        */
-        $replacementRootId = $this->StoreThenRetrieveFreshCopy($replacementRoot)->GetId();
-
-        /**
-        * @var DaftNestedWriteableObject $alter
-        */
-        foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
-            $alter->AlterDaftNestedObjectParentId($replacementRootId);
-            $this->StoreThenRetrieveFreshCopy($alter);
-        }
-    }
-
     /**
     * {@inheritdoc}
     */
@@ -148,6 +130,24 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         }
 
         return $this->CountDaftNestedObjectFullTree();
+    }
+
+    protected function ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
+        DaftNestedWriteableObject $root,
+        DaftNestedWriteableObject $replacementRoot
+    ) : void {
+        /**
+        * @var scalar|scalar[] $replacementRootId
+        */
+        $replacementRootId = $this->StoreThenRetrieveFreshCopy($replacementRoot)->GetId();
+
+        /**
+        * @var DaftNestedWriteableObject $alter
+        */
+        foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
+            $alter->AlterDaftNestedObjectParentId($replacementRootId);
+            $this->StoreThenRetrieveFreshCopy($alter);
+        }
     }
 
     /**
