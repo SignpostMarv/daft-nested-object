@@ -113,13 +113,13 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         ? int $relativeDepthLimit,
         DaftNestedObject $e
     ) : bool {
-                if (is_int($relativeDepthLimit) && $e->GetIntNestedLevel() > $relativeDepthLimit) {
-                    return false;
-                } elseif ($includeRoot) {
-                    return $e->GetIntNestedLeft() >= $left && $e->GetIntNestedRight() <= $right;
-                }
+        if (is_int($relativeDepthLimit) && $e->GetIntNestedLevel() > $relativeDepthLimit) {
+            return false;
+        } elseif ($includeRoot) {
+            return $e->GetIntNestedLeft() >= $left && $e->GetIntNestedRight() <= $right;
+        }
 
-                return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;
+        return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;
     }
 
     public function CountDaftNestedObjectTreeWithObject(
