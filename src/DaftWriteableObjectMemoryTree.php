@@ -183,10 +183,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $root = $this->StoreThenRetrieveFreshCopy($root);
 
-        $right = $root->GetIntNestedRight();
-        $width = ($right - $root->GetIntNestedLeft()) + 1;
-
-        $this->ModifyDaftNestedObjectTreeForRemoval($right, $width);
 
         if ( ! is_null($replacementRoot)) {
             $replacementRoot = $this->StoreThenRetrieveFreshCopy($replacementRoot);
@@ -194,13 +190,18 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             /**
             * @var DaftNestedWriteableObject $alter
             */
-            foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
+            foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 0) as $alter) {
+                $alter->AlterDaftNestedObjectParentId($root->ObtainDaftNestedObjectParentId());
                 $alter = $this->StoreThenRetrieveFreshCopy($alter);
-                $this->ModifyDaftNestedObjectTreeInsert($alter, $replacementRoot, false, false);
+                if ($alter->GetId() === $replacementRoot->GetId()) {
+                    $replacementRoot = $alter;
+                }
             }
         }
 
         $this->RemoveDaftObject($root);
+
+        $this->RebuildTreeInefficiently();
 
         return $this->CountDaftNestedObjectFullTree();
     }
@@ -250,12 +251,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $this->RememberDaftObject($alter);
         }
 
-        $right = $rootObject->GetIntNestedRight();
-        $width = ($right - $rootObject->GetIntNestedLeft()) + 1;
-
-        $this->ModifyDaftNestedObjectTreeForRemoval($right, $width);
-
         $this->RemoveDaftObject($rootObject);
+
+        $this->RebuildTreeInefficiently();
 
         return $this->CountDaftNestedObjectFullTree();
     }
@@ -412,33 +410,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $idXref,
                 $xRefChildren
             );
-        }
-    }
-
-    protected function ModifyDaftNestedObjectTreeForRemoval(int $right, int $width) : void
-    {
-        /**
-        * @var DaftNestedWriteableObject $alter
-        */
-        foreach ($this->RecallDaftNestedObjectFullTree() as $alter) {
-            $alter = $this->StoreThenRetrieveFreshCopy($alter);
-
-            $alterLeft = $alter->GetIntNestedLeft();
-            $alterRight = $alter->GetIntNestedRight();
-            $changed = false;
-
-            if ($alterRight > $right) {
-                $alter->SetIntNestedRight($alterRight - $width);
-                $changed = true;
-            }
-            if ($alterLeft > $right) {
-                $alter->SetIntNestedLeft($alterLeft - $width);
-                $changed = true;
-            }
-
-            if ($changed) {
-                $this->RememberDaftObject($alter);
-            }
         }
     }
 
