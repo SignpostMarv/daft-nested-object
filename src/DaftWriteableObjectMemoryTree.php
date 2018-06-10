@@ -14,17 +14,10 @@ use RuntimeException;
 
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
-    public function ModifyDaftNestedObjectTreeInsert(
+    protected function ModifyDaftNestedObjectTreeInsertAbove(
         DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf,
-        bool $before = false,
-        bool $above = null
-    ) : DaftNestedWriteableObject {
-        if ($newLeaf->GetId() === $referenceLeaf->GetId()) {
-            throw new InvalidArgumentException('Cannot modify leaf relative to itself!');
-        }
-
-        if (true === $above) {
+        DaftNestedWriteableObject $referenceLeaf
+    ) : void {
             $newLeaf->AlterDaftNestedObjectParentId(
                 $referenceLeaf->ObtainDaftNestedObjectParentId()
             );
@@ -32,10 +25,22 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
             $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
             $this->StoreThenRetrieveFreshCopy($referenceLeaf);
-        } elseif (false === $above) {
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertBelow(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf
+    ) : void {
             $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
             $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
-        } else {
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before
+    ) : void {
+
             /**
             * @var array<int, DaftNestedWriteableObject> $siblings
             */
@@ -83,6 +88,24 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             );
 
             $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
+    }
+
+    public function ModifyDaftNestedObjectTreeInsert(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before = false,
+        bool $above = null
+    ) : DaftNestedWriteableObject {
+        if ($newLeaf->GetId() === $referenceLeaf->GetId()) {
+            throw new InvalidArgumentException('Cannot modify leaf relative to itself!');
+        }
+
+        if (true === $above) {
+            $this->ModifyDaftNestedObjectTreeInsertAbove($newLeaf, $referenceLeaf);
+        } elseif (false === $above) {
+            $this->ModifyDaftNestedObjectTreeInsertBelow($newLeaf, $referenceLeaf);
+        } else {
+            $this->ModifyDaftNestedObjectTreeInsertAdjacent($newLeaf, $referenceLeaf, $before);
         }
 
         $this->RebuildTreeInefficiently();
