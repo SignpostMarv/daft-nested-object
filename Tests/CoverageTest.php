@@ -71,6 +71,29 @@ class CoverageTest extends Base
         $repo->ModifyDaftNestedObjectTreeInsert($leaf, $leaf, $before, $above);
     }
 
+    public function testStoreThenRetrieveFreshCopyFails() : void
+    {
+        /**
+        * @var Fixtures\ThrowingWriteableMemoryTree $repo
+        */
+        $repo = Fixtures\ThrowingWriteableMemoryTree::DaftObjectRepositoryByType(
+            Fixtures\DaftNestedWriteableIntObject::class
+        );
+
+        list($leaf) = static::PrepRepoWriteable(
+            $repo,
+            Fixtures\DaftNestedWriteableIntObject::class,
+            1
+        );
+
+        $repo->ToggleRecallDaftObjectAlwaysNull(true);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Was not able to obtain a fresh copy of the object!');
+
+        $repo->StoreThenRetrieveFreshCopyPublic($leaf);
+    }
+
     /**
     * @dataProvider DataProviderInsertArgs
     */
@@ -203,6 +226,47 @@ class CoverageTest extends Base
             $before,
             $above
         );
+    }
+
+    /**
+    * @dataProvider DataProviderInsertArgs
+    */
+    public function testModifyDaftNestedObjectTreeInsertAdjacentFailsWithNonSibling(
+        bool $before,
+        ? bool $above
+    ) : void {
+        /**
+        * @var Fixtures\DaftWriteableNestedObjectIntTree $repo
+        */
+        $repo = Fixtures\DaftWriteableNestedObjectIntTree::DaftObjectRepositoryByType(
+            Fixtures\DaftNestedWriteableIntObject::class
+        );
+
+        list($a0, $b0) = static::PrepRepoWriteable(
+            $repo,
+            Fixtures\DaftNestedWriteableIntObject::class,
+            1,
+            2
+        );
+
+        $repo->ModifyDaftNestedObjectTreeInsert($a0, $b0, false, true);
+
+        $a0 = $repo->RecallDaftObject($a0->GetId());
+        $b0 = $repo->RecallDaftObject($b0->GetId());
+
+        if ( ! ( $a0 instanceof Fixtures\DaftNestedWriteableIntObject)) {
+            throw new RuntimeException('Could not retrieve fresh object!');
+        } elseif ( ! ( $b0 instanceof Fixtures\DaftNestedWriteableIntObject)) {
+            throw new RuntimeException('Could not retrieve fresh object!');
+        }
+
+        $ref = new \ReflectionMethod($repo, 'ModifyDaftNestedObjectTreeInsertAdjacent');
+        $ref->setAccessible(true);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Reference leaf not found in siblings tree!');
+
+        $ref->invoke($repo, $a0, $b0, $before);
     }
 
     /**
