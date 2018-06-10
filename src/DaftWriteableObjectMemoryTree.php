@@ -63,9 +63,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         if ( ! ($leaf instanceof DaftNestedWriteableObject)) {
             throw new InvalidArgumentException(
-                'Arguemnt 1 passed to ' .
+                'Argument 1 passed to ' .
                 __METHOD__ .
-                ' did not resolve to a leaf node!'
+                '() did not resolve to a leaf node!'
             );
         }
 
@@ -76,9 +76,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
         } elseif ($referenceId !== $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException(
-                'Arguemnt 2 passed to ' .
+                'Argument 2 passed to ' .
                 __METHOD__ .
-                ' did not resolve to a leaf node!'
+                '() did not resolve to a leaf node!'
             );
         }
 
