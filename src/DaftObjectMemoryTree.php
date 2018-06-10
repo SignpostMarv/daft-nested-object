@@ -101,6 +101,18 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                 $right,
                 $relativeDepthLimit
             ) : bool {
+                return $this->FilterLeaf($includeRoot, $left, $right, $relativeDepthLimit, $e);
+            }
+        ));
+    }
+
+    protected function FilterLeaf(
+        bool $includeRoot,
+        int $left,
+        int $right,
+        ? int $relativeDepthLimit,
+        DaftNestedObject $e
+    ) : bool {
                 if (is_int($relativeDepthLimit) && $e->GetIntNestedLevel() > $relativeDepthLimit) {
                     return false;
                 } elseif ($includeRoot) {
@@ -108,8 +120,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                 }
 
                 return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;
-            }
-        ));
     }
 
     public function CountDaftNestedObjectTreeWithObject(
