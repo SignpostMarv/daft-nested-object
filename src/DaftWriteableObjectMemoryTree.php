@@ -170,23 +170,33 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 );
             }
 
-            /**
-            * @var DaftNestedWriteableObject $alter
-            */
-            foreach (
-                $this->RecallDaftNestedObjectTreeWithObject($rootObject, false, 1) as $alter
-            ) {
-                $alter = $this->StoreThenRetrieveFreshCopy($alter);
-                $alter->AlterDaftNestedObjectParentId($replacementRoot);
-                $this->RememberDaftObject($alter);
-            }
-
-            $this->RemoveDaftObject($rootObject);
-
-            $this->RebuildTreeInefficiently();
+            $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
         }
 
         return $this->CountDaftNestedObjectFullTree();
+    }
+
+    /**
+    * @param mixed $replacementRoot
+    */
+    protected function UpdateRemoveThenRebuild(
+        DaftNestedWriteableObject $rootObject,
+        $replacementRoot
+    ) : void {
+        /**
+        * @var DaftNestedWriteableObject $alter
+        */
+        foreach (
+            $this->RecallDaftNestedObjectTreeWithObject($rootObject, false, 1) as $alter
+        ) {
+            $alter = $this->StoreThenRetrieveFreshCopy($alter);
+            $alter->AlterDaftNestedObjectParentId($replacementRoot);
+            $this->RememberDaftObject($alter);
+        }
+
+        $this->RemoveDaftObject($rootObject);
+
+        $this->RebuildTreeInefficiently();
     }
 
     protected function ModifyDaftNestedObjectTreeInsertAbove(
