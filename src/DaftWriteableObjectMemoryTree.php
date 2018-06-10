@@ -109,12 +109,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $referenceLeaf = $before ? current($tree) : end($tree);
 
-        return $this->ModifyDaftNestedObjectTreeInsert(
-            $newLeaf,
-            $referenceLeaf,
-            $before,
-            $above
-        );
+        return $this->ModifyDaftNestedObjectTreeInsert($newLeaf, $referenceLeaf, $before, $above);
     }
 
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
@@ -208,9 +203,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : void {
-        $newLeaf->AlterDaftNestedObjectParentId(
-                $referenceLeaf->ObtainDaftNestedObjectParentId()
-            );
+        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
         $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
 
         $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
@@ -234,15 +227,16 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         * @var array<int, DaftNestedWriteableObject> $siblings
         */
         $siblings = array_values(array_filter(
-                $this->RecallDaftNestedObjectTreeWithId(
-                    $referenceLeaf->ObtainDaftNestedObjectParentId(),
-                    false,
-                    0
-                ),
-                function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
-                    return $leaf->GetId() !== $newLeaf->GetId();
-                }
-            ));
+            $this->RecallDaftNestedObjectTreeWithId(
+                $referenceLeaf->ObtainDaftNestedObjectParentId(),
+                false,
+                0
+            ),
+            function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
+                return $leaf->GetId() !== $newLeaf->GetId();
+            }
+        ));
+
         $siblingIds = [];
         $siblingSort = [];
         $j = count($siblings);
@@ -264,17 +258,17 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         if (false === $pos) {
             throw new RuntimeException('Reference leaf not found in siblings tree!');
         }
+
         for ($i = 0; $i < $j; ++$i) {
             $siblings[$i]->SetIntNestedSortOrder(
-                        $siblingSort[$i] +
-                        (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
-                    );
+                $siblingSort[$i] +
+                (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
+            );
             $this->StoreThenRetrieveFreshCopy($siblings[$i]);
         }
+
         $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
-        $newLeaf->AlterDaftNestedObjectParentId(
-                $referenceLeaf->ObtainDaftNestedObjectParentId()
-            );
+        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
 
         $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
     }
