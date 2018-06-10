@@ -10,7 +10,6 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\PHPStan;
 
 use PHPStan\Broker\Broker;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Reflection\PropertyReflection;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\Type;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
@@ -33,20 +32,6 @@ class PropertyReflectionExtension extends Base
     */
     private $nestedType = null;
 
-    public static function PropertyIsInt(string $property) : bool
-    {
-        return in_array(
-            $property,
-            [
-                'intNestedLeft',
-                'intNestedRight',
-                'intNestedLevel',
-                'intNestedSortOrder',
-            ],
-            true
-        );
-    }
-
     public function __construct(ClassReflection $classReflection, Broker $broker, string $property)
     {
         parent::__construct($classReflection, $broker, $property);
@@ -65,6 +50,20 @@ class PropertyReflectionExtension extends Base
         if ($intProperty) {
             $this->nestedType = new IntegerType();
         }
+    }
+
+    public static function PropertyIsInt(string $property) : bool
+    {
+        return in_array(
+            $property,
+            [
+                'intNestedLeft',
+                'intNestedRight',
+                'intNestedLevel',
+                'intNestedSortOrder',
+            ],
+            true
+        );
     }
 
     public function isReadable() : bool

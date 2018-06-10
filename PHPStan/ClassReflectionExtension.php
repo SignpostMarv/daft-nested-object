@@ -9,12 +9,9 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\DaftNestedObject\PHPStan;
 
 use PHPStan\Broker\Broker;
-use PHPStan\Reflection\BrokerAwareExtension;
 use PHPStan\Reflection\ClassReflection;
-use PHPStan\Reflection\PropertiesClassReflectionExtension;
 use PHPStan\Reflection\PropertyReflection;
 use RuntimeException;
-use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\PHPStan\ClassReflectionExtension as Base;
 
 class ClassReflectionExtension extends Base
