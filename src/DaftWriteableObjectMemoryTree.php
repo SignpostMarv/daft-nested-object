@@ -11,7 +11,6 @@ namespace SignpostMarv\DaftObject;
 use BadMethodCallException;
 use InvalidArgumentException;
 use RuntimeException;
-use SignpostMarv\DaftObject\DaftObject;
 
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
