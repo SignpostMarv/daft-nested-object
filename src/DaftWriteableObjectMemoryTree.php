@@ -363,16 +363,31 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $tree[$i] = $this->StoreThenRetrieveFreshCopy($leaf);
         }
 
-        $rebuild = function (
-            DaftNestedWriteableObject $leaf,
-            int $level,
-            int $n,
-            array $parentIds,
-            array $ids,
-            array $children
-        ) use (
-            &$rebuild
-        ) : int {
+        $n = 0;
+
+        /**
+        * @var DaftNestedWriteableObject $rootLeaf
+        */
+        foreach ($xRefChildren[0] as $rootLeaf) {
+            $n = $this->InefficientRebuild(
+                $rootLeaf,
+                0,
+                $n,
+                $parentIdXref,
+                $idXref,
+                $xRefChildren
+            );
+        }
+    }
+
+    protected function InefficientRebuild(
+        DaftNestedWriteableObject $leaf,
+        int $level,
+        int $n,
+        array $parentIds,
+        array $ids,
+        array $children
+    ) : int {
             /**
             * @var scalar|scalar[] $id
             */
@@ -393,7 +408,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 * @var DaftNestedWriteableObject $childLeaf
                 */
                 foreach ($children[$parentPos] as $childLeaf) {
-                    $n = (int) $rebuild(
+                    $n = $this->InefficientRebuild(
                         $childLeaf,
                         $level + 1,
                         $n,
@@ -409,23 +424,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $this->StoreThenRetrieveFreshCopy($leaf);
 
             return $n + 1;
-        };
-
-        $n = 0;
-
-        /**
-        * @var DaftNestedWriteableObject $rootLeaf
-        */
-        foreach ($xRefChildren[0] as $rootLeaf) {
-            $n = $rebuild(
-                $rootLeaf,
-                0,
-                $n,
-                $parentIdXref,
-                $idXref,
-                $xRefChildren
-            );
-        }
     }
 
     protected function StoreThenRetrieveFreshCopy(
