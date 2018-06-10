@@ -35,11 +35,13 @@ class PropertyReflectionExtension extends Base
 
     public static function PropertyIsInt(string $property) : bool
     {
-        return in_array($property, [
-            'intNestedLeft',
-            'intNestedRight',
-            'intNestedLevel',
-            'intNestedSortOrder',
+        return in_array(
+            $property,
+            [
+                'intNestedLeft',
+                'intNestedRight',
+                'intNestedLevel',
+                'intNestedSortOrder',
             ],
             true
         );
