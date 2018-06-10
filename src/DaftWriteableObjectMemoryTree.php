@@ -72,10 +72,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 1,
                 __METHOD__
             ));
-        } elseif (
-            $leafIsObject &&
-            ($reference instanceof DaftNestedWriteableObject)
-        ) {
+        } elseif ($leafIsObject && ($reference instanceof DaftNestedWriteableObject)) {
             return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
         } elseif ($referenceId !== $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException(sprintf(
