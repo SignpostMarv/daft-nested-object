@@ -33,16 +33,21 @@ class PropertyReflectionExtension extends Base
     */
     private $nestedType = null;
 
-    public function __construct(ClassReflection $classReflection, Broker $broker, string $property)
+    protected static function PropertyIsInt(string $property) : bool
     {
-        parent::__construct($classReflection, $broker, $property);
-
-        $intProperty = in_array($property, [
+        return in_array($property, [
             'intNestedLeft',
             'intNestedRight',
             'intNestedLevel',
             'intNestedSortOrder',
         ]);
+    }
+
+    public function __construct(ClassReflection $classReflection, Broker $broker, string $property)
+    {
+        parent::__construct($classReflection, $broker, $property);
+
+        $intProperty = static::PropertyIsInt($property);
 
         if ('intNestedParentId' === $property || $intProperty) {
             $this->nestedReadable = true;
@@ -76,12 +81,7 @@ class PropertyReflectionExtension extends Base
     protected static function PropertyIsPublic(string $className, string $property) : bool
     {
         return
-            in_array($property, [
-                'intNestedLeft',
-                'intNestedRight',
-                'intNestedLevel',
-                'intNestedParentId',
-            ]) ||
+            static::PropertyIsInt($property) ||
             parent::PropertyIsPublic($className, $property);
     }
 }
