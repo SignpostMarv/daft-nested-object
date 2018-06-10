@@ -173,16 +173,16 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DaftNestedWriteableObject $rootObject,
         ? DaftObject $replacementRootObject
     ) : int {
-                if ( ! ($replacementRootObject instanceof DaftNestedWriteableObject)) {
-                    throw new InvalidArgumentException(
-                        'Could not locate replacement root, cannot leave orphan objects!'
-                    );
-                }
+        if ( ! ($replacementRootObject instanceof DaftNestedWriteableObject)) {
+            throw new InvalidArgumentException(
+                'Could not locate replacement root, cannot leave orphan objects!'
+            );
+        }
 
-                return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
-                    $rootObject,
-                    $replacementRootObject
-                );
+        return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
+            $rootObject,
+            $replacementRootObject
+        );
     }
 
     /**
