@@ -30,11 +30,12 @@
     "scripts": {
         "tests": [
             "phpunit -vvvv --coverage-clover=phpunit.clover",
-            "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests",
+            "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests PHPStan",
             "psalm",
-            "phpcpd src Tests",
+            "phpcpd src Tests PHPStan",
             "phpmnd src",
             "phpmnd Tests",
+            "phpmnd PHPStan",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
         ]
     },
