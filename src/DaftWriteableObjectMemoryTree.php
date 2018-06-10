@@ -368,7 +368,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $leaf->SetIntNestedLevel($level);
             $leaf->SetIntNestedLeft($n);
 
-            $n += 1;
+            ++$n;
 
             /**
             * @var int|false $parentPos
