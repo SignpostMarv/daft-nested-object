@@ -90,10 +90,10 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c0 = static::InitLeafClass($leafClass, ['id' => 3]);
         $d0 = static::InitLeafClass($leafClass, ['id' => 4]);
 
-        $repo->ModifyDaftNestedObjectTreeInsertLoose($a0, 0, false, false);
-        $repo->ModifyDaftNestedObjectTreeInsertLoose($b0, 0, false, false);
-        $repo->ModifyDaftNestedObjectTreeInsertLoose($c0, 0, false, false);
-        $repo->ModifyDaftNestedObjectTreeInsertLoose($d0, 0, false, false);
+        $repo->ModifyDaftNestedObjectTreeInsertLoose($a0, 0, false, null);
+        $repo->ModifyDaftNestedObjectTreeInsertLoose($b0, 0, false, null);
+        $repo->ModifyDaftNestedObjectTreeInsertLoose($c0, 0, false, null);
+        $repo->ModifyDaftNestedObjectTreeInsertLoose($d0, 0, false, null);
 
         list($a0, $b0, $c0, $d0) = $this->RecallFreshObjects($repo, $a0, $b0, $c0, $d0);
 
@@ -373,7 +373,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
             ],
             [
                 function (DaftNestedWriteableObjectTree $repo, string $leafClass) : array {
-                    return static::InitLeafClassInsertBelowId($repo, $leafClass, 0, [1, 2, 3, 4]);
+                    return static::InitLeafClassInsertAfterId($repo, $leafClass, 0, [1, 2, 3, 4]);
                 },
                 function (
                     WriteableNestedTreeTest $testCase,
@@ -457,16 +457,13 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
                     $repo->ModifyDaftNestedObjectTreeInsertLoose(10, 1, true, null);
 
-                    /**
-                    * @var array<int, DaftNestedWriteableObject> $tree
-                    */
-                    $tree = $repo->RecallDaftNestedObjectFullTree();
+                    $leaves = $this->RecallFreshObjects($repo, ...$tree);
 
                     $this->AssertTreeState(
-                        [0, 2, 3, 5, 6, 10, 11, 13, 14, 18],
-                        [1, 9, 4, 8, 7, 17, 12, 16, 15, 19],
-                        [0, 0, 1, 1, 2, 0, 1, 1, 2, 0],
-                        $tree
+                        [2, 3, 5, 6, 10, 11, 13, 14, 18, 0],
+                        [9, 4, 8, 7, 17, 12, 16, 15, 19, 1],
+                        [0, 1, 1, 2, 0, 1, 1, 2, 0, 0],
+                        $leaves
                     );
                 },
                 [0, 2, 4, 6, 8, 10, 12, 14, 16, 18],

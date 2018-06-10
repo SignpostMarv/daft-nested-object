@@ -78,6 +78,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $this->StoreThenRetrieveFreshCopy($siblings[$i]);
             }
             $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
+            $newLeaf->AlterDaftNestedObjectParentId(
+                $referenceLeaf->ObtainDaftNestedObjectParentId()
+            );
 
             $newLeaf = $this->StoreThenRetrieveFreshCopy($newLeaf);
         }
@@ -163,7 +166,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $newLeaf,
             $referenceLeaf,
             $before,
-            null
+            $above
         );
     }
 
@@ -376,7 +379,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 /**
                 * @var DaftNestedWriteableObject $childLeaf
                 */
-                foreach ($children[(int) $parentPos] as $childLeaf) {
+                foreach ($children[$parentPos] as $childLeaf) {
                     $n = (int) $rebuild(
                         $childLeaf,
                         $level + 1,
