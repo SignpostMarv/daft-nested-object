@@ -156,19 +156,17 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     }
 
     /**
-    * @param mixed $leaf
+    * @param DaftNestedWriteableObject|mixed $leaf
     */
     protected function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
     {
         if ($leaf === $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
-        } elseif ( ! ($leaf instanceof DaftNestedWriteableObject)) {
-            $leaf = $this->RecallDaftObject($leaf);
-        } else {
-            $leaf = $this->StoreThenRetrieveFreshCopy($leaf);
+        } elseif ($leaf instanceof DaftNestedWriteableObject) {
+            return $this->StoreThenRetrieveFreshCopy($leaf);
         }
 
-        return $leaf;
+            return $this->RecallDaftObject($leaf);
     }
 
     protected function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
