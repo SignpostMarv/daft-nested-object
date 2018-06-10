@@ -24,7 +24,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
     const RIGHT_1to10 = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
     const LEVEL_1to10 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-
     const LEFT_DEDUPE = [0, 2, 3, 4, 8, 9, 11, 12, 16];
     const RIGHT_DEDUPE = [1, 7, 6, 5, 15, 10, 14, 13, 17];
     const LEVEL_DEDUPE = [0, 0, 1, 2, 0, 1, 1, 2, 0];
@@ -204,38 +203,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
     }
 
     /**
-    * @return array<int, DaftNestedWriteableObject>
-    */
-    protected function setupTestTreeRemovalFailure(
-        string $leafClass,
-        DaftNestedWriteableObjectTree $repo
-    ) : array {
-        /**
-        * @var array<int, DaftNestedWriteableObject> $leaves
-        */
-        $leaves = static::InitLeafClassInsertAfterId($repo, $leafClass, 0, range(1, 10));
-
-        /**
-        * @var array<int, int> $ids
-        */
-        $ids = range(1, 10);
-        static::InsertLooseChunks($repo, false, true, ...$ids);
-        static::InsertLooseChunks($repo, false, true, 1, 3, 5, 7);
-        $repo->ModifyDaftNestedObjectTreeInsertLoose(10, 1, true, null);
-
-        $leaves = $this->RecallFreshObjects($repo, ...$leaves);
-
-        $this->AssertTreeState(
-            [2, 3, 5, 6, 10, 11, 13, 14, 18, 0],
-            [9, 4, 8, 7, 17, 12, 16, 15, 19, 1],
-            [0, 1, 1, 2, 0, 1, 1, 2, 0, 0],
-            $leaves
-        );
-
-        return $leaves;
-    }
-
-    /**
     * @dataProvider DataProviderArgsTreeRemovalFailure
     */
     public function testTreeRemovalFailure(
@@ -359,6 +326,38 @@ class WriteableNestedTreeTest extends NestedTreeTest
             },
             $ids
         );
+    }
+
+    /**
+    * @return array<int, DaftNestedWriteableObject>
+    */
+    protected function setupTestTreeRemovalFailure(
+        string $leafClass,
+        DaftNestedWriteableObjectTree $repo
+    ) : array {
+        /**
+        * @var array<int, DaftNestedWriteableObject> $leaves
+        */
+        $leaves = static::InitLeafClassInsertAfterId($repo, $leafClass, 0, range(1, 10));
+
+        /**
+        * @var array<int, int> $ids
+        */
+        $ids = range(1, 10);
+        static::InsertLooseChunks($repo, false, true, ...$ids);
+        static::InsertLooseChunks($repo, false, true, 1, 3, 5, 7);
+        $repo->ModifyDaftNestedObjectTreeInsertLoose(10, 1, true, null);
+
+        $leaves = $this->RecallFreshObjects($repo, ...$leaves);
+
+        $this->AssertTreeState(
+            [2, 3, 5, 6, 10, 11, 13, 14, 18, 0],
+            [9, 4, 8, 7, 17, 12, 16, 15, 19, 1],
+            [0, 1, 1, 2, 0, 1, 1, 2, 0, 0],
+            $leaves
+        );
+
+        return $leaves;
     }
 
     protected static function InitLeafClassInsertAboveId(
