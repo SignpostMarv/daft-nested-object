@@ -46,22 +46,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $newLeaf;
     }
 
-    /**
-    * @param mixed $leaf
-    */
-    protected function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
-    {
-        if ($leaf === $this->GetNestedObjectTreeRootId()) {
-            throw new InvalidArgumentException('Cannot pass root id as new leaf');
-        } elseif ( ! ($leaf instanceof DaftNestedWriteableObject)) {
-            $leaf = $this->RecallDaftObject($leaf);
-        } else {
-            $leaf = $this->StoreThenRetrieveFreshCopy($leaf);
-        }
-
-        return $leaf;
-    }
-
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
         $referenceId,
@@ -169,6 +153,22 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         }
 
         return $this->CountDaftNestedObjectFullTree();
+    }
+
+    /**
+    * @param mixed $leaf
+    */
+    protected function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
+    {
+        if ($leaf === $this->GetNestedObjectTreeRootId()) {
+            throw new InvalidArgumentException('Cannot pass root id as new leaf');
+        } elseif ( ! ($leaf instanceof DaftNestedWriteableObject)) {
+            $leaf = $this->RecallDaftObject($leaf);
+        } else {
+            $leaf = $this->StoreThenRetrieveFreshCopy($leaf);
+        }
+
+        return $leaf;
     }
 
     protected function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
