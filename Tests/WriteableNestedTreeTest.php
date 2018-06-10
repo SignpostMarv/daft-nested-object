@@ -24,6 +24,11 @@ class WriteableNestedTreeTest extends NestedTreeTest
     const RIGHT_1to10 = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19];
     const LEVEL_1to10 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+
+    const LEFT_DEDUPE = [0, 2, 3, 4, 8, 9, 11, 12, 16];
+    const RIGHT_DEDUPE = [1, 7, 6, 5, 15, 10, 14, 13, 17];
+    const LEVEL_DEDUPE = [0, 0, 1, 2, 0, 1, 1, 2, 0];
+
     /**
     * @dataProvider DataProviderArgs
     */
@@ -199,18 +204,12 @@ class WriteableNestedTreeTest extends NestedTreeTest
     }
 
     /**
-    * @dataProvider DataProviderArgsTreeRemovalFailure
+    * @return array<int, DaftNestedWriteableObject>
     */
-    public function testTreeRemovalFailure(
+    protected function setupTestTreeRemovalFailure(
         string $leafClass,
-        string $treeClass,
-        bool $byObject
-    ) : void {
-        /**
-        * @var DaftNestedWriteableObjectTree $repo
-        */
-        $repo = $treeClass::DaftObjectRepositoryByType($leafClass);
-
+        DaftNestedWriteableObjectTree $repo
+    ) : array {
         /**
         * @var array<int, DaftNestedWriteableObject> $leaves
         */
@@ -233,6 +232,24 @@ class WriteableNestedTreeTest extends NestedTreeTest
             $leaves
         );
 
+        return $leaves;
+    }
+
+    /**
+    * @dataProvider DataProviderArgsTreeRemovalFailure
+    */
+    public function testTreeRemovalFailure(
+        string $leafClass,
+        string $treeClass,
+        bool $byObject
+    ) : void {
+        /**
+        * @var DaftNestedWriteableObjectTree $repo
+        */
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass);
+
+        $leaves = $this->setupTestTreeRemovalFailure($leafClass, $repo);
+
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Cannot leave orphan objects in a tree');
 
@@ -241,6 +258,26 @@ class WriteableNestedTreeTest extends NestedTreeTest
         } else {
             $repo->ModifyDaftNestedObjectTreeRemoveWithId($leaves[0]->GetId(), null);
         }
+    }
+
+    /**
+    * @dataProvider DataProviderArgs
+    */
+    public function testTreeRemovalFailureDueToOrphan(string $leafClass, string $treeClass) : void
+    {
+        /**
+        * @var DaftNestedWriteableObjectTree $repo
+        */
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass);
+
+        $leaves = $this->setupTestTreeRemovalFailure($leafClass, $repo);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage(
+            'Could not locate replacement root, cannot leave orphan objects!'
+        );
+
+        $repo->ModifyDaftNestedObjectTreeRemoveWithId($leaves[0]->GetId(), 11);
     }
 
     public function DataProviderArgsTreeRemovalFailure() : Generator
@@ -573,9 +610,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
                     $this->AssertTreeState(
-                        [0, 2, 3, 4, 8, 9, 11, 12, 16],
-                        [1, 7, 6, 5, 15, 10, 14, 13, 17],
-                        [0, 0, 1, 2, 0, 1, 1, 2, 0],
+                        self::LEFT_DEDUPE,
+                        self::RIGHT_DEDUPE,
+                        self::LEVEL_DEDUPE,
                         $tree
                     );
                 },
@@ -611,11 +648,118 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
                     $this->AssertTreeState(
-                        [0, 2, 3, 4, 8, 9, 11, 12, 16],
-                        [1, 7, 6, 5, 15, 10, 14, 13, 17],
-                        [0, 0, 1, 2, 0, 1, 1, 2, 0],
+                        self::LEFT_DEDUPE,
+                        self::RIGHT_DEDUPE,
+                        self::LEVEL_DEDUPE,
                         $tree
                     );
+                },
+                self::LEFT_1to10,
+                self::RIGHT_1to10,
+                self::LEVEL_1to10,
+            ],
+            [
+                function (DaftNestedWriteableObjectTree $repo, string $leafClass) : array {
+                    return static::InitLeafClassInsertAfterId($repo, $leafClass, 0, range(1, 10));
+                },
+                function (
+                    WriteableNestedTreeTest $testCase,
+                    DaftNestedWriteableObjectTree $repo,
+                    string $leafClass,
+                    DaftNestedWriteableObject ...$leaves
+                ) : void {
+                    static::InsertLooseChunks($repo, false, true,
+                        1, 2,
+                        1, 3,
+                        1, 4,
+                        1, 5,
+                        1, 6,
+                        1, 7,
+                        1, 8,
+                        1, 9
+                    );
+
+                    $this->AssertTreeState(
+                        [0, 1, 3, 5, 7, 9, 11, 13, 15, 18],
+                        [17, 2, 4, 6, 8, 10, 12, 14, 16, 19],
+                        [0, 1, 1, 1, 1, 1, 1, 1, 1, 0],
+                        $this->RecallFreshObjects($repo, ...$leaves)
+                    );
+
+                    $repo->ModifyDaftNestedObjectTreeRemoveWithId(1, $repo->GetNestedObjectTreeRootId());
+
+                    /**
+                    * @var array<int, DaftNestedWriteableObject> $tree
+                    */
+                    $tree = $repo->RecallDaftNestedObjectFullTree();
+
+                    /**
+                    * @var array<int, int> $left
+                    */
+                    $left = range(0, 16, 2);
+
+                    /**
+                    * @var array<int, int> $right
+                    */
+                    $right = range(1, 17, 2);
+
+                    /**
+                    * @var array<int, int> $level
+                    */
+                    $level = array_fill(0, 9, 0);
+
+                    $this->AssertTreeState($left, $right, $level, $tree);
+                },
+                self::LEFT_1to10,
+                self::RIGHT_1to10,
+                self::LEVEL_1to10,
+            ],
+            [
+                function (DaftNestedWriteableObjectTree $repo, string $leafClass) : array {
+                    return static::InitLeafClassInsertAfterId($repo, $leafClass, 0, [100, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+                },
+                function (
+                    WriteableNestedTreeTest $testCase,
+                    DaftNestedWriteableObjectTree $repo,
+                    string $leafClass,
+                    DaftNestedWriteableObject ...$leaves
+                ) : void {
+                    static::InsertLooseChunks($repo, false, true,
+                        100, 2,
+                        100, 3,
+                        100, 4,
+                        100, 5,
+                        100, 6,
+                        100, 7,
+                        100, 8,
+                        100, 9
+                    );
+
+                    $left = [0, 1, 3, 5, 7, 9, 11, 13, 15, 18];
+                    $right = [17, 2, 4, 6, 8, 10, 12, 14, 16, 19];
+                    $level = [0, 1, 1, 1, 1, 1, 1, 1, 1, 0];
+
+                    /**
+                    * @var array<int, DaftNestedWriteableObject> $tree
+                    */
+                    $tree = $repo->RecallDaftNestedObjectFullTree();
+
+                    $this->AssertTreeState($left, $right, $level, $tree);
+
+                    $leaves = $this->RecallFreshObjects($repo, ...$leaves);
+
+                    $repo->ModifyDaftNestedObjectTreeRemoveWithObject($leaves[0], $leaves[9]);
+
+                    /**
+                    * @var array<int, DaftNestedWriteableObject> $tree
+                    */
+                    $tree = $repo->RecallDaftNestedObjectFullTree();
+
+                    array_pop($left);
+                    array_pop($right);
+                    array_pop($level);
+
+                    $this->AssertTreeState($left, $right, $level, $tree);
                 },
                 self::LEFT_1to10,
                 self::RIGHT_1to10,

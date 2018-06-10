@@ -123,8 +123,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             /**
             * @var DaftNestedWriteableObject $alter
             */
-            foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 0) as $alter) {
-                $alter->AlterDaftNestedObjectParentId($root->ObtainDaftNestedObjectParentId());
+            foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
+                $alter->AlterDaftNestedObjectParentId($replacementRoot->GetId());
                 $alter = $this->StoreThenRetrieveFreshCopy($alter);
                 if ($alter->GetId() === $replacementRoot->GetId()) {
                     $replacementRoot = $alter;
@@ -178,7 +178,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         /**
         * @var DaftNestedWriteableObject $alter
         */
-        foreach ($this->RecallDaftNestedObjectTreeWithObject($rootObject, false, null) as $alter) {
+        foreach ($this->RecallDaftNestedObjectTreeWithObject($rootObject, false, 1) as $alter) {
             $alter = $this->StoreThenRetrieveFreshCopy($alter);
             $alter->AlterDaftNestedObjectParentId($replacementRoot);
             $this->RememberDaftObject($alter);
