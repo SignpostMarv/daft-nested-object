@@ -37,18 +37,14 @@ class PropertyReflectionExtension extends Base
     {
         parent::__construct($classReflection, $broker, $property);
 
-        $intProperty =
-            in_array($property, [
-                'intNestedLeft',
-                'intNestedRight',
-                'intNestedLevel',
-                'intNestedSortOrder',
-            ]);
+        $intProperty = in_array($property, [
+            'intNestedLeft',
+            'intNestedRight',
+            'intNestedLevel',
+            'intNestedSortOrder',
+        ]);
 
-        if (
-            'intNestedParentId' === $property ||
-            $intProperty
-        ) {
+        if ('intNestedParentId' === $property || $intProperty) {
             $this->nestedReadable = true;
             $this->nestedWriteable = is_a(
                 $classReflection->getNativeReflection()->getName(),
@@ -57,9 +53,7 @@ class PropertyReflectionExtension extends Base
             );
         }
 
-        if (
-            $intProperty
-        ) {
+        if ($intProperty) {
             $this->nestedType = new IntegerType();
         }
     }
