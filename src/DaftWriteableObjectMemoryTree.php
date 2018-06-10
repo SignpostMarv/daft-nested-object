@@ -11,6 +11,7 @@ namespace SignpostMarv\DaftObject;
 use BadMethodCallException;
 use InvalidArgumentException;
 use RuntimeException;
+use SignpostMarv\DaftObject\DaftObject;
 
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
@@ -156,8 +157,22 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 ! is_null($replacementRoot) &&
                 $replacementRoot !== $this->GetNestedObjectTreeRootId()
             ) {
-                $replacementRootObject = $this->RecallDaftObject($replacementRoot);
+                return $this->MaybeRemoveWithPossibleObject(
+                    $rootObject,
+                    $this->RecallDaftObject($replacementRoot)
+                );
+            }
 
+            $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
+        }
+
+        return $this->CountDaftNestedObjectFullTree();
+    }
+
+    protected function MaybeRemoveWithPossibleObject(
+        DaftNestedWriteableObject $rootObject,
+        ? DaftObject $replacementRootObject
+    ) : int {
                 if ( ! ($replacementRootObject instanceof DaftNestedWriteableObject)) {
                     throw new InvalidArgumentException(
                         'Could not locate replacement root, cannot leave orphan objects!'
@@ -168,12 +183,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                     $rootObject,
                     $replacementRootObject
                 );
-            }
-
-            $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
-        }
-
-        return $this->CountDaftNestedObjectFullTree();
     }
 
     /**
