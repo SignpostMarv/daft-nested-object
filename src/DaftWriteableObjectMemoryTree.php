@@ -90,17 +90,17 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $root = $this->StoreThenRetrieveFreshCopy($root);
 
         if ( ! is_null($replacementRoot)) {
-            $replacementRoot = $this->StoreThenRetrieveFreshCopy($replacementRoot);
+            /**
+            * @var scalar|scalar[] $replacementRootId
+            */
+            $replacementRootId = $this->StoreThenRetrieveFreshCopy($replacementRoot)->GetId();
 
             /**
             * @var DaftNestedWriteableObject $alter
             */
             foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
-                $alter->AlterDaftNestedObjectParentId($replacementRoot->GetId());
+                $alter->AlterDaftNestedObjectParentId($replacementRootId);
                 $alter = $this->StoreThenRetrieveFreshCopy($alter);
-                if ($alter->GetId() === $replacementRoot->GetId()) {
-                    $replacementRoot = $alter;
-                }
             }
         }
 
