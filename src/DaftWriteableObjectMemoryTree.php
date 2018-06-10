@@ -147,43 +147,45 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $rootObject = $this->RecallDaftObject($root);
 
         if ($rootObject instanceof DaftNestedWriteableObject) {
-        if (
-            ! is_null($replacementRoot) &&
-            $replacementRoot !== $this->GetNestedObjectTreeRootId()
-        ) {
-            $replacementRootObject = $this->RecallDaftObject($replacementRoot);
+            if (
+                ! is_null($replacementRoot) &&
+                $replacementRoot !== $this->GetNestedObjectTreeRootId()
+            ) {
+                $replacementRootObject = $this->RecallDaftObject($replacementRoot);
 
-            if ( ! ($replacementRootObject instanceof DaftNestedWriteableObject)) {
-                throw new InvalidArgumentException(
-                    'Could not locate replacement root, cannot leave orphan objects!'
+                if ( ! ($replacementRootObject instanceof DaftNestedWriteableObject)) {
+                    throw new InvalidArgumentException(
+                        'Could not locate replacement root, cannot leave orphan objects!'
+                    );
+                }
+
+                return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
+                    $rootObject,
+                    $replacementRootObject
                 );
             }
 
-            return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
-                $rootObject,
-                $replacementRootObject
-            );
-        }
+            if (
+                $this->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
+                is_null($replacementRoot)
+            ) {
+                throw new BadMethodCallException('Cannot leave orphan objects in a tree');
+            }
 
-        if (
-            $this->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
-            is_null($replacementRoot)
-        ) {
-            throw new BadMethodCallException('Cannot leave orphan objects in a tree');
-        }
+            /**
+            * @var DaftNestedWriteableObject $alter
+            */
+            foreach (
+                $this->RecallDaftNestedObjectTreeWithObject($rootObject, false, 1) as $alter
+            ) {
+                $alter = $this->StoreThenRetrieveFreshCopy($alter);
+                $alter->AlterDaftNestedObjectParentId($replacementRoot);
+                $this->RememberDaftObject($alter);
+            }
 
-        /**
-        * @var DaftNestedWriteableObject $alter
-        */
-        foreach ($this->RecallDaftNestedObjectTreeWithObject($rootObject, false, 1) as $alter) {
-            $alter = $this->StoreThenRetrieveFreshCopy($alter);
-            $alter->AlterDaftNestedObjectParentId($replacementRoot);
-            $this->RememberDaftObject($alter);
-        }
+            $this->RemoveDaftObject($rootObject);
 
-        $this->RemoveDaftObject($rootObject);
-
-        $this->RebuildTreeInefficiently();
+            $this->RebuildTreeInefficiently();
         }
 
         return $this->CountDaftNestedObjectFullTree();
