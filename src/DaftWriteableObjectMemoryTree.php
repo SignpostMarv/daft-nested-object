@@ -183,7 +183,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $root = $this->StoreThenRetrieveFreshCopy($root);
 
-
         if ( ! is_null($replacementRoot)) {
             $replacementRoot = $this->StoreThenRetrieveFreshCopy($replacementRoot);
 
