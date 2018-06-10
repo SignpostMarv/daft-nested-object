@@ -23,12 +23,12 @@ trait TraitToggleRecallDaftObjectAlwaysNull
     protected $ToggleRecallDaftObjectAfterCalls = false;
 
     /**
-    * @var integer
+    * @var int
     */
     protected $ToggleRecallDaftObjectAfterCallsCount = 0;
 
     /**
-    * @var integer
+    * @var int
     */
     protected $ToggleRecallDaftObjectAfterCallsAfter = 0;
 
@@ -51,7 +51,6 @@ trait TraitToggleRecallDaftObjectAlwaysNull
     {
         if ($this->ToggleRecallDaftObjectAfterCalls) {
             if ((++$this->ToggleRecallDaftObjectAfterCallsCount) > $this->ToggleRecallDaftObjectAfterCallsAfter) {
-
                 $this->ToggleRecallDaftObjectAlwaysNull(true);
             }
         }
