@@ -473,13 +473,22 @@ class WriteableNestedTreeTest extends NestedTreeTest
         ];
     }
 
+    /**
+    * @return array<int, DaftNestedWriteableObject>
+    */
     protected function RecallFreshObjects(
         DaftNestedWriteableObjectTree $repo,
         DaftNestedWriteableObject ...$leaves
     ) : array {
         return array_map(
             function (DaftNestedWriteableObject $leaf) use ($repo) : DaftNestedWriteableObject {
-                return $repo->RecallDaftObject($leaf->GetId());
+                $out = $repo->RecallDaftObject($leaf->GetId());
+
+                if ( ! ($out instanceof DaftNestedWriteableObject)) {
+                    throw new RuntimeException('Could not retrieve fresh leaf from tree!');
+                }
+
+                return $out;
             },
             $leaves
         );
