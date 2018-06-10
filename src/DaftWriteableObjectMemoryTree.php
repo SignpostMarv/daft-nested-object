@@ -88,33 +88,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
     }
 
-    protected function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
-        DaftNestedWriteableObject $leaf,
-        bool $before,
-        ? bool $above
-    ) : DaftNestedWriteableObject {
-        $tree = $this->RecallDaftNestedObjectFullTree(0);
-        $tree = array_filter($tree, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
-            return $e->GetId() !== $leaf->GetId();
-        });
-
-        if (0 === count($tree)) {
-            $leaf->SetIntNestedLeft(0);
-            $leaf->SetIntNestedRight(1);
-            $leaf->SetIntNestedLevel(0);
-            $leaf->AlterDaftNestedObjectParentId($this->GetNestedObjectTreeRootId());
-
-            return $this->StoreThenRetrieveFreshCopy($leaf);
-        }
-
-        /**
-        * @var DaftNestedWriteableObject $reference
-        */
-        $reference = $before ? current($tree) : end($tree);
-
-        return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
-    }
-
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
         DaftNestedWriteableObject $root,
         ? DaftNestedWriteableObject $replacementRoot
@@ -177,6 +150,33 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         }
 
         return $this->CountDaftNestedObjectFullTree();
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
+        DaftNestedWriteableObject $leaf,
+        bool $before,
+        ? bool $above
+    ) : DaftNestedWriteableObject {
+        $tree = $this->RecallDaftNestedObjectFullTree(0);
+        $tree = array_filter($tree, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
+            return $e->GetId() !== $leaf->GetId();
+        });
+
+        if (0 === count($tree)) {
+            $leaf->SetIntNestedLeft(0);
+            $leaf->SetIntNestedRight(1);
+            $leaf->SetIntNestedLevel(0);
+            $leaf->AlterDaftNestedObjectParentId($this->GetNestedObjectTreeRootId());
+
+            return $this->StoreThenRetrieveFreshCopy($leaf);
+        }
+
+        /**
+        * @var DaftNestedWriteableObject $reference
+        */
+        $reference = $before ? current($tree) : end($tree);
+
+        return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
     }
 
     protected function MaybeRemoveWithPossibleObject(
