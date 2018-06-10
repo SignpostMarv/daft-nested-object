@@ -54,9 +54,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     ) : DaftNestedWriteableObject {
         if ($leaf === $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
-        }
-
-        if ( ! ($leaf instanceof DaftNestedWriteableObject)) {
+        } elseif ( ! ($leaf instanceof DaftNestedWriteableObject)) {
             $leaf = $this->RecallDaftObject($leaf);
         } else {
             $leaf = $this->StoreThenRetrieveFreshCopy($leaf);
