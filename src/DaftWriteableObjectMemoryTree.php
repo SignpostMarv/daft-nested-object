@@ -43,6 +43,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $newLeaf;
     }
 
+    const EXCEPTION_ARGUMENT_DID_NOT_RESOLVE_TO_A_LEAF_NODE =
+        'Argument %u passed to %s() did not resolve to a leaf node!';
+
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
         $referenceId,
@@ -62,11 +65,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $reference = $this->RecallDaftObject($referenceId);
 
         if ( ! ($leaf instanceof DaftNestedWriteableObject)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                '() did not resolve to a leaf node!'
-            );
+            throw new InvalidArgumentException(sprintf(
+                self::EXCEPTION_ARGUMENT_DID_NOT_RESOLVE_TO_A_LEAF_NODE,
+                1,
+                __METHOD__
+            ));
         }
 
         if (
@@ -75,11 +78,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         ) {
             return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
         } elseif ($referenceId !== $this->GetNestedObjectTreeRootId()) {
-            throw new InvalidArgumentException(
-                'Argument 2 passed to ' .
-                __METHOD__ .
-                '() did not resolve to a leaf node!'
-            );
+            throw new InvalidArgumentException(sprintf(
+                self::EXCEPTION_ARGUMENT_DID_NOT_RESOLVE_TO_A_LEAF_NODE,
+                2,
+                __METHOD__
+            ));
         }
 
         $tree = $this->RecallDaftNestedObjectFullTree(0);
