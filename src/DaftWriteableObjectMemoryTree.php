@@ -153,7 +153,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
             $alter->AlterDaftNestedObjectParentId($replacementRootId);
-            $this->StoreThenRetrieveFreshCopy($alter);
+            $this->RememberDaftObject($alter);
         }
     }
 
