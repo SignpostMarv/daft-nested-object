@@ -50,22 +50,25 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $leafIsObject = ($leaf instanceof DaftNestedWriteableObject);
 
-        if ( ! is_null($leaf) && ($reference instanceof DaftNestedWriteableObject)) {
+        if (
+            ! is_null($leaf) &&
+            (
+                ($reference instanceof DaftNestedWriteableObject) ||
+                ($referenceId === $this->GetNestedObjectTreeRootId())
+            )
+        ) {
+            if ($reference instanceof DaftNestedWriteableObject) {
             return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
-        } elseif ( ! $leafIsObject || ($referenceId !== $this->GetNestedObjectTreeRootId())) {
+            }
+
+            return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
+        }
+
             throw new InvalidArgumentException(sprintf(
                 self::EXCEPTION_ARGUMENT_DID_NOT_RESOLVE_TO_A_LEAF_NODE,
                 ( ! $leafIsObject) ? 1 : 2,
                 __METHOD__
             ));
-        }
-
-        /**
-        * @var DaftNestedWriteableObject $leaf
-        */
-        $leaf = $leaf;
-
-        return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
     }
 
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
