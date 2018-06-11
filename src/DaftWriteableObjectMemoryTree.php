@@ -35,6 +35,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $this->ModifyDaftNestedObjectTreeInsertAdjacent($newLeaf, $referenceLeaf, $before);
         }
 
+        return $this->RebuildAfterInsert($newLeaf);
+    }
+
+    protected function RebuildAfterInsert(
+        DaftNestedWriteableObject $newLeaf
+    ) : DaftNestedWriteableObject {
         $this->RebuildTreeInefficiently();
 
         $newLeaf = $this->RecallDaftObject($newLeaf->GetId());
