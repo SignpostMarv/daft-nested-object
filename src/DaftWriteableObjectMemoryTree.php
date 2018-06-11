@@ -97,7 +97,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     }
 
     /**
-    * {@inheritdoc}
+    *  {@inheritdoc}
+    *
+    * @param scalar|scalar[]|null $replacementRoot
     */
     public function ModifyDaftNestedObjectTreeRemoveWithId($root, $replacementRoot) : int
     {
@@ -118,6 +120,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                     $this->RecallDaftObject($replacementRoot)
                 );
             }
+
+            /**
+            * @var scalar|scalar[] $replacementRoot
+            */
+            $replacementRoot = $replacementRoot;
 
             $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
         }
@@ -148,6 +155,14 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $replacementRootId = $this->StoreThenRetrieveFreshCopy($replacementRoot)->GetId();
 
+        $this->UpdateRoots($root, $replacementRootId);
+    }
+
+    /**
+    * @param scalar|scalar[] $replacementRootId
+    */
+    protected function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
+    {
         /**
         * @var DaftNestedWriteableObject $alter
         */
@@ -220,21 +235,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     }
 
     /**
-    * @param mixed $replacementRoot
+    * @param scalar|scalar[] $replacementRoot
     */
     protected function UpdateRemoveThenRebuild(
         DaftNestedWriteableObject $rootObject,
         $replacementRoot
     ) : void {
-        /**
-        * @var DaftNestedWriteableObject $alter
-        */
-        foreach (
-            $this->RecallDaftNestedObjectTreeWithObject($rootObject, false, 1) as $alter
-        ) {
-            $alter->AlterDaftNestedObjectParentId($replacementRoot);
-            $this->RememberDaftObject($alter);
-        }
+        $this->UpdateRoots($rootObject, $replacementRoot);
 
         $this->RemoveDaftObject($rootObject);
 

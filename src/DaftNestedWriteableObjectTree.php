@@ -45,7 +45,7 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
 
     /**
     * @param mixed $root
-    * @param mixed $replacementRoot
+    * @param scalar|scalar[]|null $replacementRoot
     *
     * @throws \BadMethodCallException if $root has leaves without $replacementRoot specified
     *
