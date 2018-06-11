@@ -38,20 +38,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $this->RebuildAfterInsert($newLeaf);
     }
 
-    protected function RebuildAfterInsert(
-        DaftNestedWriteableObject $newLeaf
-    ) : DaftNestedWriteableObject {
-        $this->RebuildTreeInefficiently();
-
-        $newLeaf = $this->RecallDaftObject($newLeaf->GetId());
-
-        if ( ! ($newLeaf instanceof DaftNestedWriteableObject)) {
-            throw new RuntimeException('Could not retrieve leaf from tree after rebuilding!');
-        }
-
-        return $newLeaf;
-    }
-
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
         $referenceId,
@@ -136,6 +122,20 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         }
 
         return $this->CountDaftNestedObjectFullTree();
+    }
+
+    protected function RebuildAfterInsert(
+        DaftNestedWriteableObject $newLeaf
+    ) : DaftNestedWriteableObject {
+        $this->RebuildTreeInefficiently();
+
+        $newLeaf = $this->RecallDaftObject($newLeaf->GetId());
+
+        if ( ! ($newLeaf instanceof DaftNestedWriteableObject)) {
+            throw new RuntimeException('Could not retrieve leaf from tree after rebuilding!');
+        }
+
+        return $newLeaf;
     }
 
     protected function ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
