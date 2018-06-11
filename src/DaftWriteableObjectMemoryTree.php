@@ -48,8 +48,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $reference = $this->RecallDaftObject($referenceId);
 
-        $leafIsObject = ($leaf instanceof DaftNestedWriteableObject);
-
         if (
             ! is_null($leaf) &&
             (
@@ -66,7 +64,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         throw new InvalidArgumentException(sprintf(
             self::EXCEPTION_ARGUMENT_DID_NOT_RESOLVE_TO_A_LEAF_NODE,
-            ( ! $leafIsObject) ? 1 : 2,
+            is_null($leaf) ? 1 : 2,
             __METHOD__
         ));
     }
