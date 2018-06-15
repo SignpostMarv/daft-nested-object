@@ -22,16 +22,12 @@ class InefficientDaftNestedRebuild
 
     public function RebuildTree() : void
     {
-        $parentIdXref = [
-            (array) $this->tree->GetNestedObjectTreeRootId(),
-        ];
+        $parentIdXref = [(array) $this->tree->GetNestedObjectTreeRootId()];
 
         /**
-        * @var array<int, array<int, DaftNestedWriteableObject>> $xRefChildren
+        * @var array<int, array<int, DaftNestedWriteableObject>> $children
         */
-        $xRefChildren = [
-            [],
-        ];
+        $children = [[]];
 
         /**
         * @var array<int, scalar|scalar[]> $idXref
@@ -59,11 +55,11 @@ class InefficientDaftNestedRebuild
                 */
                 $pos = array_search($leafParentId, $parentIdXref, true);
 
-                $xRefChildren[$pos] = [];
+                $children[$pos] = [];
             }
 
-            if ( ! in_array($leaf, $xRefChildren[$pos], true)) {
-                $xRefChildren[$pos][] = $leaf;
+            if ( ! in_array($leaf, $children[$pos], true)) {
+                $children[$pos][] = $leaf;
             }
 
             if ( ! in_array($leaf->GetId(), $idXref, true)) {
@@ -86,15 +82,8 @@ class InefficientDaftNestedRebuild
         /**
         * @var DaftNestedWriteableObject $rootLeaf
         */
-        foreach ($xRefChildren[0] as $rootLeaf) {
-            $n = $this->InefficientRebuild(
-                $rootLeaf,
-                0,
-                $n,
-                $parentIdXref,
-                $idXref,
-                $xRefChildren
-            );
+        foreach ($children[0] as $rootLeaf) {
+            $n = $this->InefficientRebuild($rootLeaf, 0, $n, $parentIdXref, $idXref, $children);
         }
     }
 
@@ -102,7 +91,7 @@ class InefficientDaftNestedRebuild
         DaftNestedWriteableObject $leaf,
         int $level,
         int $n,
-        array $parentIds,
+        array $parents,
         array $ids,
         array $children
     ) : int {
@@ -119,21 +108,14 @@ class InefficientDaftNestedRebuild
         /**
         * @var int|false $parentPos
         */
-        $parentPos = array_search((array) $id, $parentIds, true);
+        $parentPos = array_search((array) $id, $parents, true);
 
         if (false !== $parentPos) {
             /**
-            * @var DaftNestedWriteableObject $childLeaf
+            * @var DaftNestedWriteableObject $child
             */
-            foreach ($children[$parentPos] as $childLeaf) {
-                $n = $this->InefficientRebuild(
-                    $childLeaf,
-                    $level + 1,
-                    $n,
-                    $parentIds,
-                    $ids,
-                    $children
-                );
+            foreach ($children[$parentPos] as $child) {
+                $n = $this->InefficientRebuild($child, $level + 1, $n, $parents, $ids, $children);
             }
         }
 
