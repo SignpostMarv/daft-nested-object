@@ -86,10 +86,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     ) : array {
         $left = $root->GetIntNestedLeft();
         $right = $root->GetIntNestedRight();
-
-        if (is_int($limit)) {
-            $limit = $root->GetIntNestedLevel() + $limit;
-        }
+        $limit = is_int($limit) ? ($root->GetIntNestedLevel() + $limit) : null;
 
         $leaves = $this->RecallDaftNestedObjectFullTree();
 
