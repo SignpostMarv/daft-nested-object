@@ -132,6 +132,22 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $this->CountDaftNestedObjectFullTree();
     }
 
+    public function StoreThenRetrieveFreshLeaf(
+        DaftNestedWriteableObject $leaf
+    ) : DaftNestedWriteableObject {
+        $this->RememberDaftObject($leaf);
+        $this->ForgetDaftObject($leaf);
+        $this->ForgetDaftObjectById($leaf->GetId());
+
+        $fresh = $this->RecallDaftObject($leaf->GetId());
+
+        if ( ! ($fresh instanceof DaftNestedWriteableObject)) {
+            throw new RuntimeException('Was not able to obtain a fresh copy of the object!');
+        }
+
+        return $fresh;
+    }
+
     protected function RebuildAfterInsert(
         DaftNestedWriteableObject $newLeaf
     ) : DaftNestedWriteableObject {
@@ -355,21 +371,5 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     {
         $rebuilder = new InefficientDaftNestedRebuild($this);
         $rebuilder->RebuildTree();
-    }
-
-    public function StoreThenRetrieveFreshLeaf(
-        DaftNestedWriteableObject $leaf
-    ) : DaftNestedWriteableObject {
-        $this->RememberDaftObject($leaf);
-        $this->ForgetDaftObject($leaf);
-        $this->ForgetDaftObjectById($leaf->GetId());
-
-        $fresh = $this->RecallDaftObject($leaf->GetId());
-
-        if ( ! ($fresh instanceof DaftNestedWriteableObject)) {
-            throw new RuntimeException('Was not able to obtain a fresh copy of the object!');
-        }
-
-        return $fresh;
     }
 }
