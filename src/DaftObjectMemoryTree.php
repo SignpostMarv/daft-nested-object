@@ -82,24 +82,21 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        ? int $limit
     ) : array {
         $left = $root->GetIntNestedLeft();
         $right = $root->GetIntNestedRight();
 
-        if (is_int($relativeDepthLimit)) {
-            $relativeDepthLimit = $root->GetIntNestedLevel() + $relativeDepthLimit;
+        if (is_int($limit)) {
+            $limit = $root->GetIntNestedLevel() + $limit;
         }
 
         $leaves = $this->RecallDaftNestedObjectFullTree();
 
-        if (is_int($relativeDepthLimit)) {
-            $leaves = array_filter(
-                $leaves,
-                function (DaftNestedObject $e) use ($relativeDepthLimit) : bool {
-                    return $e->GetIntNestedLevel() <= $relativeDepthLimit;
-                }
-            );
+        if (is_int($limit)) {
+            $leaves = array_filter($leaves, function (DaftNestedObject $e) use ($limit) : bool {
+                return $e->GetIntNestedLevel() <= $limit;
+            });
         }
 
         return array_values(array_filter(
