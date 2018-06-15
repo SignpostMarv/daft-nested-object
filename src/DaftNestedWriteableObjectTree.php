@@ -52,4 +52,8 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
     * @return int full tree count after removal
     */
     public function ModifyDaftNestedObjectTreeRemoveWithId($root, $replacementRoot) : int;
+
+    public function StoreThenRetrieveFreshLeaf(
+        DaftNestedWriteableObject $leaf
+    ) : DaftNestedWriteableObject;
 }

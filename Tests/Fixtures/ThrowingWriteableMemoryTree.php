@@ -25,10 +25,10 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree
         $this->ToggleRecallDaftObjectAlwaysNull(true);
     }
 
-    public function StoreThenRetrieveFreshCopyPublic(
+    public function StoreThenRetrieveFreshLeafPublic(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject {
-        return $this->StoreThenRetrieveFreshCopy($leaf);
+        return $this->StoreThenRetrieveFreshLeaf($leaf);
     }
 
     public function ModifyDaftNestedObjectTreeInsertAdjacentPublic(

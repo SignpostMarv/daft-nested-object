@@ -71,7 +71,7 @@ class CoverageTest extends Base
         $repo->ModifyDaftNestedObjectTreeInsert($leaf, $leaf, $before, $above);
     }
 
-    public function testStoreThenRetrieveFreshCopyFails() : void
+    public function testStoreThenRetrieveFreshLeafFails() : void
     {
         /**
         * @var Fixtures\ThrowingWriteableMemoryTree $repo
@@ -91,7 +91,7 @@ class CoverageTest extends Base
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Was not able to obtain a fresh copy of the object!');
 
-        $repo->StoreThenRetrieveFreshCopyPublic($leaf);
+        $repo->StoreThenRetrieveFreshLeafPublic($leaf);
     }
 
     /**

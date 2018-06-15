@@ -78,7 +78,7 @@ class InefficientDaftNestedRebuild
             $leaf->SetIntNestedRight(0);
             $leaf->SetIntNestedLevel(0);
 
-            $tree[$i] = $this->tree->StoreThenRetrieveFreshCopy($leaf);
+            $tree[$i] = $this->tree->StoreThenRetrieveFreshLeaf($leaf);
         }
 
         $n = 0;
@@ -139,7 +139,7 @@ class InefficientDaftNestedRebuild
 
         $leaf->SetIntNestedRight($n);
 
-        $this->StoreThenRetrieveFreshCopy($leaf);
+        $this->tree->StoreThenRetrieveFreshLeaf($leaf);
 
         return $n + 1;
     }

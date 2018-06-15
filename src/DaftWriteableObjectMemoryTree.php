@@ -80,7 +80,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             throw new BadMethodCallException('Cannot leave orphan objects in a tree');
         }
 
-        $root = $this->StoreThenRetrieveFreshCopy($root);
+        $root = $this->StoreThenRetrieveFreshLeaf($root);
 
         if ( ! is_null($replacementRoot)) {
             $this->ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
@@ -153,7 +153,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         /**
         * @var scalar|scalar[] $replacementRootId
         */
-        $replacementRootId = $this->StoreThenRetrieveFreshCopy($replacementRoot)->GetId();
+        $replacementRootId = $this->StoreThenRetrieveFreshLeaf($replacementRoot)->GetId();
 
         $this->UpdateRoots($root, $replacementRootId);
     }
@@ -180,7 +180,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         if ($leaf === $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
         } elseif ($leaf instanceof DaftNestedWriteableObject) {
-            return $this->StoreThenRetrieveFreshCopy($leaf);
+            return $this->StoreThenRetrieveFreshLeaf($leaf);
         }
 
         /**
@@ -207,7 +207,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             $leaf->SetIntNestedLevel(0);
             $leaf->AlterDaftNestedObjectParentId($this->GetNestedObjectTreeRootId());
 
-            return $this->StoreThenRetrieveFreshCopy($leaf);
+            return $this->StoreThenRetrieveFreshLeaf($leaf);
         }
 
         /**
@@ -255,8 +255,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
         $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
 
-        $this->StoreThenRetrieveFreshCopy($newLeaf);
-        $this->StoreThenRetrieveFreshCopy($referenceLeaf);
+        $this->StoreThenRetrieveFreshLeaf($newLeaf);
+        $this->StoreThenRetrieveFreshLeaf($referenceLeaf);
     }
 
     protected function ModifyDaftNestedObjectTreeInsertBelow(
@@ -264,7 +264,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DaftNestedWriteableObject $referenceLeaf
     ) : void {
         $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
-        $this->StoreThenRetrieveFreshCopy($newLeaf);
+        $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
 
     protected function ModifyDaftNestedObjectTreeInsertAdjacent(
@@ -313,13 +313,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 $siblingSort[$i] +
                 (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
             );
-            $this->StoreThenRetrieveFreshCopy($siblings[$i]);
+            $this->StoreThenRetrieveFreshLeaf($siblings[$i]);
         }
 
         $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
         $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
 
-        $this->StoreThenRetrieveFreshCopy($newLeaf);
+        $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
 
     protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
@@ -357,7 +357,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $rebuilder->RebuildTree();
     }
 
-    protected function StoreThenRetrieveFreshCopy(
+    public function StoreThenRetrieveFreshLeaf(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject {
         $this->RememberDaftObject($leaf);
