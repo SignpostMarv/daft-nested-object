@@ -16,6 +16,7 @@ use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftWriteableObjectMemoryTree;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
+use SignpostMarv\DaftObject\TraitWriteableTree;
 
 class CoverageTest extends Base
 {
@@ -176,7 +177,7 @@ class CoverageTest extends Base
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
             'Argument 1 passed to %s::%s() did not resolve to a leaf node!',
-            DaftWriteableObjectMemoryTree::class,
+            TraitWriteableTree::class,
             'ModifyDaftNestedObjectTreeInsertLoose'
         ));
 
@@ -216,7 +217,7 @@ class CoverageTest extends Base
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage(sprintf(
             'Argument 2 passed to %s::%s() did not resolve to a leaf node!',
-            DaftWriteableObjectMemoryTree::class,
+            TraitWriteableTree::class,
             'ModifyDaftNestedObjectTreeInsertLoose'
         ));
 
