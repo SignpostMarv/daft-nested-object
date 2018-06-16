@@ -111,19 +111,24 @@ trait TraitWriteableTree
 
         $this->ThrowIfNotTree();
 
+        /**
+        * @var DaftNestedWriteableObjectTree&TraitWriteableTree $tree
+        */
+        $tree = $this;
+
         if ($rootObject instanceof DaftNestedWriteableObject) {
             if (
-                $this->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
+                $tree->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
                 is_null($replacementRoot)
             ) {
                 throw new BadMethodCallException('Cannot leave orphan objects in a tree');
             } elseif (
                 ! is_null($replacementRoot) &&
-                $replacementRoot !== $this->GetNestedObjectTreeRootId()
+                $replacementRoot !== $tree->GetNestedObjectTreeRootId()
             ) {
-                return $this->MaybeRemoveWithPossibleObject(
+                return $tree->MaybeRemoveWithPossibleObject(
                     $rootObject,
-                    $this->RecallDaftObject($replacementRoot)
+                    $tree->RecallDaftObject($replacementRoot)
                 );
             }
 
@@ -132,7 +137,7 @@ trait TraitWriteableTree
             */
             $replacementRoot = $replacementRoot;
 
-            $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
+            $tree->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
         }
 
         return $this->CountDaftNestedObjectFullTree();
