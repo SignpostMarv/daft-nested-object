@@ -181,8 +181,8 @@ trait TraitWriteableTree
         */
         foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
             if ($alter instanceof DaftNestedWriteableObject) {
-            $alter->AlterDaftNestedObjectParentId($replacementRootId);
-            $this->RememberDaftObject($alter);
+                $alter->AlterDaftNestedObjectParentId($replacementRootId);
+                $this->RememberDaftObject($alter);
             }
         }
     }

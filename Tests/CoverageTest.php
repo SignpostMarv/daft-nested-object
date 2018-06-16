@@ -14,7 +14,6 @@ use RuntimeException;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
-use SignpostMarv\DaftObject\DaftWriteableObjectMemoryTree;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 use SignpostMarv\DaftObject\TraitWriteableTree;
 
