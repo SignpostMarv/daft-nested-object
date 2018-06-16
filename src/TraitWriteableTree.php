@@ -117,13 +117,11 @@ trait TraitWriteableTree
                 throw new BadMethodCallException('Cannot leave orphan objects in a tree');
             } elseif (
                 ! is_null($replacementRoot) &&
-                ($tree instanceof DaftNestedWriteableObjectTree) &&
                 $replacementRoot !== $tree->GetNestedObjectTreeRootId()
             ) {
-                return $this->MaybeRemoveWithPossibleObject(
-                    $rootObject,
-                    $tree->RecallDaftObject($replacementRoot)
-                );
+                $replacementRoot = $tree->RecallDaftObject($replacementRoot);
+
+                return $this->MaybeRemoveWithPossibleObject($rootObject, $replacementRoot);
             }
 
             /**
