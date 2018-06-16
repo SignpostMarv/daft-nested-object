@@ -245,7 +245,7 @@ trait TraitWriteableTree
         }
     }
 
-    protected function ThrowIfNotTree() : void
+    final protected function ThrowIfNotTree() : void
     {
         if ( ! ($this instanceof DaftNestedObjectTree)) {
             throw new BadMethodCallException(
