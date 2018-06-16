@@ -48,7 +48,7 @@ trait TraitWriteableTree
         $this->ThrowIfNotTree();
 
         /**
-        * @var DaftNestedWriteableObjectTree $this
+        * @var DaftNestedWriteableObjectTree&TraitWriteableTree $this
         */
         $tree = $this;
 
@@ -56,14 +56,14 @@ trait TraitWriteableTree
             ! is_null($leaf) &&
             (
                 ($reference instanceof DaftNestedWriteableObject) ||
-                ($referenceId === $this->GetNestedObjectTreeRootId())
+                ($referenceId === $tree->GetNestedObjectTreeRootId())
             )
         ) {
             if ($reference instanceof DaftNestedWriteableObject) {
-                return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
+                return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
             }
 
-            return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
+            return $tree->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
         }
 
         throw new InvalidArgumentException(sprintf(
