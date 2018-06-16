@@ -24,8 +24,8 @@ class NestedTreeTest extends Base
     {
         yield from [
             [
-                static::leafClass(),
                 static::treeClass(),
+                static::leafClass(),
             ],
         ];
     }
@@ -33,17 +33,22 @@ class NestedTreeTest extends Base
     /**
     * @dataProvider DataProviderArgs
     */
-    public function testRecallFullTree(string $leafClass, string $treeClass) : void
-    {
+    public function testRecallFullTree(
+        string $treeClass,
+        string $leafClass,
+        ...$remainingTreeArgs
+    ) : void {
         $this->assertTrue(class_exists($leafClass));
         $this->assertTrue(class_exists($treeClass));
         $this->assertTrue(is_a($leafClass, DaftNestedObject::class, true));
         $this->assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
 
+        array_unshift($remainingTreeArgs, $leafClass);
+
         /**
         * @var DaftNestedObjectTree $repo
         */
-        $repo = $treeClass::DaftObjectRepositoryByType($leafClass);
+        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
 
         $a = new $leafClass([
             'id' => 1,
@@ -256,8 +261,11 @@ class NestedTreeTest extends Base
     /**
     * @dataProvider DataProviderArgs
     */
-    public function testThrowIfNotType(string $leafClass, string $treeClass) : void
-    {
+    public function testThrowIfNotType(
+        string $treeClass,
+        string $leafClass,
+        ...$remainingTreeArgs
+    ) : void {
         $this->assertTrue(class_exists($leafClass));
         $this->assertTrue(class_exists($treeClass));
         $this->assertTrue(is_a($leafClass, DaftNestedObject::class, true));
@@ -277,10 +285,12 @@ class NestedTreeTest extends Base
             AbstractArrayBackedDaftObject::class
         ));
 
+        array_unshift($remainingTreeArgs, AbstractArrayBackedDaftObject::class);
+
         /**
         * @var DaftNestedObjectTree $repo
         */
-        $repo = $treeClass::DaftObjectRepositoryByType(AbstractArrayBackedDaftObject::class);
+        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
     }
 
     protected static function leafClass() : string
