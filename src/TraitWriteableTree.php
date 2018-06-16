@@ -289,11 +289,7 @@ trait TraitWriteableTree
 
         $out = $tree->RecallDaftObject($leaf);
 
-        if ($out instanceof DaftNestedWriteableObject) {
-            return $out;
-        }
-
-        return null;
+        return ($out instanceof DaftNestedWriteableObject) ? $out : null;
     }
 
     protected function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
