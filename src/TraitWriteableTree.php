@@ -47,6 +47,11 @@ trait TraitWriteableTree
 
         $this->ThrowIfNotTree();
 
+        /**
+        * @var DaftNestedWriteableObjectTree $this
+        */
+        $tree = $this;
+
         if (
             ! is_null($leaf) &&
             (
@@ -247,14 +252,14 @@ trait TraitWriteableTree
 
     final protected function ThrowIfNotTree() : void
     {
-        if ( ! ($this instanceof DaftNestedObjectTree)) {
+        if ( ! ($this instanceof DaftNestedWriteableObjectTree)) {
             throw new BadMethodCallException(
                 'Cannot call ' .
                 __FUNCTION__ .
                 ' on ' .
                 static::class .
                 ', class does not implement ' .
-                DaftNestedObjectTree::class
+                DaftNestedWriteableObjectTree::class
             );
         }
     }
