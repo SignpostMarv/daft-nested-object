@@ -145,6 +145,65 @@ trait TraitWriteableTree
         return $fresh;
     }
 
+    /**
+    * @param mixed $id
+    */
+    abstract public function RecallDaftObject($id) : ? DaftObject;
+
+    /**
+    * @return scalar|scalar[]
+    */
+    abstract public function GetNestedObjectTreeRootId();
+
+    abstract public function CountDaftNestedObjectTreeWithObject(
+        DaftNestedObject $root,
+        bool $includeRoot,
+        ? int $relativeDepthLimit
+    ) : int;
+
+    abstract public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
+
+    /**
+    * @param mixed $id
+    */
+    abstract public function RemoveDaftObjectById($id) : void;
+
+    abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
+
+    abstract public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
+
+    abstract public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
+
+    /**
+    * @param mixed $id
+    */
+    abstract public function ForgetDaftObjectById($id) : void;
+
+    /**
+    * @return array<int, DaftNestedObject>
+    */
+    abstract public function RecallDaftNestedObjectTreeWithObject(
+        DaftNestedObject $root,
+        bool $includeRoot,
+        ? int $relativeDepthLimit
+    ) : array;
+
+    /**
+    * @return array<int, DaftNestedWriteableObject>
+    */
+    abstract public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array;
+
+    /**
+    * @param mixed $id
+    *
+    * @return array<int, DaftNestedWriteableObject>
+    */
+    abstract public function RecallDaftNestedObjectTreeWithId(
+        $id,
+        bool $includeRoot,
+        ? int $relativeDepthLimit
+    ) : array;
+
     protected function RebuildAfterInsert(
         DaftNestedWriteableObject $newLeaf
     ) : DaftNestedWriteableObject {
@@ -369,6 +428,9 @@ trait TraitWriteableTree
 
     protected function RebuildTreeInefficiently() : void
     {
+        /**
+        * @var DaftNestedWriteableObjectTree $this
+        */
         $rebuilder = new InefficientDaftNestedRebuild($this);
         $rebuilder->RebuildTree();
     }
