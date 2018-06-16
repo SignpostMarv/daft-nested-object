@@ -35,6 +35,10 @@ trait TraitWriteableTree
         return $this->RebuildAfterInsert($newLeaf);
     }
 
+    /**
+    * @param mixed $leaf
+    * @param mixed $referenceId
+    */
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
         $referenceId,
@@ -45,12 +49,7 @@ trait TraitWriteableTree
 
         $reference = $this->RecallDaftObject($referenceId);
 
-        $this->ThrowIfNotTree();
-
-        /**
-        * @var DaftNestedWriteableObjectTree&TraitWriteableTree $this
-        */
-        $tree = $this;
+        $tree = $this->ThrowIfNotTree();
 
         if (
             ! is_null($leaf) &&
@@ -63,7 +62,7 @@ trait TraitWriteableTree
                 return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
             }
 
-            return $tree->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
+            return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
         }
 
         throw new InvalidArgumentException(sprintf(
@@ -101,8 +100,7 @@ trait TraitWriteableTree
     }
 
     /**
-    *  {@inheritdoc}
-    *
+    * @param mixed $root
     * @param scalar|scalar[]|null $replacementRoot
     */
     public function ModifyDaftNestedObjectTreeRemoveWithId($root, $replacementRoot) : int
@@ -124,6 +122,7 @@ trait TraitWriteableTree
                 throw new BadMethodCallException('Cannot leave orphan objects in a tree');
             } elseif (
                 ! is_null($replacementRoot) &&
+                ($tree instanceof DaftNestedWriteableObjectTree) &&
                 $replacementRoot !== $tree->GetNestedObjectTreeRootId()
             ) {
                 return $tree->MaybeRemoveWithPossibleObject(
@@ -255,7 +254,7 @@ trait TraitWriteableTree
         }
     }
 
-    final protected function ThrowIfNotTree() : void
+    final protected function ThrowIfNotTree() : DaftNestedWriteableObjectTree
     {
         if ( ! ($this instanceof DaftNestedWriteableObjectTree)) {
             throw new BadMethodCallException(
@@ -267,6 +266,8 @@ trait TraitWriteableTree
                 DaftNestedWriteableObjectTree::class
             );
         }
+
+        return $this;
     }
 
     /**
@@ -274,12 +275,7 @@ trait TraitWriteableTree
     */
     protected function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
     {
-        $this->ThrowIfNotTree();
-
-        /**
-        * @var DaftNestedWriteableObjectTree&TraitWriteableTree $tree
-        */
-        $tree = $this;
+        $tree = $this->ThrowIfNotTree();
 
         if ($leaf === $tree->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
@@ -287,6 +283,9 @@ trait TraitWriteableTree
             return $tree->StoreThenRetrieveFreshLeaf($leaf);
         }
 
+        /**
+        * @var DaftNestedWriteableObject|null $out
+        */
         $out = $tree->RecallDaftObject($leaf);
 
         return ($out instanceof DaftNestedWriteableObject) ? $out : null;
@@ -301,12 +300,7 @@ trait TraitWriteableTree
         $leaves = array_filter($leaves, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
             return $e->GetId() !== $leaf->GetId();
         });
-        $this->ThrowIfNotTree();
-
-        /**
-        * @var DaftNestedWriteableObjectTree&TraitWriteableTree $tree
-        */
-        $tree = $this;
+        $tree = $this->ThrowIfNotTree();
 
         if (0 === count($leaves)) {
             $leaf->SetIntNestedLeft(0);
@@ -429,41 +423,27 @@ trait TraitWriteableTree
         $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
 
-    protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
-    {
-        static::ThrowIfNotType($object, DaftNestedWriteableObject::class, 1, __METHOD__);
-
-        parent::RememberDaftObjectData($object);
-    }
+    abstract protected function RememberDaftObjectData(
+        DefinesOwnIdPropertiesInterface $object
+    ) : void;
 
     /**
     * @param DaftObject|string $object
     */
-    protected static function ThrowIfNotType(
+    abstract protected static function ThrowIfNotType(
         $object,
         string $type,
         int $argument,
         string $function
-    ) : void {
-        if ( ! is_a($object, DaftNestedWriteableObject::class, is_string($object))) {
-            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
-                $argument,
-                static::class,
-                $function,
-                DaftNestedWriteableObject::class,
-                is_string($object) ? $object : get_class($object)
-            );
-        }
-
-        parent::ThrowIfNotType($object, $type, $argument, $function);
-    }
+    ) : void;
 
     protected function RebuildTreeInefficiently() : void
     {
         /**
-        * @var DaftNestedWriteableObjectTree $this
+        * @var DaftNestedWriteableObjectTree $tree
         */
-        $rebuilder = new InefficientDaftNestedRebuild($this);
+        $tree = $this->ThrowIfNotTree();
+        $rebuilder = new InefficientDaftNestedRebuild($tree);
         $rebuilder->RebuildTree();
     }
 }

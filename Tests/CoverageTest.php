@@ -8,12 +8,14 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests;
 
+use BadMethodCallException;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
+use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 use SignpostMarv\DaftObject\TraitWriteableTree;
 
@@ -267,6 +269,21 @@ class CoverageTest extends Base
         $this->expectExceptionMessage('Reference leaf not found in siblings tree!');
 
         $ref->invoke($repo, $a0, $b0, $before);
+    }
+
+    public function testTraitThrowsIfNotTree() : void
+    {
+        $obj = new Fixtures\WriteableTraitNotTree();
+
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessage(
+            'Cannot call ThrowIfNotTree on ' .
+            Fixtures\WriteableTraitNotTree::class .
+            ', class does not implement ' .
+            DaftNestedWriteableObjectTree::class
+        );
+
+        $obj->WillFail();
     }
 
     /**
