@@ -276,13 +276,18 @@ trait TraitWriteableTree
     {
         $this->ThrowIfNotTree();
 
-        if ($leaf === $this->GetNestedObjectTreeRootId()) {
+        /**
+        * @var DaftNestedWriteableObjectTree&TraitWriteableTree $tree
+        */
+        $tree = $this;
+
+        if ($leaf === $tree->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
         } elseif ($leaf instanceof DaftNestedWriteableObject) {
-            return $this->StoreThenRetrieveFreshLeaf($leaf);
+            return $tree->StoreThenRetrieveFreshLeaf($leaf);
         }
 
-        $out = $this->RecallDaftObject($leaf);
+        $out = $tree->RecallDaftObject($leaf);
 
         if ($out instanceof DaftNestedWriteableObject) {
             return $out;
@@ -296,27 +301,32 @@ trait TraitWriteableTree
         bool $before,
         ? bool $above
     ) : DaftNestedWriteableObject {
-        $tree = $this->RecallDaftNestedObjectFullTree(0);
-        $tree = array_filter($tree, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
+        $leaves = $this->RecallDaftNestedObjectFullTree(0);
+        $leaves = array_filter($leaves, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
             return $e->GetId() !== $leaf->GetId();
         });
         $this->ThrowIfNotTree();
 
-        if (0 === count($tree)) {
+        /**
+        * @var DaftNestedWriteableObjectTree&TraitWriteableTree $tree
+        */
+        $tree = $this;
+
+        if (0 === count($leaves)) {
             $leaf->SetIntNestedLeft(0);
             $leaf->SetIntNestedRight(1);
             $leaf->SetIntNestedLevel(0);
-            $leaf->AlterDaftNestedObjectParentId($this->GetNestedObjectTreeRootId());
+            $leaf->AlterDaftNestedObjectParentId($tree->GetNestedObjectTreeRootId());
 
-            return $this->StoreThenRetrieveFreshLeaf($leaf);
+            return $tree->StoreThenRetrieveFreshLeaf($leaf);
         }
 
         /**
         * @var DaftNestedWriteableObject $reference
         */
-        $reference = $before ? current($tree) : end($tree);
+        $reference = $before ? current($leaves) : end($leaves);
 
-        return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
+        return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
     }
 
     protected function MaybeRemoveWithPossibleObject(
