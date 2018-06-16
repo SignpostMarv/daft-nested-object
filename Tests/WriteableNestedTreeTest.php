@@ -98,7 +98,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         /**
         * @var DaftNestedWriteableObjectTree $repo
         */
-        $repo = $treeClass::DaftObjectRepositoryByType($leafClass);
+        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
 
         $a0 = static::InitLeafClass($leafClass, ['id' => 1]);
         $b0 = static::InitLeafClass($leafClass, ['id' => 2]);
