@@ -107,7 +107,7 @@ trait TraitWriteableTree
     {
         $rootObject = $this->RecallDaftObject($root);
 
-        $tree = $this->ThrowIfNotTree();;
+        $tree = $this->ThrowIfNotTree();
 
         if ($rootObject instanceof DaftNestedWriteableObject) {
             if (
