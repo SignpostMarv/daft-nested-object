@@ -107,12 +107,7 @@ trait TraitWriteableTree
     {
         $rootObject = $this->RecallDaftObject($root);
 
-        $this->ThrowIfNotTree();
-
-        /**
-        * @var DaftNestedWriteableObjectTree&TraitWriteableTree $tree
-        */
-        $tree = $this;
+        $tree = $this->ThrowIfNotTree();;
 
         if ($rootObject instanceof DaftNestedWriteableObject) {
             if (
@@ -125,7 +120,7 @@ trait TraitWriteableTree
                 ($tree instanceof DaftNestedWriteableObjectTree) &&
                 $replacementRoot !== $tree->GetNestedObjectTreeRootId()
             ) {
-                return $tree->MaybeRemoveWithPossibleObject(
+                return $this->MaybeRemoveWithPossibleObject(
                     $rootObject,
                     $tree->RecallDaftObject($replacementRoot)
                 );
@@ -136,7 +131,7 @@ trait TraitWriteableTree
             */
             $replacementRoot = $replacementRoot;
 
-            $tree->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
+            $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
         }
 
         return $this->CountDaftNestedObjectFullTree();
