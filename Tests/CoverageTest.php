@@ -66,20 +66,6 @@ class CoverageTest extends Base
         }
     }
 
-    /**
-    * @dataProvider DataProviderCoverageNonWriteableRepo
-    */
-    public function testRecallDaftNestedObjectFullTreeCouldNotRetrieve(
-        DaftNestedObjectTree $repo
-    ) : void {
-        list($leaf) = static::PrepRepo($repo, Fixtures\DaftNestedIntObject::class, 1);
-
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Could not retrieve leaf from tree!');
-
-        $repo->RecallDaftNestedObjectFullTree();
-    }
-
     public function DataProviderInsertArgs() : Generator
     {
         foreach ([true, false] as $before) {

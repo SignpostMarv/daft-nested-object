@@ -19,41 +19,51 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         */
         $props = $this->type::DaftObjectIdProperties();
 
+        $type = $this->type;
+
         /**
         * @var DaftNestedObject[] $out
         */
-        $out = array_map(
-            function (array $id) : DaftNestedObject {
-                $out = $this->RecallDaftObject($id);
+        $out = $this->memory;
 
-                if ( ! ($out instanceof DaftNestedObject)) {
-                    throw new RuntimeException('Could not retrieve leaf from tree!');
-                }
+        /**
+        * @var array<int, scalar|scalar[]> $outIds
+        */
+        $outIds = [];
 
-                return $out;
-            },
+        foreach ($out as $obj) {
+            /**
+            * @var array<int, scalar|scalar[]> $id
+            */
+            $id = $obj->GetId();
+
+            $outIds[] = $id;
+        }
+
+        /**
+        * @var DaftNestedObject[] $fromMemory
+        */
+        $fromMemory = array_filter(
             array_map(
                 /**
                 * @param array<string, scalar|null> $row
                 */
-                function (array $row) use ($props) : array {
+                function (array $row) use ($type) : DaftNestedObject {
                     /**
-                    * @var array<string, scalar|null> $out
+                    * @var DaftNestedObject $out
                     */
-                    $out = [];
-
-                    /**
-                    * @var string $prop
-                    */
-                    foreach ($props as $prop) {
-                        $out[$prop] = $row[$prop] ?? null;
-                    }
+                    $out = new $type($row);
 
                     return $out;
                 },
                 (array) $this->data
-            )
+            ),
+            function (DaftNestedObject $leaf) use ($outIds) : bool {
+                return ! in_array($leaf->GetId(), $outIds, true);
+            }
         );
+
+        $out = array_merge($out, $fromMemory);
 
         usort($out, function (DaftNestedObject $a, DaftNestedObject $b) : int {
             return $a->GetIntNestedLeft() <=> $b->GetIntNestedLeft();
