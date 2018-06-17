@@ -78,18 +78,30 @@ class NestedTreeTest extends Base
         ]);
 
         $this->assertSame(0, $repo->CountDaftNestedObjectFullTree());
+        $this->assertSame(
+            $repo->CountDaftNestedObjectFullTree(),
+            $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
+        );
 
         $repo->RememberDaftObject($a);
         $repo->RememberDaftObject($c); // yes this is deliberately out of order
         $repo->RememberDaftObject($b);
 
         $this->assertSame(3, $repo->CountDaftNestedObjectFullTree());
+        $this->assertSame(
+            $repo->CountDaftNestedObjectFullTree(),
+            $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
+        );
 
         $repo->RememberDaftObject($c); // yes this is deliberately out of order
         $repo->RememberDaftObject($b); // yes this is deliberately out of order
         $repo->RememberDaftObject($a); // yes this is deliberately out of order
 
         $this->assertSame(3, $repo->CountDaftNestedObjectFullTree());
+        $this->assertSame(
+            $repo->CountDaftNestedObjectFullTree(),
+            $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
+        );
 
         $this->assertSame(
             [
@@ -119,6 +131,10 @@ class NestedTreeTest extends Base
         );
 
         $this->assertSame(2, $repo->CountDaftNestedObjectFullTree(0));
+        $this->assertSame(
+            $repo->CountDaftNestedObjectFullTree(),
+            $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
+        );
 
         $this->assertSame(
             [
