@@ -21,7 +21,7 @@ use SignpostMarv\DaftObject\TraitWriteableTree;
 
 class CoverageTest extends Base
 {
-    public function testRecallDaftNestedObjectFullTreeCouldNotRetrieve() : void
+    public function DataProviderCoverageNonWriteableRepo() : Generator
     {
         /**
         * @var Fixtures\ThrowingMemoryTree $repo
@@ -30,6 +30,48 @@ class CoverageTest extends Base
             Fixtures\DaftNestedIntObject::class
         );
 
+        yield [$repo];
+    }
+
+    public function DataProviderCoverageWriteableRepo() : Generator
+    {
+        /**
+        * @var Fixtures\DaftWriteableNestedObjectIntTree $repo
+        */
+        $repo = Fixtures\DaftWriteableNestedObjectIntTree::DaftObjectRepositoryByType(
+            Fixtures\DaftNestedWriteableIntObject::class
+        );
+
+        yield [$repo];
+
+        /**
+        * @var Fixtures\ThrowingWriteableMemoryTree $repo
+        */
+        $repo = Fixtures\ThrowingWriteableMemoryTree::DaftObjectRepositoryByType(
+            Fixtures\DaftNestedWriteableIntObject::class
+        );
+
+        yield [$repo];
+    }
+
+    public function DataProviderCoverageWriteableRepoWithThrowingTree() : Generator
+    {
+        /**
+        * @var array $args
+        */
+        foreach ($this->DataProviderCoverageWriteableRepo() as $args) {
+            if ($args[0] instanceof Fixtures\DaftObjectWriteableThrowingTree) {
+                yield $args;
+            }
+        }
+    }
+
+    /**
+    * @dataProvider DataProviderCoverageNonWriteableRepo
+    */
+    public function testRecallDaftNestedObjectFullTreeCouldNotRetrieve(
+        DaftNestedObjectTree $repo
+    ) : void {
         list($leaf) = static::PrepRepo($repo, Fixtures\DaftNestedIntObject::class, 1);
 
         $this->expectException(RuntimeException::class);
@@ -42,7 +84,25 @@ class CoverageTest extends Base
     {
         foreach ([true, false] as $before) {
             foreach ([null, true, false] as $above) {
-                yield [$before, $above];
+                /**
+                * @var array $repoArgs
+                */
+                foreach ($this->DataProviderCoverageWriteableRepo() as $repoArgs) {
+                    list($repo) = $repoArgs;
+                    yield [$repo, $before, $above];
+                }
+            }
+        }
+    }
+
+    public function DataProviderInsertArgsWithThrowingTree() : Generator
+    {
+        /**
+        * @var array $args
+        */
+        foreach ($this->DataProviderInsertArgs() as $args) {
+            if ($args[0] instanceof Fixtures\DaftObjectWriteableThrowingTree) {
+                yield $args;
             }
         }
     }
@@ -51,16 +111,10 @@ class CoverageTest extends Base
     * @dataProvider DataProviderInsertArgs
     */
     public function testModifyDaftNestedObjectTreeInsertFailsRelativeToSelf(
+        DaftNestedWriteableObjectTree $repo,
         bool $before,
         ? bool $above
     ) : void {
-        /**
-        * @var Fixtures\DaftWriteableNestedObjectIntTree $repo
-        */
-        $repo = Fixtures\DaftWriteableNestedObjectIntTree::DaftObjectRepositoryByType(
-            Fixtures\DaftNestedWriteableIntObject::class
-        );
-
         list($leaf) = static::PrepRepoWriteable(
             $repo,
             Fixtures\DaftNestedWriteableIntObject::class,
@@ -73,15 +127,12 @@ class CoverageTest extends Base
         $repo->ModifyDaftNestedObjectTreeInsert($leaf, $leaf, $before, $above);
     }
 
-    public function testStoreThenRetrieveFreshLeafFails() : void
-    {
-        /**
-        * @var Fixtures\ThrowingWriteableMemoryTree $repo
-        */
-        $repo = Fixtures\ThrowingWriteableMemoryTree::DaftObjectRepositoryByType(
-            Fixtures\DaftNestedWriteableIntObject::class
-        );
-
+    /**
+    * @dataProvider DataProviderCoverageWriteableRepoWithThrowingTree
+    */
+    public function testStoreThenRetrieveFreshLeafFails(
+        Fixtures\DaftObjectWriteableThrowingTree $repo
+    ) : void {
         list($leaf) = static::PrepRepoWriteable(
             $repo,
             Fixtures\DaftNestedWriteableIntObject::class,
@@ -97,19 +148,13 @@ class CoverageTest extends Base
     }
 
     /**
-    * @dataProvider DataProviderInsertArgs
+    * @dataProvider DataProviderInsertArgsWithThrowingTree
     */
     public function testModifyDaftNestedObjectTreeInsertFailsToRetrieveLeaf(
+        Fixtures\DaftObjectWriteableThrowingTree $repo,
         bool $before,
         ? bool $above
     ) : void {
-        /**
-        * @var Fixtures\ThrowingWriteableMemoryTree $repo
-        */
-        $repo = Fixtures\ThrowingWriteableMemoryTree::DaftObjectRepositoryByType(
-            Fixtures\DaftNestedWriteableIntObject::class
-        );
-
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
         list($a0, $b0) = static::PrepRepoWriteable(
@@ -129,16 +174,10 @@ class CoverageTest extends Base
     * @dataProvider DataProviderInsertArgs
     */
     public function testModifyDaftNestedObjectTreeInsertLooseDoesNotAllowRootAsArgOne(
+        DaftNestedWriteableObjectTree $repo,
         bool $before,
         ? bool $above
     ) : void {
-        /**
-        * @var Fixtures\ThrowingWriteableMemoryTree $repo
-        */
-        $repo = Fixtures\ThrowingWriteableMemoryTree::DaftObjectRepositoryByType(
-            Fixtures\DaftNestedWriteableIntObject::class
-        );
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot pass root id as new leaf');
 
@@ -151,19 +190,13 @@ class CoverageTest extends Base
     }
 
     /**
-    * @dataProvider DataProviderInsertArgs
+    * @dataProvider DataProviderInsertArgsWithThrowingTree
     */
     public function testModifyDaftNestedObjectTreeInsertLooseFailsToRecallReferenceNode(
+        Fixtures\DaftObjectWriteableThrowingTree $repo,
         bool $before,
         ? bool $above
     ) : void {
-        /**
-        * @var Fixtures\ThrowingWriteableMemoryTree $repo
-        */
-        $repo = Fixtures\ThrowingWriteableMemoryTree::DaftObjectRepositoryByType(
-            Fixtures\DaftNestedWriteableIntObject::class
-        );
-
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
         list($a0, $b0) = static::PrepRepoWriteable(
@@ -191,19 +224,13 @@ class CoverageTest extends Base
     }
 
     /**
-    * @dataProvider DataProviderInsertArgs
+    * @dataProvider DataProviderInsertArgsWithThrowingTree
     */
     public function testModifyDaftNestedObjectTreeInsertLooseFailsWithNonRootReferenceLeaf(
+        Fixtures\DaftObjectWriteableThrowingTree $repo,
         bool $before,
         ? bool $above
     ) : void {
-        /**
-        * @var Fixtures\ThrowingWriteableMemoryTree $repo
-        */
-        $repo = Fixtures\ThrowingWriteableMemoryTree::DaftObjectRepositoryByType(
-            Fixtures\DaftNestedWriteableIntObject::class
-        );
-
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
         list($a0, $b0) = static::PrepRepoWriteable(
@@ -234,6 +261,7 @@ class CoverageTest extends Base
     * @dataProvider DataProviderInsertArgs
     */
     public function testModifyDaftNestedObjectTreeInsertAdjacentFailsWithNonSibling(
+        DaftNestedWriteableObjectTree $repo,
         bool $before,
         ? bool $above
     ) : void {

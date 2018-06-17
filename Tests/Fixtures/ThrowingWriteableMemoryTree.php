@@ -12,7 +12,11 @@ use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftObjectMemoryTree;
 
-class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree
+class ThrowingWriteableMemoryTree
+    extends
+        DaftWriteableNestedObjectIntTree
+    implements
+        DaftObjectWriteableThrowingTree
 {
     use TraitToggleRecallDaftObjectAlwaysNull;
 
