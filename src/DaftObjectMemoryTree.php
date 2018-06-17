@@ -12,11 +12,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 {
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array
     {
-        /**
-        * @var string[] $props
-        */
-        $props = $this->type::DaftObjectIdProperties();
-
         $type = $this->type;
 
         /**
