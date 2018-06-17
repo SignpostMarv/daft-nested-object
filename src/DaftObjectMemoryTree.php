@@ -8,8 +8,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
-use RuntimeException;
-
 abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
 {
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array
