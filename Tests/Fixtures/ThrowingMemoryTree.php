@@ -11,11 +11,7 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftObjectMemoryTree;
 
-class ThrowingMemoryTree
-    extends
-        DaftNestedObjectIntTree
-    implements
-        DaftObjectThrowingTree
+class ThrowingMemoryTree extends DaftNestedObjectIntTree implements DaftObjectThrowingTree
 {
     use TraitToggleRecallDaftObjectAlwaysNull;
 }
