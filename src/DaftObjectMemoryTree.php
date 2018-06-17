@@ -130,7 +130,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                 )
                 : (
                     ((array) $id === (array) $this->GetNestedObjectTreeRootId())
-                        ? $this->RecallDaftNestedObjectFullTree(0)
+                        ? $this->RecallDaftNestedObjectFullTree($relativeDepthLimit)
                         : []
                 );
     }
