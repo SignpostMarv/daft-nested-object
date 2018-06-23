@@ -72,7 +72,6 @@ trait TraitWriteableTree
                 $tree = $this->RecallDaftNestedObjectFullTree();
                 $firstLeft = $tree[0]->GetIntNestedLeft();
 
-
                 if ($firstLeft > 0) {
                     $mod = 0 - $firstLeft;
 
