@@ -30,6 +30,76 @@ trait TraitWriteableTree
             $this->ModifyDaftNestedObjectTreeInsertBelow($newLeaf, $referenceLeaf);
         } else {
             $this->ModifyDaftNestedObjectTreeInsertAdjacent($newLeaf, $referenceLeaf, $before);
+
+            if ( ! $before) {
+                $newLeft = $newLeaf->GetIntNestedLeft();
+                $newRight = $newLeaf->GetIntNestedRight();
+                $newWidth = $newRight - $newLeft;
+                $newLevel = $newLeaf->GetIntNestedLevel();
+
+                $refLeft = $referenceLeaf->GetIntNestedLeft();
+                $refRight = $referenceLeaf->GetIntNestedRight();
+                $refWidth = $refRight - $refLeft;
+                $refLevel = $referenceLeaf->GetIntNestedLevel();
+
+                foreach ($this->RecallDaftNestedObjectFullTree() as $alter) {
+                    $alterLeft = $alter->GetIntNestedLeft();
+                    $alterRight = $alter->GetIntNestedRight();
+                    $alterLevel = $alter->GetIntNestedLevel();
+                    $alterWidth = min(1, $alterRight - $alterLeft);
+                    $altered = false;
+
+                    if ($alterLeft >= $newLeft && $alterRight <= $newRight) {
+                        $alterLeft = $refRight + 1 + ($alterLeft - $newLeft);
+                        $alterRight = $alterLeft + $alterWidth;
+                        $alterLevel = $refLevel + ($alterLevel - $refLevel);
+
+                        $altered = true;
+                    } elseif ($alterLeft > $refRight) {
+                        $alterLeft += ($newWidth + $refWidth);
+                        $alterRight = $alterLeft + $alterWidth;
+
+                        $altered = true;
+                    }
+                    if ($altered) {
+                        $alter->SetIntNestedLeft($alterLeft);
+                        $alter->SetIntNestedRight($alterRight);
+                        $alter->SetIntNestedLevel($alterLevel);
+                        $this->RememberDaftObject($alter);
+                    }
+                }
+
+                $tree = $this->RecallDaftNestedObjectFullTree();
+                $firstLeft = $tree[0]->GetIntNestedLeft();
+
+
+                if ($firstLeft > 0) {
+                    $mod = 0 - $firstLeft;
+
+                    foreach ($tree as $alter) {
+                        $alterLeft = $alter->GetIntNestedLeft();
+                        $alterWidth = $alter->GetIntNestedRight() - $alterLeft;
+
+                        $alterLeft += $mod;
+                        $alterRight = $alterLeft + $alterWidth;
+
+                        $alter->SetIntNestedLeft($alterLeft);
+                        $alter->SetIntNestedRight($alterRight);
+
+                        $this->RememberDaftObject($alter);
+                    }
+                }
+
+                $fresh = $this->RecallDaftObject($newLeaf->GetId());
+
+                if ( ! ($fresh instanceof DaftNestedWriteableObject)) {
+                    throw new RuntimeException(
+                        'Could not retrieve leaf from tree after rebuilding!'
+                    );
+                }
+
+                return $fresh;
+            }
         }
 
         return $this->RebuildAfterInsert($newLeaf);

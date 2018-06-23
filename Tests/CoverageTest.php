@@ -153,6 +153,10 @@ class CoverageTest extends Base
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Could not retrieve leaf from tree after rebuilding!');
 
+        if ( ! $before && null === $above) {
+            $repo->ToggleRecallDaftObjectAfterCalls(true, 3);
+        }
+
         $repo->ModifyDaftNestedObjectTreeInsert($a0, $b0, $before, $above);
     }
 
