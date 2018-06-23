@@ -67,8 +67,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $this->assertNotSame($d0, $d1);
 
         $this->AssertTreeState(
-            [0, 0, 0, 0],
-            [0, 0, 0, 0],
+            [0, 2, 4, 6],
+            [1, 3, 5, 7],
             [0, 0, 0, 0],
             [$a0, $b0, $c0, $d0]
         );
