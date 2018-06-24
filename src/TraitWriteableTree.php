@@ -333,18 +333,6 @@ trait TraitWriteableTree
             return $tree->StoreThenRetrieveFreshLeaf($leaf);
         }
 
-        return $this->ModifyDaftNestedObjectTreeInsertFromLeaves($leaves, $leaf, $before, $above);
-    }
-
-    /**
-    * @param array<int, DaftNestedWriteableObject> $leaves
-    */
-    protected function ModifyDaftNestedObjectTreeInsertFromLeaves(
-        array $leaves,
-        DaftNestedWriteableObject $leaf,
-        bool $before,
-        ? bool $above
-    ) : DaftNestedWriteableObject {
         /**
         * @var DaftNestedWriteableObject $reference
         */
