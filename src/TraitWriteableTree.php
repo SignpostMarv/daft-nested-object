@@ -118,41 +118,6 @@ trait TraitWriteableTree
         return is_int($resp) ? $resp : $this->CountDaftNestedObjectFullTree();
     }
 
-    /**
-    * @param mixed $root
-    * @param scalar|scalar[]|null $replacementRoot
-    */
-    protected function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
-        $root,
-        $replacementRoot,
-        DaftNestedWriteableObject $rootObject
-    ) : ? int {
-        $tree = $this->ThrowIfNotTree();
-
-        if (
-            $tree->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
-            is_null($replacementRoot)
-        ) {
-            throw new BadMethodCallException('Cannot leave orphan objects in a tree');
-        } elseif (
-            ! is_null($replacementRoot) &&
-            $replacementRoot !== $tree->GetNestedObjectTreeRootId()
-        ) {
-            $replacementRoot = $tree->RecallDaftObject($replacementRoot);
-
-            return $this->MaybeRemoveWithPossibleObject($rootObject, $replacementRoot);
-        }
-
-        /**
-        * @var scalar|scalar[] $replacementRoot
-        */
-        $replacementRoot = $replacementRoot;
-
-        $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
-
-        return null;
-    }
-
     public function StoreThenRetrieveFreshLeaf(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject {
@@ -222,6 +187,41 @@ trait TraitWriteableTree
         bool $includeRoot,
         ? int $relativeDepthLimit
     ) : array;
+
+    /**
+    * @param mixed $root
+    * @param scalar|scalar[]|null $replacementRoot
+    */
+    protected function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
+        $root,
+        $replacementRoot,
+        DaftNestedWriteableObject $rootObject
+    ) : ? int {
+        $tree = $this->ThrowIfNotTree();
+
+        if (
+            $tree->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
+            is_null($replacementRoot)
+        ) {
+            throw new BadMethodCallException('Cannot leave orphan objects in a tree');
+        } elseif (
+            ! is_null($replacementRoot) &&
+            $replacementRoot !== $tree->GetNestedObjectTreeRootId()
+        ) {
+            $replacementRoot = $tree->RecallDaftObject($replacementRoot);
+
+            return $this->MaybeRemoveWithPossibleObject($rootObject, $replacementRoot);
+        }
+
+        /**
+        * @var scalar|scalar[] $replacementRoot
+        */
+        $replacementRoot = $replacementRoot;
+
+        $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
+
+        return null;
+    }
 
     protected function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
         DaftNestedWriteableObjectTree $tree,
