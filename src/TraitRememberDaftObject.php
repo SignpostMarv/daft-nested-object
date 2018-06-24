@@ -15,7 +15,7 @@ trait TraitRememberDaftObject
         if ($object instanceof DaftNestedWriteableObject) {
             $this->RememberDaftObjectWriteableTyped($object);
         } else {
-            static::ThrowIfNotType($object, DaftNestedWriteableObject::class, 1, __METHOD__);
+            static::ThrowIfNotType($object, DaftNestedWriteableObject::class, 1, __FUNCTION__);
         }
     }
 

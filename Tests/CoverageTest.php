@@ -12,10 +12,13 @@ use BadMethodCallException;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
+use stdClass;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
+use SignpostMarv\DaftObject\DaftObjectRepositoryTypeByClassMethodAndTypeException;
+use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 use SignpostMarv\DaftObject\TraitWriteableTree;
 
@@ -298,6 +301,23 @@ class CoverageTest extends Base
         );
 
         $obj->WillFail();
+    }
+
+    public function testRememberDaftObject() : void
+    {
+        $obj = new Fixtures\CoverageTraitRememberDaftObject();
+
+        $this->expectException(DaftObjectRepositoryTypeByClassMethodAndTypeException::class);
+        $this->expectExceptionMessage(sprintf(
+            'Argument %s passed to %s::%s() must be an implementation of %s, %s given.',
+            1,
+            Fixtures\CoverageTraitRememberDaftObject::class,
+            'RememberDaftObject',
+            DaftNestedWriteableObject::class,
+            Fixtures\DaftNestedIntObject::class
+        ));
+
+        $obj->RememberDaftObject(new Fixtures\DaftNestedIntObject());
     }
 
     /**
