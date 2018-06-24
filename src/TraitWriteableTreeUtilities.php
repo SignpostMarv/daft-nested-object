@@ -235,11 +235,10 @@ trait TraitWriteableTreeUtilities
         $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
 
-    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
+    protected function SiblingsExceptLeaf(
         DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf,
-        bool $before
-    ) : void {
+        DaftNestedWriteableObject $referenceLeaf
+    ) : array {
         /**
         * @var array<int, DaftNestedWriteableObject> $siblings
         */
@@ -253,6 +252,16 @@ trait TraitWriteableTreeUtilities
                 return $leaf->GetId() !== $newLeaf->GetId();
             }
         ));
+
+        return $siblings;
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before
+    ) : void {
+        $siblings = $this->SiblingsExceptLeaf($newLeaf, $referenceLeaf);
 
         $siblingIds = [];
         $siblingSort = [];
