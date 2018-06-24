@@ -12,13 +12,11 @@ use BadMethodCallException;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
-use stdClass;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
 use SignpostMarv\DaftObject\DaftObjectRepositoryTypeByClassMethodAndTypeException;
-use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 use SignpostMarv\DaftObject\TraitWriteableTree;
 
