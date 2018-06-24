@@ -33,15 +33,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         */
         $fromMemory = array_filter(
             array_map(
-                function (array $row) : DaftNestedObject {
-                    $type = $this->type;
-                    /**
-                    * @var DaftNestedObject $out
-                    */
-                    $out = new $type($row);
-
-                    return $out;
-                },
+                [$this, 'MapDataToObject'],
                 (array) $this->data
             ),
             function (DaftNestedObject $leaf) use ($outIds) : bool {
@@ -65,6 +57,17 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         }
 
         return $out;
+    }
+
+    protected function MapDataToObject(array $row) : DaftNestedObject
+    {
+                    $type = $this->type;
+                    /**
+                    * @var DaftNestedObject $out
+                    */
+                    $out = new $type($row);
+
+                    return $out;
     }
 
     public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int
