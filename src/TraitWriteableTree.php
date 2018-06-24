@@ -48,18 +48,19 @@ trait TraitWriteableTree
         $leaf = $this->MaybeGetLeaf($leaf);
 
         $reference = $this->RecallDaftObject($referenceId);
-
         $tree = $this->ThrowIfNotTree();
 
-        $isRef = $reference instanceof DaftNestedWriteableObject;
-        $isRoot = $referenceId === $tree->GetNestedObjectTreeRootId();
+        $resp = $this->ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
+            $tree,
+            $leaf,
+            $reference,
+            $referenceId === $tree->GetNestedObjectTreeRootId(),
+            $before,
+            $above
+        );
 
-        if ( ! is_null($leaf) && ($isRef || $isRoot)) {
-            if ($reference instanceof DaftNestedWriteableObject) {
-                return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
-            }
-
-            return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
+        if ($resp instanceof DaftNestedWriteableObject) {
+            return $resp;
         }
 
         throw new InvalidArgumentException(sprintf(
@@ -67,6 +68,25 @@ trait TraitWriteableTree
             is_null($leaf) ? 1 : 2,
             __METHOD__
         ));
+    }
+
+    protected function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
+        DaftNestedWriteableObjectTree $tree,
+        ? DaftNestedWriteableObject $leaf,
+        ? DaftObject $reference,
+        bool $isRoot,
+        bool $before,
+        ? bool $above
+    ) : ? DaftNestedWriteableObject {
+        if ( ! is_null($leaf) && (($reference instanceof DaftNestedWriteableObject) || $isRoot)) {
+            if ($reference instanceof DaftNestedWriteableObject) {
+                return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
+            }
+
+            return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
+        }
+
+        return null;
     }
 
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
