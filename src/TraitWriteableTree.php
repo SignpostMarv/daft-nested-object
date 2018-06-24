@@ -109,7 +109,6 @@ trait TraitWriteableTree
 
         if ($rootObject instanceof DaftNestedWriteableObject) {
             $resp = $this->ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
-                $root,
                 $replacementRoot,
                 $rootObject
             );
@@ -189,11 +188,9 @@ trait TraitWriteableTree
     ) : array;
 
     /**
-    * @param mixed $root
     * @param scalar|scalar[]|null $replacementRoot
     */
     protected function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
-        $root,
         $replacementRoot,
         DaftNestedWriteableObject $rootObject
     ) : ? int {
