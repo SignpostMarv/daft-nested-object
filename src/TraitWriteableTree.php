@@ -51,12 +51,10 @@ trait TraitWriteableTree
 
         $tree = $this->ThrowIfNotTree();
 
-        $isRef = (
-            ($reference instanceof DaftNestedWriteableObject) ||
-            ($referenceId === $tree->GetNestedObjectTreeRootId())
-        );
+        $isRef = $reference instanceof DaftNestedWriteableObject;
+        $isRoot = $referenceId === $tree->GetNestedObjectTreeRootId();
 
-        if ( ! is_null($leaf) && $isRef) {
+        if ( ! is_null($leaf) && ($isRef || $isRoot)) {
             if ($reference instanceof DaftNestedWriteableObject) {
                 return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
             }
