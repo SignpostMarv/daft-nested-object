@@ -10,41 +10,8 @@ namespace SignpostMarv\DaftObject;
 
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
+    use TraitRememberDaftObject;
     use TraitWriteableTree;
-
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
-    {
-        static::ThrowIfNotType($object, DaftNestedWriteableObject::class, 1, __METHOD__);
-
-        /**
-        * @var DaftNestedWriteableObject $object
-        */
-        $object = $object;
-
-        $left = $object->GetIntNestedLeft();
-        $right = $object->GetIntNestedRight();
-        $level = $object->GetIntNestedLevel();
-
-        if (0 === $left && 0 === $right && 0 === $level) {
-            if ($this->CountDaftNestedObjectFullTree() > 0) {
-                $tree = $this->RecallDaftNestedObjectFullTree();
-
-                /**
-                * @var DaftNestedWriteableObject $end
-                */
-                $end = end($tree);
-
-                $left = $end->GetIntNestedRight() + 1;
-            } else {
-                $left = $this->CountDaftNestedObjectFullTree() * 2;
-            }
-
-            $object->SetIntNestedLeft($left);
-            $object->SetIntNestedRight($left + 1);
-        }
-
-        parent::RememberDaftObject($object);
-    }
 
     protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
     {
