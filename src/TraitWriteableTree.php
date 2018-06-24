@@ -70,25 +70,6 @@ trait TraitWriteableTree
         ));
     }
 
-    protected function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
-        DaftNestedWriteableObjectTree $tree,
-        ? DaftNestedWriteableObject $leaf,
-        ? DaftObject $reference,
-        bool $isRoot,
-        bool $before,
-        ? bool $above
-    ) : ? DaftNestedWriteableObject {
-        if ( ! is_null($leaf) && (($reference instanceof DaftNestedWriteableObject) || $isRoot)) {
-            if ($reference instanceof DaftNestedWriteableObject) {
-                return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
-            }
-
-            return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
-        }
-
-        return null;
-    }
-
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
         DaftNestedWriteableObject $root,
         ? DaftNestedWriteableObject $replacementRoot
@@ -221,6 +202,25 @@ trait TraitWriteableTree
         bool $includeRoot,
         ? int $relativeDepthLimit
     ) : array;
+
+    protected function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
+        DaftNestedWriteableObjectTree $tree,
+        ? DaftNestedWriteableObject $leaf,
+        ? DaftObject $reference,
+        bool $isRoot,
+        bool $before,
+        ? bool $above
+    ) : ? DaftNestedWriteableObject {
+        if ( ! is_null($leaf) && (($reference instanceof DaftNestedWriteableObject) || $isRoot)) {
+            if ($reference instanceof DaftNestedWriteableObject) {
+                return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
+            }
+
+            return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
+        }
+
+        return null;
+    }
 
     protected function RebuildAfterInsert(
         DaftNestedWriteableObject $newLeaf
