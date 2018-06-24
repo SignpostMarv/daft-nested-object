@@ -19,9 +19,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         */
         $out = $this->memory;
 
-        /**
-        * @var array<int, scalar|scalar[]> $outIds
-        */
         $outIds = [];
 
         foreach ($out as $obj) {
@@ -38,9 +35,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         */
         $fromMemory = array_filter(
             array_map(
-                /**
-                * @param array<string, scalar|null> $row
-                */
                 function (array $row) use ($type) : DaftNestedObject {
                     /**
                     * @var DaftNestedObject $out
