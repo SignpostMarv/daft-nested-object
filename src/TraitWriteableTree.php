@@ -131,26 +131,26 @@ trait TraitWriteableTree
     ) : ? int {
         $tree = $this->ThrowIfNotTree();
 
-            if (
-                $tree->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
-                is_null($replacementRoot)
-            ) {
-                throw new BadMethodCallException('Cannot leave orphan objects in a tree');
-            } elseif (
-                ! is_null($replacementRoot) &&
-                $replacementRoot !== $tree->GetNestedObjectTreeRootId()
-            ) {
-                $replacementRoot = $tree->RecallDaftObject($replacementRoot);
+        if (
+            $tree->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
+            is_null($replacementRoot)
+        ) {
+            throw new BadMethodCallException('Cannot leave orphan objects in a tree');
+        } elseif (
+            ! is_null($replacementRoot) &&
+            $replacementRoot !== $tree->GetNestedObjectTreeRootId()
+        ) {
+            $replacementRoot = $tree->RecallDaftObject($replacementRoot);
 
-                return $this->MaybeRemoveWithPossibleObject($rootObject, $replacementRoot);
-            }
+            return $this->MaybeRemoveWithPossibleObject($rootObject, $replacementRoot);
+        }
 
-            /**
-            * @var scalar|scalar[] $replacementRoot
-            */
-            $replacementRoot = $replacementRoot;
+        /**
+        * @var scalar|scalar[] $replacementRoot
+        */
+        $replacementRoot = $replacementRoot;
 
-            $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
+        $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
 
         return null;
     }
