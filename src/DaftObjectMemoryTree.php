@@ -45,11 +45,12 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         });
 
         if (is_int($relativeDepthLimit)) {
+            $filter = function (DaftNestedObject $e) use ($relativeDepthLimit) : bool {
+                    return $e->GetIntNestedLevel() <= $relativeDepthLimit;
+            };
             $out = array_filter(
                 $out,
-                function (DaftNestedObject $e) use ($relativeDepthLimit) : bool {
-                    return $e->GetIntNestedLevel() <= $relativeDepthLimit;
-                }
+                $filter
             );
         }
 
