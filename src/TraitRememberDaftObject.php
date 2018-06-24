@@ -12,12 +12,10 @@ trait TraitRememberDaftObject
 {
     public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
     {
-        static::ThrowIfNotType($object, DaftNestedWriteableObject::class, 1, __METHOD__);
-
         if ($object instanceof DaftNestedWriteableObject) {
             $this->RememberDaftObjectWriteableTyped($object);
         } else {
-            parent::RememberDaftObject($object);
+            static::ThrowIfNotType($object, DaftNestedWriteableObject::class, 1, __METHOD__);
         }
     }
 
