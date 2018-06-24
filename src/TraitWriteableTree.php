@@ -146,11 +146,6 @@ trait TraitWriteableTree
 
     abstract public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
 
-    /**
-    * @param mixed $id
-    */
-    abstract public function RemoveDaftObjectById($id) : void;
-
     abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
     abstract public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
@@ -461,20 +456,6 @@ trait TraitWriteableTree
 
         $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
-
-    abstract protected function RememberDaftObjectData(
-        DefinesOwnIdPropertiesInterface $object
-    ) : void;
-
-    /**
-    * @param DaftObject|string $object
-    */
-    abstract protected static function ThrowIfNotType(
-        $object,
-        string $type,
-        int $argument,
-        string $function
-    ) : void;
 
     protected function RebuildTreeInefficiently() : void
     {
