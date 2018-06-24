@@ -54,17 +54,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         return $out;
     }
 
-    protected function MapDataToObject(array $row) : DaftNestedObject
-    {
-        $type = $this->type;
-        /**
-        * @var DaftNestedObject $out
-        */
-        $out = new $type($row);
-
-        return $out;
-    }
-
     public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int
     {
         return count($this->RecallDaftNestedObjectFullTree($relativeDepthLimit));
@@ -189,6 +178,17 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function CompareObjects(DaftNestedObject $a, DaftNestedObject $b) : int
     {
         return $a->GetIntNestedSortOrder() <=> $b->GetIntNestedSortOrder();
+    }
+
+    protected function MapDataToObject(array $row) : DaftNestedObject
+    {
+        $type = $this->type;
+        /**
+        * @var DaftNestedObject $out
+        */
+        $out = new $type($row);
+
+        return $out;
     }
 
     protected function FilterLeaf(
