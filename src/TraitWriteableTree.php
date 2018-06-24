@@ -105,19 +105,17 @@ trait TraitWriteableTree
     {
         $rootObject = $this->RecallDaftObject($root);
 
+        $resp = null;
+
         if ($rootObject instanceof DaftNestedWriteableObject) {
             $resp = $this->ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
                 $root,
                 $replacementRoot,
                 $rootObject
             );
-
-            if (is_int($resp)) {
-                return $resp;
-            }
         }
 
-        return $this->CountDaftNestedObjectFullTree();
+        return is_int($resp) ? $resp : $this->CountDaftNestedObjectFullTree();
     }
 
     /**
