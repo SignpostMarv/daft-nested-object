@@ -105,9 +105,32 @@ trait TraitWriteableTree
     {
         $rootObject = $this->RecallDaftObject($root);
 
+        if ($rootObject instanceof DaftNestedWriteableObject) {
+            $resp = $this->ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
+                $root,
+                $replacementRoot,
+                $rootObject
+            );
+
+            if (is_int($resp)) {
+                return $resp;
+            }
+        }
+
+        return $this->CountDaftNestedObjectFullTree();
+    }
+
+    /**
+    * @param mixed $root
+    * @param scalar|scalar[]|null $replacementRoot
+    */
+    protected function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
+        $root,
+        $replacementRoot,
+        DaftNestedWriteableObject $rootObject
+    ) : ? int {
         $tree = $this->ThrowIfNotTree();
 
-        if ($rootObject instanceof DaftNestedWriteableObject) {
             if (
                 $tree->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
                 is_null($replacementRoot)
@@ -128,9 +151,8 @@ trait TraitWriteableTree
             $replacementRoot = $replacementRoot;
 
             $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
-        }
 
-        return $this->CountDaftNestedObjectFullTree();
+        return null;
     }
 
     public function StoreThenRetrieveFreshLeaf(
