@@ -47,6 +47,9 @@ trait TraitToggleRecallDaftObjectAlwaysNull
         $this->ToggleRecallDaftObjectAfterCallsCount = 0;
     }
 
+    /**
+    * @param mixed $id
+    */
     public function RecallDaftObject($id) : ? DaftObject
     {
         if ($this->ToggleRecallDaftObjectAfterCalls) {

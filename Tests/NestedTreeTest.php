@@ -32,16 +32,18 @@ class NestedTreeTest extends Base
 
     /**
     * @dataProvider DataProviderArgs
+    *
+    * @param mixed ...$remainingTreeArgs
     */
     public function testRecallFullTree(
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
-        $this->assertTrue(class_exists($leafClass));
-        $this->assertTrue(class_exists($treeClass));
-        $this->assertTrue(is_a($leafClass, DaftNestedObject::class, true));
-        $this->assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
+        static::assertTrue(class_exists($leafClass));
+        static::assertTrue(class_exists($treeClass));
+        static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
+        static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
 
         array_unshift($remainingTreeArgs, $leafClass);
 
@@ -77,8 +79,8 @@ class NestedTreeTest extends Base
             'intNestedSortOrder' => 0,
         ]);
 
-        $this->assertSame(0, $repo->CountDaftNestedObjectFullTree());
-        $this->assertSame(
+        static::assertSame(0, $repo->CountDaftNestedObjectFullTree());
+        static::assertSame(
             $repo->CountDaftNestedObjectFullTree(),
             $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
         );
@@ -87,8 +89,8 @@ class NestedTreeTest extends Base
         $repo->RememberDaftObject($c); // yes this is deliberately out of order
         $repo->RememberDaftObject($b);
 
-        $this->assertSame(3, $repo->CountDaftNestedObjectFullTree());
-        $this->assertSame(
+        static::assertSame(3, $repo->CountDaftNestedObjectFullTree());
+        static::assertSame(
             $repo->CountDaftNestedObjectFullTree(),
             $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
         );
@@ -97,13 +99,13 @@ class NestedTreeTest extends Base
         $repo->RememberDaftObject($b); // yes this is deliberately out of order
         $repo->RememberDaftObject($a); // yes this is deliberately out of order
 
-        $this->assertSame(3, $repo->CountDaftNestedObjectFullTree());
-        $this->assertSame(
+        static::assertSame(3, $repo->CountDaftNestedObjectFullTree());
+        static::assertSame(
             $repo->CountDaftNestedObjectFullTree(),
             $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
         );
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $a->id,
                 $b->id,
@@ -117,7 +119,7 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $a->id,
                 $b->id,
@@ -130,13 +132,13 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(2, $repo->CountDaftNestedObjectFullTree(0));
-        $this->assertSame(
+        static::assertSame(2, $repo->CountDaftNestedObjectFullTree(0));
+        static::assertSame(
             $repo->CountDaftNestedObjectFullTree(),
             $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
         );
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $b->id,
                 $c->id,
@@ -149,7 +151,7 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $b->id,
                 $c->id,
@@ -162,10 +164,10 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(2, $repo->CountDaftNestedObjectTreeWithObject($b, true, null));
-        $this->assertSame(2, $repo->CountDaftNestedObjectTreeWithId($b->id, true, null));
+        static::assertSame(2, $repo->CountDaftNestedObjectTreeWithObject($b, true, null));
+        static::assertSame(2, $repo->CountDaftNestedObjectTreeWithId($b->id, true, null));
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $b->id,
                 $c->id,
@@ -178,7 +180,7 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $b->id,
                 $c->id,
@@ -191,10 +193,10 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(2, $repo->CountDaftNestedObjectPathToObject($c, true));
-        $this->assertSame(2, $repo->CountDaftNestedObjectPathToId($c->id, true));
+        static::assertSame(2, $repo->CountDaftNestedObjectPathToObject($c, true));
+        static::assertSame(2, $repo->CountDaftNestedObjectPathToId($c->id, true));
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $b->id,
             ],
@@ -206,7 +208,7 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $b->id,
             ],
@@ -218,10 +220,10 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(1, $repo->CountDaftNestedObjectPathToObject($c, false));
-        $this->assertSame(1, $repo->CountDaftNestedObjectPathToId($c->id, false));
+        static::assertSame(1, $repo->CountDaftNestedObjectPathToObject($c, false));
+        static::assertSame(1, $repo->CountDaftNestedObjectPathToId($c->id, false));
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $c->id,
             ],
@@ -233,7 +235,7 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(
+        static::assertSame(
             [
                 $c->id,
             ],
@@ -245,10 +247,10 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(1, $repo->CountDaftNestedObjectTreeWithObject($b, false, null));
-        $this->assertSame(1, $repo->CountDaftNestedObjectTreeWithId($b->id, false, null));
+        static::assertSame(1, $repo->CountDaftNestedObjectTreeWithObject($b, false, null));
+        static::assertSame(1, $repo->CountDaftNestedObjectTreeWithId($b->id, false, null));
 
-        $this->assertSame(
+        static::assertSame(
             [
             ],
             array_map(
@@ -259,7 +261,7 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(
+        static::assertSame(
             [
             ],
             array_map(
@@ -270,22 +272,24 @@ class NestedTreeTest extends Base
             )
         );
 
-        $this->assertSame(0, $repo->CountDaftNestedObjectTreeWithObject($b, false, 0));
-        $this->assertSame(0, $repo->CountDaftNestedObjectTreeWithId($b->id, false, 0));
+        static::assertSame(0, $repo->CountDaftNestedObjectTreeWithObject($b, false, 0));
+        static::assertSame(0, $repo->CountDaftNestedObjectTreeWithId($b->id, false, 0));
     }
 
     /**
     * @dataProvider DataProviderArgs
+    *
+    * @param mixed ...$remainingTreeArgs
     */
     public function testThrowIfNotType(
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
-        $this->assertTrue(class_exists($leafClass));
-        $this->assertTrue(class_exists($treeClass));
-        $this->assertTrue(is_a($leafClass, DaftNestedObject::class, true));
-        $this->assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
+        static::assertTrue(class_exists($leafClass));
+        static::assertTrue(class_exists($treeClass));
+        static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
+        static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
 
         $this->expectException(DaftObjectRepositoryTypeByClassMethodAndTypeException::class);
         $this->expectExceptionMessage(sprintf(

@@ -30,14 +30,16 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
     /**
     * @dataProvider DataProviderArgs
+    *
+    * @param mixed ...$remainingTreeArgs
     */
     public function testTreeModification(
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
-        $this->assertTrue(is_a($leafClass, DaftNestedWriteableObject::class, true));
-        $this->assertTrue(is_a($treeClass, DaftNestedWriteableObjectTree::class, true));
+        static::assertTrue(is_a($leafClass, DaftNestedWriteableObject::class, true));
+        static::assertTrue(is_a($treeClass, DaftNestedWriteableObjectTree::class, true));
 
         array_unshift($remainingTreeArgs, $leafClass);
 
@@ -61,10 +63,10 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($c0, $b0->GetId(), false, false);
         $d1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($d0, $b0->GetId(), false, null);
 
-        $this->assertNotSame($a0, $a1);
-        $this->assertNotSame($b0, $b1);
-        $this->assertNotSame($c0, $c1);
-        $this->assertNotSame($d0, $d1);
+        static::assertNotSame($a0, $a1);
+        static::assertNotSame($b0, $b1);
+        static::assertNotSame($c0, $c1);
+        static::assertNotSame($d0, $d1);
 
         $this->AssertTreeState(
             [0, 2, 4, 6],
@@ -73,19 +75,19 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [$a0, $b0, $c0, $d0]
         );
 
-        $this->assertSame(
+        static::assertSame(
             (array) $repo->GetNestedObjectTreeRootId(),
             $a0->ObtainDaftNestedObjectParentId()
         );
-        $this->assertSame(
+        static::assertSame(
             (array) $repo->GetNestedObjectTreeRootId(),
             $b0->ObtainDaftNestedObjectParentId()
         );
-        $this->assertSame(
+        static::assertSame(
             (array) $repo->GetNestedObjectTreeRootId(),
             $c0->ObtainDaftNestedObjectParentId()
         );
-        $this->assertSame(
+        static::assertSame(
             (array) $repo->GetNestedObjectTreeRootId(),
             $d0->ObtainDaftNestedObjectParentId()
         );
@@ -209,6 +211,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
     /**
     * @dataProvider DataProviderArgsTreeRemovalFailure
+    *
+    * @param mixed ...$remainingTreeArgs
     */
     public function testTreeRemovalFailure(
         bool $byObject,
@@ -237,6 +241,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
     /**
     * @dataProvider DataProviderArgs
+    *
+    * @param mixed ...$remainingTreeArgs
     */
     public function testTreeRemovalFailureDueToOrphan(
         string $treeClass,
@@ -295,6 +301,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
     * @param array<int, int> $left
     * @param array<int, int> $right
     * @param array<int, int> $level
+    * @param mixed ...$remainingTreeArgs
     *
     * @dataProvider DataProviderAdditionalTreeModification
     */
@@ -614,7 +621,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                         $leaves
                     );
 
-                    $this->assertSame(
+                    static::assertSame(
                         9,
                         $repo->ModifyDaftNestedObjectTreeRemoveWithId(2, 1)
                     );
@@ -873,9 +880,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array $level,
         array $leaves
     ) : void {
-        $this->assertSame(count($left), count($right));
-        $this->assertSame(count($right), count($leaves));
-        $this->assertSame(count($leaves), count($level));
+        static::assertCount(count($left), $right);
+        static::assertCount(count($right), $leaves);
+        static::assertCount(count($leaves), $level);
 
         $actualLeft = [];
         $actualRight = [];
@@ -887,7 +894,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
             $actualLevel[] = $leaf->GetIntNestedLevel();
         }
 
-        $this->assertSame(
+        static::assertSame(
             [
                 'left' => $left,
                 'right' => $right,
@@ -907,21 +914,21 @@ class WriteableNestedTreeTest extends NestedTreeTest
         int $level,
         DaftNestedWriteableObject $leaf
     ) : void {
-        $this->assertSame($left, $leaf->GetIntNestedLeft(), sprintf(
+        static::assertSame($left, $leaf->GetIntNestedLeft(), sprintf(
             'Left does not match state %u (%u), %u, %u',
             $left,
             $leaf->GetIntNestedLeft(),
             $right,
             $level
         ));
-        $this->assertSame($right, $leaf->GetIntNestedRight(), sprintf(
+        static::assertSame($right, $leaf->GetIntNestedRight(), sprintf(
             'Right does not match state %u, %u (%u), %u',
             $left,
             $right,
             $leaf->GetIntNestedRight(),
             $level
         ));
-        $this->assertSame($level, $leaf->GetIntNestedLevel(), sprintf(
+        static::assertSame($level, $leaf->GetIntNestedLevel(), sprintf(
             'Level does not match state %u, %u, %u (%u)',
             $left,
             $right,
@@ -930,6 +937,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
         ));
     }
 
+    /**
+    * @param mixed ...$additionalArgs
+    */
     protected static function InitLeafClass(string $type, array $cargs = [], ...$additionalArgs) : DaftNestedWriteableObject
     {
         if ( ! is_a($type, DaftNestedWriteableObject::class, true)) {

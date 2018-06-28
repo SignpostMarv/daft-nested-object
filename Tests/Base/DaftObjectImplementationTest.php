@@ -40,7 +40,7 @@ class DaftObjectImplementationTest extends BaseTest
         string $property,
         $value
     ) : void {
-        $this->assertTrue(is_a($implementation, Fixtures\DaftNestedIntObject::class, true));
+        static::assertTrue(is_a($implementation, Fixtures\DaftNestedIntObject::class, true));
 
         $instance = new $implementation();
 
@@ -140,7 +140,7 @@ class DaftObjectImplementationTest extends BaseTest
             $props
         );
 
-        $this->assertSame($instance->ObtainDaftNestedObjectParentId(), $actual);
+        static::assertSame($instance->ObtainDaftNestedObjectParentId(), $actual);
 
         $id = array_map(
             /**
@@ -161,10 +161,10 @@ class DaftObjectImplementationTest extends BaseTest
             $instance->AlterDaftNestedObjectParentId($id);
 
             foreach ($props as $prop) {
-                $this->assertSame($args[$prop], $instance->$prop);
+                static::assertSame($args[$prop], $instance->$prop);
             }
 
-            $this->assertSame($id, $instance->ObtainDaftNestedObjectParentId());
+            static::assertSame($id, $instance->ObtainDaftNestedObjectParentId());
         }
 
         if ($instance instanceof Fixtures\DaftNestedWriteableIntObject) {

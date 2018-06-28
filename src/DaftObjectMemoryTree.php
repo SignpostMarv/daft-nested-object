@@ -32,7 +32,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         * @var DaftNestedObject[] $fromMemory
         */
         $fromMemory = array_filter(
-            array_map([$this, 'MapDataToObject'], (array) $this->data),
+            array_map([$this, 'MapDataToObject'], $this->data),
             function (DaftNestedObject $leaf) use ($outIds) : bool {
                 return ! in_array($leaf->GetId(), $outIds, true);
             }
@@ -97,6 +97,9 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         );
     }
 
+    /**
+    * @param mixed $id
+    */
     public function RecallDaftNestedObjectTreeWithId(
         $id,
         bool $includeRoot,
@@ -118,6 +121,9 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                 );
     }
 
+    /**
+    * @param mixed $id
+    */
     public function CountDaftNestedObjectTreeWithId(
         $id,
         bool $includeRoot,
@@ -157,6 +163,9 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         return count($this->RecallDaftNestedObjectPathToObject($leaf, $includeLeaf));
     }
 
+    /**
+    * @param mixed $id
+    */
     public function RecallDaftNestedObjectPathToId($id, bool $includeLeaf) : array
     {
         $object = $this->RecallDaftObject($id);
@@ -167,7 +176,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                 : [];
     }
 
-    /*
+    /**
     * @param mixed $id
     */
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int

@@ -204,6 +204,7 @@ trait TraitWriteableTreeUtilities
 
     /**
     * @param scalar|scalar[] $replacementRoot
+    * @param mixed $replacementRoot
     */
     protected function UpdateRemoveThenRebuild(
         DaftNestedWriteableObject $rootObject,
