@@ -6,10 +6,11 @@
     xsi:schemaLocation="https://getpsalm.org/schema/config ./vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
+        <file name="./.php_cs.dist" />
+        <file name="phpunit-bootstrap.php" />
         <directory name="src" />
         <directory name="Tests" />
         <directory name="PHPStan" />
-        <file name="./.php_cs.dist" />
     </projectFiles>
 
     <issueHandlers>
