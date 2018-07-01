@@ -105,6 +105,11 @@ class NestedTreeTest extends Base
             $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
         );
 
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectFullTree();
+
         static::assertSame(
             [
                 $a->id,
@@ -113,11 +118,16 @@ class NestedTreeTest extends Base
             ],
             array_map(
                 function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
+                    return (int) $leaf->GetId();
                 },
-                $repo->RecallDaftNestedObjectFullTree()
+                $tree
             )
         );
+
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectFullTree(0);
 
         static::assertSame(
             [
@@ -126,9 +136,9 @@ class NestedTreeTest extends Base
             ],
             array_map(
                 function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
+                    return (int) $leaf->GetId();
                 },
-                $repo->RecallDaftNestedObjectFullTree(0)
+                $tree
             )
         );
 
@@ -138,18 +148,10 @@ class NestedTreeTest extends Base
             $repo->CountDaftNestedObjectTreeWithId($repo->GetNestedObjectTreeRootId(), true, null)
         );
 
-        static::assertSame(
-            [
-                $b->id,
-                $c->id,
-            ],
-            array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
-                },
-                $repo->RecallDaftNestedObjectTreeWithObject($b, true, null)
-            )
-        );
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, true, null);
 
         static::assertSame(
             [
@@ -158,27 +160,37 @@ class NestedTreeTest extends Base
             ],
             array_map(
                 function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
+                    return (int) $leaf->GetId();
                 },
-                $repo->RecallDaftNestedObjectTreeWithId($b->id, true, null)
+                $tree
+            )
+        );
+
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectTreeWithId($b->id, true, null);
+
+        static::assertSame(
+            [
+                $b->id,
+                $c->id,
+            ],
+            array_map(
+                function (DaftNestedObject $leaf) : int {
+                    return (int) $leaf->GetId();
+                },
+                $tree
             )
         );
 
         static::assertSame(2, $repo->CountDaftNestedObjectTreeWithObject($b, true, null));
         static::assertSame(2, $repo->CountDaftNestedObjectTreeWithId($b->id, true, null));
 
-        static::assertSame(
-            [
-                $b->id,
-                $c->id,
-            ],
-            array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
-                },
-                $repo->RecallDaftNestedObjectPathToObject($c, true)
-            )
-        );
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $repo->RecallDaftNestedObjectPathToObject($c, true);
 
         static::assertSame(
             [
@@ -187,26 +199,37 @@ class NestedTreeTest extends Base
             ],
             array_map(
                 function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
+                    return (int) $leaf->GetId();
                 },
-                $repo->RecallDaftNestedObjectPathToId($c->id, true)
+                $tree
+            )
+        );
+
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectPathToId($c->id, true);
+
+        static::assertSame(
+            [
+                $b->id,
+                $c->id,
+            ],
+            array_map(
+                function (DaftNestedObject $leaf) : int {
+                    return (int) $leaf->GetId();
+                },
+                $tree
             )
         );
 
         static::assertSame(2, $repo->CountDaftNestedObjectPathToObject($c, true));
         static::assertSame(2, $repo->CountDaftNestedObjectPathToId($c->id, true));
 
-        static::assertSame(
-            [
-                $b->id,
-            ],
-            array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
-                },
-                $repo->RecallDaftNestedObjectPathToObject($c, false)
-            )
-        );
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectPathToObject($c, false);
 
         static::assertSame(
             [
@@ -214,26 +237,36 @@ class NestedTreeTest extends Base
             ],
             array_map(
                 function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
+                    return (int) $leaf->GetId();
                 },
-                $repo->RecallDaftNestedObjectPathToId($c->id, false)
+                $tree
+            )
+        );
+
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectPathToId($c->id, false);
+
+        static::assertSame(
+            [
+                $b->id,
+            ],
+            array_map(
+                function (DaftNestedObject $leaf) : int {
+                    return (int) $leaf->GetId();
+                },
+                $tree
             )
         );
 
         static::assertSame(1, $repo->CountDaftNestedObjectPathToObject($c, false));
         static::assertSame(1, $repo->CountDaftNestedObjectPathToId($c->id, false));
 
-        static::assertSame(
-            [
-                $c->id,
-            ],
-            array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
-                },
-                $repo->RecallDaftNestedObjectTreeWithObject($b, false, null)
-            )
-        );
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, false, null);
 
         static::assertSame(
             [
@@ -241,34 +274,61 @@ class NestedTreeTest extends Base
             ],
             array_map(
                 function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
+                    return (int) $leaf->GetId();
                 },
-                $repo->RecallDaftNestedObjectTreeWithId($b->id, false, null)
+                $tree
+            )
+        );
+
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectTreeWithId($b->id, false, null);
+
+        static::assertSame(
+            [
+                $c->id,
+            ],
+            array_map(
+                function (DaftNestedObject $leaf) : int {
+                    return (int) $leaf->GetId();
+                },
+                $tree
             )
         );
 
         static::assertSame(1, $repo->CountDaftNestedObjectTreeWithObject($b, false, null));
         static::assertSame(1, $repo->CountDaftNestedObjectTreeWithId($b->id, false, null));
 
-        static::assertSame(
-            [
-            ],
-            array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
-                },
-                $repo->RecallDaftNestedObjectTreeWithObject($b, false, 0)
-            )
-        );
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, false, 0);
 
         static::assertSame(
             [
             ],
             array_map(
                 function (DaftNestedObject $leaf) : int {
-                    return $leaf->id;
+                    return (int) $leaf->GetId();
                 },
-                $repo->RecallDaftNestedObjectTreeWithId($b->id, false, 0)
+                $tree
+            )
+        );
+
+        /**
+        * @var array<int, DaftNestedObject> $tree
+        */
+        $tree = $repo->RecallDaftNestedObjectTreeWithId($b->id, false, 0);
+
+        static::assertSame(
+            [
+            ],
+            array_map(
+                function (DaftNestedObject $leaf) : int {
+                    return (int) $leaf->GetId();
+                },
+                $tree
             )
         );
 

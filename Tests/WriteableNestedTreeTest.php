@@ -832,7 +832,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
     * @param array<int, int> $left
     * @param array<int, int> $right
     * @param array<int, int> $level
-    * @param array<int, DaftNestedWriteableObject> $leaves
     */
     protected function AssertTreeStateRecallLeaves(
         DaftNestedWriteableObjectTree $repo,
