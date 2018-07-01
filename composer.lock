@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "067c4131271f6445e8d13c247afeac34",
+    "content-hash": "649456af8f1a578221fae2334e1e84ba",
     "packages": [
         {
             "name": "signpostmarv/daft-object",
@@ -1831,16 +1831,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "86b9f9a4421d282f3c18e0d4d1426f330c1ef21d"
+                "reference": "3cc1716d3557d075f3772c4490d2aa8ef864e1e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/86b9f9a4421d282f3c18e0d4d1426f330c1ef21d",
-                "reference": "86b9f9a4421d282f3c18e0d4d1426f330c1ef21d",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/3cc1716d3557d075f3772c4490d2aa8ef864e1e4",
+                "reference": "3cc1716d3557d075f3772c4490d2aa8ef864e1e4",
                 "shasum": ""
             },
             "require": {
@@ -1894,11 +1894,11 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2018-06-24T17:49:58+00:00"
+            "time": "2018-06-30T21:31:19+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "0.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
@@ -1948,16 +1948,16 @@
         },
         {
             "name": "phpstan/phpstan-strict-rules",
-            "version": "0.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "bffdf03fc70602833936dccf6c2eb3be58ed78d6"
+                "reference": "1ec1d04221dca0c2f4ce7abb73c17b276bfce206"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/bffdf03fc70602833936dccf6c2eb3be58ed78d6",
-                "reference": "bffdf03fc70602833936dccf6c2eb3be58ed78d6",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/1ec1d04221dca0c2f4ce7abb73c17b276bfce206",
+                "reference": "1ec1d04221dca0c2f4ce7abb73c17b276bfce206",
                 "shasum": ""
             },
             "require": {
@@ -1990,7 +1990,7 @@
                 "MIT"
             ],
             "description": "Extra strict and opinionated rules for PHPStan",
-            "time": "2018-06-22T18:09:47+00:00"
+            "time": "2018-06-30T11:53:58+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4094,6 +4094,9 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "maglnet/composer-require-checker": 20,
+        "phpstan/phpstan": 20,
+        "phpstan/phpstan-phpunit": 20,
+        "phpstan/phpstan-strict-rules": 20,
         "roave/security-advisories": 20
     },
     "prefer-stable": false,
