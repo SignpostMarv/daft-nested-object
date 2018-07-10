@@ -189,6 +189,15 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         return $a->GetIntNestedSortOrder() <=> $b->GetIntNestedSortOrder();
     }
 
+    public function RememberDaftObjectData(
+        DefinesOwnIdPropertiesInterface $object,
+        bool $assumeDoesNotExist = false
+    ) : void {
+        static::ThrowIfNotType($object, DaftNestedObject::class, 1, __METHOD__);
+
+        parent::RememberDaftObjectData($object, $assumeDoesNotExist);
+    }
+
     protected function MapDataToObject(array $row) : DaftNestedObject
     {
         $type = $this->type;
@@ -211,15 +220,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         }
 
         return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;
-    }
-
-    public function RememberDaftObjectData(
-        DefinesOwnIdPropertiesInterface $object,
-        bool $assumeDoesNotExist = false
-    ) : void {
-        static::ThrowIfNotType($object, DaftNestedObject::class, 1, __METHOD__);
-
-        parent::RememberDaftObjectData($object, $assumeDoesNotExist);
     }
 
     /**
