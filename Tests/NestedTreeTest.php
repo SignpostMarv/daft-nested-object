@@ -187,9 +187,6 @@ class NestedTreeTest extends Base
         static::assertSame(2, $repo->CountDaftNestedObjectTreeWithObject($b, true, null));
         static::assertSame(2, $repo->CountDaftNestedObjectTreeWithId($b->id, true, null));
 
-        /**
-        * @var array<int, DaftNestedObject> $tree
-        */
         $repo->RecallDaftNestedObjectPathToObject($c, true);
 
         static::assertSame(
