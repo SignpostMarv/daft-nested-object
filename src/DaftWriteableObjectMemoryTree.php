@@ -13,11 +13,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     use TraitRememberDaftObject;
     use TraitWriteableTree;
 
-    protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
-    {
+    public function RememberDaftObjectData(
+        DefinesOwnIdPropertiesInterface $object,
+        bool $assumeDoesNotExist = false
+    ) : void {
         static::ThrowIfNotType($object, DaftNestedWriteableObject::class, 1, __METHOD__);
 
-        parent::RememberDaftObjectData($object);
+        parent::RememberDaftObjectData($object, $assumeDoesNotExist);
     }
 
     /**
