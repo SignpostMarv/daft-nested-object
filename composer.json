@@ -42,7 +42,7 @@
     },
     "require": {
         "php": "^7.1",
-        "signpostmarv/daft-object": "^0.12.0"
+        "signpostmarv/daft-object": "^0.12.1"
     },
     "require-dev": {
         "maglnet/composer-require-checker": "dev-master",
