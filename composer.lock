@@ -1835,12 +1835,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "e7b016bfcb3d6f8065864207fad4de2e19a54894"
+                "reference": "ea30584b2aa2b605e01dbca1cc30f3fb136b990a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e7b016bfcb3d6f8065864207fad4de2e19a54894",
-                "reference": "e7b016bfcb3d6f8065864207fad4de2e19a54894",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ea30584b2aa2b605e01dbca1cc30f3fb136b990a",
+                "reference": "ea30584b2aa2b605e01dbca1cc30f3fb136b990a",
                 "shasum": ""
             },
             "require": {
@@ -1895,7 +1895,7 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2018-07-08T18:05:04+00:00"
+            "time": "2018-07-10T21:16:17+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
