@@ -4,34 +4,35 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "16797bdad7cc0d33fe0607b8d84c7b1a",
+    "content-hash": "3bb023603eec37e13831c24489452cc6",
     "packages": [
         {
             "name": "signpostmarv/daft-object",
-            "version": "v0.12.1",
+            "version": "v0.12.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "c9b30456ce64ccb0f11acd5bf01f0d31f37879a8"
+                "reference": "2163dd32c3564dc0cc0df27f39e01fdf940ec540"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/c9b30456ce64ccb0f11acd5bf01f0d31f37879a8",
-                "reference": "c9b30456ce64ccb0f11acd5bf01f0d31f37879a8",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/2163dd32c3564dc0cc0df27f39e01fdf940ec540",
+                "reference": "2163dd32c3564dc0cc0df27f39e01fdf940ec540",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "^1.5",
-                "ext-mbstring": "^7.1",
+                "ext-json": "*",
+                "ext-mbstring": "*",
                 "php": "^7.1"
             },
             "require-dev": {
-                "maglnet/composer-require-checker": "dev-master",
-                "phpstan/phpstan": "^0.10.0",
+                "maglnet/composer-require-checker": "^1.0",
+                "phpstan/phpstan": "^0.10.1",
                 "phpstan/phpstan-phpunit": "^0.10.0",
                 "phpstan/phpstan-strict-rules": "^0.10.0",
                 "phpunit/phpunit": "^7.2",
                 "povils/phpmnd": "^2.0",
+                "roave/security-advisories": "dev-master",
                 "sebastian/phpcpd": "^4.0",
                 "signpostmarv/php-cs-fixer-config": "^0.5.1",
                 "vimeo/psalm": "^2.0"
@@ -53,7 +54,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2018-07-11T17:21:48+00:00"
+            "time": "2018-07-13T19:30:56+00:00"
         }
     ],
     "packages-dev": [
@@ -570,16 +571,16 @@
         },
         {
             "name": "maglnet/composer-require-checker",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/maglnet/ComposerRequireChecker.git",
-                "reference": "f180153409f86590f150c8fd80967ed99a0088e7"
+                "reference": "dcd45242d2187a9aff7286a9d6d1764b8e829dd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/f180153409f86590f150c8fd80967ed99a0088e7",
-                "reference": "f180153409f86590f150c8fd80967ed99a0088e7",
+                "url": "https://api.github.com/repos/maglnet/ComposerRequireChecker/zipball/dcd45242d2187a9aff7286a9d6d1764b8e829dd2",
+                "reference": "dcd45242d2187a9aff7286a9d6d1764b8e829dd2",
                 "shasum": ""
             },
             "require": {
@@ -634,7 +635,7 @@
                 "require",
                 "requirements"
             ],
-            "time": "2018-06-26T20:35:49+00:00"
+            "time": "2018-07-11T19:38:33+00:00"
         },
         {
             "name": "muglug/package-versions-56",
@@ -2642,16 +2643,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "3.0.1",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "591a30922f54656695e59b1f39501aec513403da"
+                "reference": "5de4fc177adf9bce8df98d8d141a7559d7ccf6da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/591a30922f54656695e59b1f39501aec513403da",
-                "reference": "591a30922f54656695e59b1f39501aec513403da",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/5de4fc177adf9bce8df98d8d141a7559d7ccf6da",
+                "reference": "5de4fc177adf9bce8df98d8d141a7559d7ccf6da",
                 "shasum": ""
             },
             "require": {
@@ -2702,7 +2703,7 @@
                 "compare",
                 "equality"
             ],
-            "time": "2018-06-14T15:05:28+00:00"
+            "time": "2018-07-12T15:12:46+00:00"
         },
         {
             "name": "sebastian/diff",
@@ -4105,7 +4106,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "maglnet/composer-require-checker": 20,
         "phpstan/phpstan": 20,
         "phpstan/phpstan-phpunit": 20,
         "phpstan/phpstan-strict-rules": 20,

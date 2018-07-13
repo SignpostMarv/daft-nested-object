@@ -42,10 +42,10 @@
     },
     "require": {
         "php": "^7.1",
-        "signpostmarv/daft-object": "^0.12.1"
+        "signpostmarv/daft-object": "^0.12.2"
     },
     "require-dev": {
-        "maglnet/composer-require-checker": "dev-master",
+        "maglnet/composer-require-checker": "^1.0",
         "phpstan/phpstan": "dev-master",
         "phpstan/phpstan-phpunit": "dev-master",
         "phpstan/phpstan-strict-rules": "dev-master",
