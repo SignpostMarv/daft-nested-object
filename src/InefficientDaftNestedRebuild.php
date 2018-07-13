@@ -45,7 +45,14 @@ class InefficientDaftNestedRebuild
         * @var DaftNestedWriteableObject $rootLeaf
         */
         foreach ($this->children[0] as $rootLeaf) {
-            $n = $this->InefficientRebuild($rootLeaf, 0, $n, $this->parentIdXref, $this->idXref, $this->children);
+            $n = $this->InefficientRebuild(
+                $rootLeaf,
+                0,
+                $n,
+                $this->parentIdXref,
+                $this->idXref,
+                $this->children
+            );
         }
     }
 
