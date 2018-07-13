@@ -13,14 +13,29 @@ class InefficientDaftNestedRebuild
     /**
     * @var DaftNestedWriteableObjectTree
     */
-    private $tree;
+    protected $tree;
+
+    /**
+    * @var array<int, scalar|scalar[]>
+    */
+    protected $parentIdXref = [];
+
+    /**
+    * @var array<int, array<int, DaftNestedWriteableObject>>
+    */
+    protected $children = [[]];
+
+    /**
+    * @var array<int, scalar|scalar[]>
+    */
+    protected $idXref = [];
 
     public function __construct(DaftNestedWriteableObjectTree $tree)
     {
         $this->tree = $tree;
     }
 
-    public function RebuildTree() : void
+    protected function Reset() : void
     {
         $parentIdXref = [(array) $this->tree->GetNestedObjectTreeRootId()];
 
@@ -34,6 +49,15 @@ class InefficientDaftNestedRebuild
         */
         $idXref = [];
 
+        $this->parentIdXref = $parentIdXref;
+        $this->children = $children;
+        $this->idXref = $idXref;
+    }
+
+    protected function ProcessTree() : void
+    {
+        $this->Reset();
+
         $tree = $this->tree->RecallDaftNestedObjectFullTree();
 
         usort($tree, function (DaftNestedWriteableObject $a, DaftNestedWriteableObject $b) : int {
@@ -45,29 +69,29 @@ class InefficientDaftNestedRebuild
         */
         foreach ($tree as $i => $leaf) {
             $leafParentId = $leaf->ObtainDaftNestedObjectParentId();
-            $pos = array_search($leafParentId, $parentIdXref, true);
+            $pos = array_search($leafParentId, $this->parentIdXref, true);
 
             if (false === $pos) {
-                $parentIdXref[] = $leafParentId;
+                $this->parentIdXref[] = $leafParentId;
 
                 /**
                 * @var int $pos
                 */
-                $pos = array_search($leafParentId, $parentIdXref, true);
+                $pos = array_search($leafParentId, $this->parentIdXref, true);
 
-                $children[$pos] = [];
+                $this->children[$pos] = [];
             }
 
-            if ( ! in_array($leaf, $children[$pos], true)) {
-                $children[$pos][] = $leaf;
+            if ( ! in_array($leaf, $this->children[$pos], true)) {
+                $this->children[$pos][] = $leaf;
             }
 
-            if ( ! in_array($leaf->GetId(), $idXref, true)) {
+            if ( ! in_array($leaf->GetId(), $this->idXref, true)) {
                 /**
                 * @var scalar|scalar[] $leafId
                 */
                 $leafId = $leaf->GetId();
-                $idXref[] = $leafId;
+                $this->idXref[] = $leafId;
             }
 
             $leaf->SetIntNestedLeft(0);
@@ -76,14 +100,19 @@ class InefficientDaftNestedRebuild
 
             $tree[$i] = $this->tree->StoreThenRetrieveFreshLeaf($leaf);
         }
+    }
+
+    public function RebuildTree() : void
+    {
+        $this->ProcessTree();
 
         $n = 0;
 
         /**
         * @var DaftNestedWriteableObject $rootLeaf
         */
-        foreach ($children[0] as $rootLeaf) {
-            $n = $this->InefficientRebuild($rootLeaf, 0, $n, $parentIdXref, $idXref, $children);
+        foreach ($this->children[0] as $rootLeaf) {
+            $n = $this->InefficientRebuild($rootLeaf, 0, $n, $this->parentIdXref, $this->idXref, $this->children);
         }
     }
 
@@ -114,8 +143,8 @@ class InefficientDaftNestedRebuild
             /**
             * @var DaftNestedWriteableObject $child
             */
-            foreach ($children[$parentPos] as $child) {
-                $n = $this->InefficientRebuild($child, $level + 1, $n, $parents, $ids, $children);
+            foreach ($this->children[$parentPos] as $child) {
+                $n = $this->InefficientRebuild($child, $level + 1, $n, $parents, $ids, $this->children);
             }
         }
 
