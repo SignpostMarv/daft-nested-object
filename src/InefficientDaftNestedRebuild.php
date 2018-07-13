@@ -35,6 +35,20 @@ class InefficientDaftNestedRebuild
         $this->tree = $tree;
     }
 
+    public function RebuildTree() : void
+    {
+        $this->ProcessTree();
+
+        $n = 0;
+
+        /**
+        * @var DaftNestedWriteableObject $rootLeaf
+        */
+        foreach ($this->children[0] as $rootLeaf) {
+            $n = $this->InefficientRebuild($rootLeaf, 0, $n, $this->parentIdXref, $this->idXref, $this->children);
+        }
+    }
+
     protected function Reset() : void
     {
         $parentIdXref = [(array) $this->tree->GetNestedObjectTreeRootId()];
@@ -99,20 +113,6 @@ class InefficientDaftNestedRebuild
             $leaf->SetIntNestedLevel(0);
 
             $tree[$i] = $this->tree->StoreThenRetrieveFreshLeaf($leaf);
-        }
-    }
-
-    public function RebuildTree() : void
-    {
-        $this->ProcessTree();
-
-        $n = 0;
-
-        /**
-        * @var DaftNestedWriteableObject $rootLeaf
-        */
-        foreach ($this->children[0] as $rootLeaf) {
-            $n = $this->InefficientRebuild($rootLeaf, 0, $n, $this->parentIdXref, $this->idXref, $this->children);
         }
     }
 
