@@ -28,16 +28,27 @@
         "sort-packages": true
     },
     "scripts": {
-        "tests": [
+        "scrutinizer": [
             "phpunit -vvvv --coverage-clover=phpunit.clover",
+            "@remaining-tests"
+        ],
+        "tests": [
+            "phpunit -vvvv",
+            "@remaining-tests",
+            "@phpstan"
+        ],
+        "phpstan": [
+            "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests PHPStan",
+            "echo 'if you can see this, phpstan/phpstan#1142 is probably fixed!'"
+        ],
+        "remaining-tests": [
             "psalm",
             "phpcpd src Tests PHPStan",
             "phpmnd src",
             "phpmnd Tests",
             "phpmnd PHPStan",
             "composer-require-checker check ./composer.json",
-            "php-cs-fixer fix --verbose --allow-risky=yes --dry-run",
-            "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests PHPStan"
+            "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
         ]
     },
     "require": {
