@@ -10,6 +10,10 @@ namespace SignpostMarv\DaftObject;
 
 abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDaftObject implements DaftNestedObject
 {
+    const SORTABLE_PROPERTIES = [
+        'intNestedSortOrder',
+    ];
+
     public function GetIntNestedLeft() : int
     {
         return (int) ($this->RetrievePropertyValueFromData('intNestedLeft') ?? null);

@@ -184,11 +184,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         return count($this->RecallDaftNestedObjectPathToId($id, $includeLeaf));
     }
 
-    public function CompareObjects(DaftNestedObject $a, DaftNestedObject $b) : int
-    {
-        return $a->GetIntNestedSortOrder() <=> $b->GetIntNestedSortOrder();
-    }
-
     public function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = false

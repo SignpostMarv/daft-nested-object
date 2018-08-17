@@ -81,6 +81,4 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     * @return scalar|scalar[]
     */
     public function GetNestedObjectTreeRootId();
-
-    public function CompareObjects(DaftNestedObject $a, DaftNestedObject $b) : int;
 }

@@ -82,7 +82,7 @@ class InefficientDaftNestedRebuild
         $tree = $this->tree->RecallDaftNestedObjectFullTree();
 
         usort($tree, function (DaftNestedWriteableObject $a, DaftNestedWriteableObject $b) : int {
-            return $this->tree->CompareObjects($a, $b);
+            return $a->CompareToDaftSortableObject($b);
         });
 
         /**
