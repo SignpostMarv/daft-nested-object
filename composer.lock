@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "62eab1e6139fe31691557ee13c051d24",
+    "content-hash": "6326ad0c76d436d5b48f6f289b1ff4c6",
     "packages": [
         {
             "name": "signpostmarv/daft-object",
-            "version": "v0.13.0",
+            "version": "v0.13.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "c92e9bd583ad9b1b4c57cde38c71557e534f3c26"
+                "reference": "f8015e0a6983109b1123e5061a34d8779068f021"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/c92e9bd583ad9b1b4c57cde38c71557e534f3c26",
-                "reference": "c92e9bd583ad9b1b4c57cde38c71557e534f3c26",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/f8015e0a6983109b1123e5061a34d8779068f021",
+                "reference": "f8015e0a6983109b1123e5061a34d8779068f021",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2018-08-09T20:20:23+00:00"
+            "time": "2018-08-18T00:44:44+00:00"
         }
     ],
     "packages-dev": [
