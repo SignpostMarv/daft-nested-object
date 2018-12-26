@@ -70,12 +70,12 @@ class DaftObjectImplementationTest extends BaseTest
     public function DataProviderAbstractNestedNotWriteable() : Generator
     {
         /**
-        * @var array $args
+        * @var array
         */
         foreach ($this->FuzzingImplementationsViaGenerator() as $args) {
             if (Fixtures\DaftNestedWriteableIntObject::class === $args[0]) {
                 /**
-                * @var scalar $value
+                * @var scalar
                 */
                 foreach ($args[1] as $arg => $value) {
                     if ('id' === $arg) {
@@ -94,7 +94,7 @@ class DaftObjectImplementationTest extends BaseTest
     public function DataProviderObjectParentId() : Generator
     {
         /**
-        * @var array $args
+        * @var array
         * @var string $args[0]
         * @var array<string, mixed> $args[1]
         */
@@ -121,7 +121,7 @@ class DaftObjectImplementationTest extends BaseTest
     public function testNestedObjectParentId(string $implementation, array $args) : void
     {
         /**
-        * @var DaftNestedObject $instance
+        * @var DaftNestedObject
         */
         $instance = new $implementation($args);
 
@@ -154,7 +154,7 @@ class DaftObjectImplementationTest extends BaseTest
 
         if ($instance instanceof DaftNestedWriteableObject) {
             /**
-            * @var DaftNestedWriteableObject $instance
+            * @var DaftNestedWriteableObject
             */
             $instance = new $implementation();
 

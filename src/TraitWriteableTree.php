@@ -159,7 +159,7 @@ trait TraitWriteableTree
         }
 
         /**
-        * @var scalar|scalar[] $replacementRoot
+        * @var scalar|scalar[]
         */
         $replacementRoot = $replacementRoot;
 

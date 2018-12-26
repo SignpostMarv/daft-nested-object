@@ -48,7 +48,7 @@ class NestedTreeTest extends Base
         array_unshift($remainingTreeArgs, $leafClass);
 
         /**
-        * @var DaftNestedObjectTree $repo
+        * @var DaftNestedObjectTree
         */
         $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
 
@@ -106,7 +106,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -125,7 +125,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectFullTree(0);
 
@@ -149,7 +149,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, true, null);
 
@@ -167,7 +167,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->id, true, null);
 
@@ -203,7 +203,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectPathToId($c->id, true);
 
@@ -224,7 +224,7 @@ class NestedTreeTest extends Base
         static::assertSame(2, $repo->CountDaftNestedObjectPathToId($c->id, true));
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectPathToObject($c, false);
 
@@ -241,7 +241,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectPathToId($c->id, false);
 
@@ -261,7 +261,7 @@ class NestedTreeTest extends Base
         static::assertSame(1, $repo->CountDaftNestedObjectPathToId($c->id, false));
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, false, null);
 
@@ -278,7 +278,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->id, false, null);
 
@@ -298,7 +298,7 @@ class NestedTreeTest extends Base
         static::assertSame(1, $repo->CountDaftNestedObjectTreeWithId($b->id, false, null));
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, false, 0);
 
@@ -314,7 +314,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject> $tree
+        * @var array<int, DaftNestedObject>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->id, false, 0);
 
@@ -365,7 +365,7 @@ class NestedTreeTest extends Base
         array_unshift($remainingTreeArgs, AbstractArrayBackedDaftObject::class);
 
         /**
-        * @var DaftNestedObjectTree $repo
+        * @var DaftNestedObjectTree
         */
         $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
     }

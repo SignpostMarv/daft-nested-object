@@ -39,7 +39,7 @@ trait TraitRememberDaftObject
                 $tree = $this->RecallDaftNestedObjectFullTree();
 
                 /**
-                * @var DaftNestedWriteableObject $end
+                * @var DaftNestedWriteableObject
                 */
                 $end = end($tree);
 

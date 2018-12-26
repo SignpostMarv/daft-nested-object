@@ -101,7 +101,7 @@ trait TraitWriteableTreeUtilities
         DaftNestedWriteableObject $replacementRoot
     ) : void {
         /**
-        * @var scalar|scalar[] $replacementRootId
+        * @var scalar|scalar[]
         */
         $replacementRootId = $this->StoreThenRetrieveFreshLeaf($replacementRoot)->GetId();
 
@@ -114,7 +114,7 @@ trait TraitWriteableTreeUtilities
     protected function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
     {
         /**
-        * @var DaftNestedWriteableObject|null $alter
+        * @var DaftNestedWriteableObject|null
         */
         foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
             if ($alter instanceof DaftNestedWriteableObject) {
@@ -154,7 +154,7 @@ trait TraitWriteableTreeUtilities
         }
 
         /**
-        * @var DaftNestedWriteableObject|null $out
+        * @var DaftNestedWriteableObject|null
         */
         $out = $tree->RecallDaftObject($leaf);
 
@@ -173,7 +173,7 @@ trait TraitWriteableTreeUtilities
         $tree = $this->ThrowIfNotTree();
 
         /**
-        * @var false|DaftNestedWriteableObject $reference
+        * @var false|DaftNestedWriteableObject
         */
         $reference = $before ? current($leaves) : end($leaves);
 
@@ -243,7 +243,7 @@ trait TraitWriteableTreeUtilities
         DaftNestedWriteableObject $referenceLeaf
     ) : array {
         /**
-        * @var array<int, DaftNestedWriteableObject> $siblings
+        * @var array<int, DaftNestedWriteableObject>
         */
         $siblings = array_values(array_filter(
             $this->RecallDaftNestedObjectTreeWithId(
@@ -265,7 +265,7 @@ trait TraitWriteableTreeUtilities
         bool $before
     ) : void {
         /**
-        * @var array<int, DaftNestedWriteableObject> $siblings
+        * @var array<int, DaftNestedWriteableObject>
         */
         $siblings = $this->SiblingsExceptLeaf($newLeaf, $referenceLeaf);
 
@@ -274,11 +274,11 @@ trait TraitWriteableTreeUtilities
         $j = count($siblings);
 
         /**
-        * @var DaftNestedWriteableObject $leaf
+        * @var DaftNestedWriteableObject
         */
         foreach ($siblings as $leaf) {
             /**
-            * @var scalar|scalar[] $siblingId
+            * @var scalar|scalar[]
             */
             $siblingId = $leaf->GetId();
             $siblingIds[] = $siblingId;
@@ -308,7 +308,7 @@ trait TraitWriteableTreeUtilities
     protected function RebuildTreeInefficiently() : void
     {
         /**
-        * @var DaftNestedWriteableObjectTree $tree
+        * @var DaftNestedWriteableObjectTree
         */
         $tree = $this->ThrowIfNotTree();
         $rebuilder = new InefficientDaftNestedRebuild($tree);

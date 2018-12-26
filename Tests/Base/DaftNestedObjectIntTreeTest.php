@@ -55,7 +55,7 @@ class DaftNestedObjectIntTreeTest extends BaseTest
         $out = [];
 
         /**
-        * @var mixed[] $args
+        * @var mixed[]
         * @var string $args[0]
         * @var string $args[1]
         * @var array $args[2]
@@ -68,7 +68,7 @@ class DaftNestedObjectIntTreeTest extends BaseTest
             $a[0] = $b[0] = DaftNestedWriteableIntObject::class;
 
             /**
-            * @var array $params
+            * @var array
             */
             foreach ($this->RepositoryDataProviderParams() as $params) {
                 $a[2] = $params;

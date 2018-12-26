@@ -13,7 +13,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array
     {
         /**
-        * @var DaftNestedObject[] $out
+        * @var DaftNestedObject[]
         */
         $out = $this->memory;
 
@@ -21,7 +21,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
         foreach ($out as $obj) {
             /**
-            * @var array<int, scalar|scalar[]> $id
+            * @var array<int, scalar|scalar[]>
             */
             $id = $obj->GetId();
 
@@ -29,7 +29,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         }
 
         /**
-        * @var DaftNestedObject[] $fromMemory
+        * @var DaftNestedObject[]
         */
         $fromMemory = array_filter(
             array_map([$this, 'MapDataToObject'], $this->data),
@@ -197,7 +197,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     {
         $type = $this->type;
         /**
-        * @var DaftNestedObject $out
+        * @var DaftNestedObject
         */
         $out = new $type($row);
 

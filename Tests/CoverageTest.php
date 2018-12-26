@@ -25,7 +25,7 @@ class CoverageTest extends Base
     public function DataProviderCoverageNonWriteableRepo() : Generator
     {
         /**
-        * @var Fixtures\ThrowingMemoryTree $repo
+        * @var Fixtures\ThrowingMemoryTree
         */
         $repo = Fixtures\ThrowingMemoryTree::DaftObjectRepositoryByType(
             Fixtures\DaftNestedIntObject::class
@@ -37,7 +37,7 @@ class CoverageTest extends Base
     public function DataProviderCoverageWriteableRepo() : Generator
     {
         /**
-        * @var Fixtures\DaftWriteableNestedObjectIntTree $repo
+        * @var Fixtures\DaftWriteableNestedObjectIntTree
         */
         $repo = Fixtures\DaftWriteableNestedObjectIntTree::DaftObjectRepositoryByType(
             Fixtures\DaftNestedWriteableIntObject::class
@@ -46,7 +46,7 @@ class CoverageTest extends Base
         yield [$repo];
 
         /**
-        * @var Fixtures\ThrowingWriteableMemoryTree $repo
+        * @var Fixtures\ThrowingWriteableMemoryTree
         */
         $repo = Fixtures\ThrowingWriteableMemoryTree::DaftObjectRepositoryByType(
             Fixtures\DaftNestedWriteableIntObject::class
@@ -58,7 +58,7 @@ class CoverageTest extends Base
     public function DataProviderCoverageWriteableRepoWithThrowingTree() : Generator
     {
         /**
-        * @var array $args
+        * @var array
         */
         foreach ($this->DataProviderCoverageWriteableRepo() as $args) {
             if ($args[0] instanceof Fixtures\DaftObjectWriteableThrowingTree) {
@@ -72,7 +72,7 @@ class CoverageTest extends Base
         foreach ([true, false] as $before) {
             foreach ([null, true, false] as $above) {
                 /**
-                * @var array $repoArgs
+                * @var array
                 */
                 foreach ($this->DataProviderCoverageWriteableRepo() as $repoArgs) {
                     list($repo) = $repoArgs;
@@ -85,7 +85,7 @@ class CoverageTest extends Base
     public function DataProviderInsertArgsWithThrowingTree() : Generator
     {
         /**
-        * @var array $args
+        * @var array
         */
         foreach ($this->DataProviderInsertArgs() as $args) {
             if ($args[0] instanceof Fixtures\DaftObjectWriteableThrowingTree) {
@@ -253,7 +253,7 @@ class CoverageTest extends Base
         ? bool $above
     ) : void {
         /**
-        * @var Fixtures\DaftWriteableNestedObjectIntTree $repo
+        * @var Fixtures\DaftWriteableNestedObjectIntTree
         */
         $repo = Fixtures\DaftWriteableNestedObjectIntTree::DaftObjectRepositoryByType(
             Fixtures\DaftNestedWriteableIntObject::class
@@ -362,7 +362,7 @@ class CoverageTest extends Base
         }
 
         /**
-        * @var array<int, DaftNestedWriteableObject> $out
+        * @var array<int, DaftNestedWriteableObject>
         */
         $out = static::PrepRepo($repo, $type, ...$ids);
 

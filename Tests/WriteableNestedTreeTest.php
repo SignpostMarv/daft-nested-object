@@ -44,7 +44,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array_unshift($remainingTreeArgs, $leafClass);
 
         /**
-        * @var DaftNestedWriteableObjectTree $repo
+        * @var DaftNestedWriteableObjectTree
         */
         $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
 
@@ -98,7 +98,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $repo->RememberDaftObject($d0);
 
         /**
-        * @var DaftNestedWriteableObjectTree $repo
+        * @var DaftNestedWriteableObjectTree
         */
         $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
 
@@ -124,17 +124,17 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $repo->ModifyDaftNestedObjectTreeRemoveWithObject($c0, null);
 
         /**
-        * @var DaftNestedWriteableObject $a0
+        * @var DaftNestedWriteableObject
         */
         $a0 = $repo->RecallDaftObject($a0->GetId());
 
         /**
-        * @var DaftNestedWriteableObject $b0
+        * @var DaftNestedWriteableObject
         */
         $b0 = $repo->RecallDaftObject($b0->GetId());
 
         /**
-        * @var DaftNestedWriteableObject $d0
+        * @var DaftNestedWriteableObject
         */
         $d0 = $repo->RecallDaftObject($d0->GetId());
 
@@ -168,17 +168,17 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $repo->ModifyDaftNestedObjectTreeRemoveWithId($c0->GetId(), null);
 
         /**
-        * @var DaftNestedWriteableObject $a0
+        * @var DaftNestedWriteableObject
         */
         $a0 = $repo->RecallDaftObject($a0->GetId());
 
         /**
-        * @var DaftNestedWriteableObject $b0
+        * @var DaftNestedWriteableObject
         */
         $b0 = $repo->RecallDaftObject($b0->GetId());
 
         /**
-        * @var DaftNestedWriteableObject $d0
+        * @var DaftNestedWriteableObject
         */
         $d0 = $repo->RecallDaftObject($d0->GetId());
 
@@ -192,12 +192,12 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $repo->ModifyDaftNestedObjectTreeRemoveWithId($b0->GetId(), null);
 
         /**
-        * @var DaftNestedWriteableObject $a0
+        * @var DaftNestedWriteableObject
         */
         $a0 = $repo->RecallDaftObject($a0->GetId());
 
         /**
-        * @var DaftNestedWriteableObject $d0
+        * @var DaftNestedWriteableObject
         */
         $d0 = $repo->RecallDaftObject($d0->GetId());
 
@@ -223,7 +223,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array_unshift($remainingTreeArgs, $leafClass);
 
         /**
-        * @var DaftNestedWriteableObjectTree $repo
+        * @var DaftNestedWriteableObjectTree
         */
         $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
 
@@ -252,7 +252,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array_unshift($remainingTreeArgs, $leafClass);
 
         /**
-        * @var DaftNestedWriteableObjectTree $repo
+        * @var DaftNestedWriteableObjectTree
         */
         $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
 
@@ -270,7 +270,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
     {
         foreach ([true, false] as $bool) {
             /**
-            * @var array $args
+            * @var array
             */
             foreach ($this->DataProviderArgs() as $args) {
                 array_unshift($args, $bool);
@@ -283,11 +283,11 @@ class WriteableNestedTreeTest extends NestedTreeTest
     public function DataProviderAdditionalTreeModification() : Generator
     {
         /**
-        * @var array $additionalArgs
+        * @var array
         */
         foreach ($this->DataProviderAdditionalArgs() as $additionalArgs) {
             /**
-            * @var string[] $args
+            * @var string[]
             */
             foreach ($this->DataProviderArgs() as $args) {
                 array_unshift($args, ...$additionalArgs);
@@ -318,12 +318,12 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array_unshift($remainingTreeArgs, $leafClass);
 
         /**
-        * @var DaftNestedWriteableObjectTree $repo
+        * @var DaftNestedWriteableObjectTree
         */
         $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
 
         /**
-        * @var array<int, DaftNestedWriteableObject> $leaves
+        * @var array<int, DaftNestedWriteableObject>
         */
         $leaves = $setup($repo, $leafClass);
 
@@ -359,12 +359,12 @@ class WriteableNestedTreeTest extends NestedTreeTest
         DaftNestedWriteableObjectTree $repo
     ) : array {
         /**
-        * @var array<int, DaftNestedWriteableObject> $leaves
+        * @var array<int, DaftNestedWriteableObject>
         */
         $leaves = static::InitLeafClassInsertAfterId($repo, $leafClass, 0, range(1, 10));
 
         /**
-        * @var array<int, int> $ids
+        * @var array<int, int>
         */
         $ids = range(1, 10);
         static::InsertLooseChunks($repo, false, true, ...$ids);
@@ -547,13 +547,13 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObject ...$leaves
                 ) : void {
                     /**
-                    * @var array<int, int> $ids
+                    * @var array<int, int>
                     */
                     $ids = range(1, 10);
                     static::InsertLooseChunks($repo, false, true, ...$ids);
 
                     /**
-                    * @var array<int, DaftNestedWriteableObject> $tree
+                    * @var array<int, DaftNestedWriteableObject>
                     */
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -568,7 +568,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     $repo->ModifyDaftNestedObjectTreeInsertLoose(5, 7, false, true);
 
                     /**
-                    * @var array<int, DaftNestedWriteableObject> $tree
+                    * @var array<int, DaftNestedWriteableObject>
                     */
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -605,7 +605,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObject ...$leaves
                 ) : void {
                     /**
-                    * @var array<int, int> $ids
+                    * @var array<int, int>
                     */
                     $ids = array_merge(range(1, 10), [1, 3, 5, 7]);
 
@@ -627,7 +627,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     );
 
                     /**
-                    * @var array<int, DaftNestedWriteableObject> $tree
+                    * @var array<int, DaftNestedWriteableObject>
                     */
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -653,7 +653,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObject ...$leaves
                 ) : void {
                     /**
-                    * @var array<int, int> $ids
+                    * @var array<int, int>
                     */
                     $ids = array_merge(range(1, 10), [1, 3, 5, 7]);
 
@@ -665,7 +665,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     );
 
                     /**
-                    * @var array<int, DaftNestedWriteableObject> $tree
+                    * @var array<int, DaftNestedWriteableObject>
                     */
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -711,22 +711,22 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     $repo->ModifyDaftNestedObjectTreeRemoveWithId(1, $repo->GetNestedObjectTreeRootId());
 
                     /**
-                    * @var array<int, DaftNestedWriteableObject> $tree
+                    * @var array<int, DaftNestedWriteableObject>
                     */
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
                     /**
-                    * @var array<int, int> $left
+                    * @var array<int, int>
                     */
                     $left = range(0, 16, 2);
 
                     /**
-                    * @var array<int, int> $right
+                    * @var array<int, int>
                     */
                     $right = range(1, 17, 2);
 
                     /**
-                    * @var array<int, int> $level
+                    * @var array<int, int>
                     */
                     $level = array_fill(0, 9, 0);
 
@@ -762,7 +762,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     $level = [0, 1, 1, 1, 1, 1, 1, 1, 1, 0];
 
                     /**
-                    * @var array<int, DaftNestedWriteableObject> $tree
+                    * @var array<int, DaftNestedWriteableObject>
                     */
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -773,7 +773,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     $repo->ModifyDaftNestedObjectTreeRemoveWithObject($leaves[0], $leaves[9]);
 
                     /**
-                    * @var array<int, DaftNestedWriteableObject> $tree
+                    * @var array<int, DaftNestedWriteableObject>
                     */
                     $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -841,7 +841,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array $leaves
     ) : void {
         /**
-        * @var array<int, DaftNestedWriteableObject> $leaves
+        * @var array<int, DaftNestedWriteableObject>
         */
         $leaves = array_map(
             function (DaftNestedWriteableObject $leaf) use ($repo) : DaftNestedWriteableObject {
