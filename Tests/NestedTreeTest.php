@@ -44,10 +44,10 @@ class NestedTreeTest extends Base
         static::assertTrue(class_exists($leafClass));
         static::assertTrue(class_exists($treeClass));
         if ( ! is_a($leafClass, DaftNestedObject::class, true)) {
-        static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
+            static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
         }
         if ( ! is_a($treeClass, DaftNestedObjectTree::class, true)) {
-        static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
+            static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
         }
 
         array_unshift($remainingTreeArgs, $leafClass);
@@ -373,7 +373,7 @@ class NestedTreeTest extends Base
         static::assertTrue(class_exists($treeClass));
         static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
         if ( ! is_a($treeClass, DaftNestedObjectTree::class, true)) {
-        static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
+            static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
         }
 
         $this->expectException(DaftObjectRepositoryTypeByClassMethodAndTypeException::class);
