@@ -63,6 +63,33 @@ trait TraitWriteableTreeUtilities
         ? int $relativeDepthLimit
     ) : array;
 
+    abstract public function StoreThenRetrieveFreshLeaf(
+        DaftNestedWriteableObject $leaf
+    ) : DaftNestedWriteableObject;
+
+    /**
+    * @param mixed $newLeaf can be an object or an id, MUST NOT be a root id
+    * @param mixed $referenceLeaf can be an object, an id, or a root id
+    *
+    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
+    */
+    abstract public function ModifyDaftNestedObjectTreeInsertLoose(
+        $newLeaf,
+        $referenceLeaf,
+        bool $before = true,
+        bool $above = null
+    ) : DaftNestedWriteableObject;
+
+    /**
+    * @throws \BadMethodCallException if $root has leaves without $replacementRoot specified
+    *
+    * @return int full tree count after removal
+    */
+    abstract public function ModifyDaftNestedObjectTreeRemoveWithObject(
+        DaftNestedWriteableObject $root,
+        ? DaftNestedWriteableObject $replacementRoot
+    ) : int;
+
     protected function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
         DaftNestedWriteableObjectTree $tree,
         ? DaftNestedWriteableObject $leaf,
