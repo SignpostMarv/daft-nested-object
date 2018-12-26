@@ -41,9 +41,6 @@ class InefficientDaftNestedRebuild
 
         $n = 0;
 
-        /**
-        * @var DaftNestedWriteableObject
-        */
         foreach ($this->children[0] as $rootLeaf) {
             $n = $this->InefficientRebuild(
                 $rootLeaf,
@@ -85,9 +82,6 @@ class InefficientDaftNestedRebuild
             return $a->CompareToDaftSortableObject($b);
         });
 
-        /**
-        * @var DaftNestedWriteableObject
-        */
         foreach ($tree as $i => $leaf) {
             $leafParentId = $leaf->ObtainDaftNestedObjectParentId();
             $pos = array_search($leafParentId, $this->parentIdXref, true);
@@ -147,9 +141,6 @@ class InefficientDaftNestedRebuild
         $parentPos = array_search((array) $id, $parents, true);
 
         if (false !== $parentPos) {
-            /**
-            * @var DaftNestedWriteableObject
-            */
             foreach ($this->children[$parentPos] as $child) {
                 $n = $this->InefficientRebuild($child, $level + 1, $n, $parents, $ids, $this->children);
             }

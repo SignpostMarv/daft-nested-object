@@ -113,9 +113,6 @@ trait TraitWriteableTreeUtilities
     */
     protected function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
     {
-        /**
-        * @var DaftNestedWriteableObject|null
-        */
         foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
             if ($alter instanceof DaftNestedWriteableObject) {
                 $alter->AlterDaftNestedObjectParentId($replacementRootId);
@@ -273,9 +270,6 @@ trait TraitWriteableTreeUtilities
         $siblingSort = [];
         $j = count($siblings);
 
-        /**
-        * @var DaftNestedWriteableObject
-        */
         foreach ($siblings as $leaf) {
             /**
             * @var scalar|scalar[]

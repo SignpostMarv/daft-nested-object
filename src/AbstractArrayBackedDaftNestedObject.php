@@ -117,9 +117,6 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         */
         $props = static::DaftNestedObjectParentIdProperties();
 
-        /**
-        * @var scalar
-        */
         foreach (array_combine($props, (is_array($value) ? $value : [$value])) as $prop => $val) {
             $this->NudgePropertyValue($prop, $val);
         }
@@ -129,9 +126,6 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
     {
         $out = parent::ChangedProperties();
 
-        /**
-        * @var string
-        */
         foreach (static::DaftNestedObjectParentIdProperties() as $prop) {
             if (in_array($prop, $out, true)) {
                 $out[] = 'daftNestedObjectParentId';
