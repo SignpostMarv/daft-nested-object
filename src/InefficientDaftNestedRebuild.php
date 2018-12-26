@@ -47,8 +47,7 @@ class InefficientDaftNestedRebuild
                 0,
                 $n,
                 $this->parentIdXref,
-                $this->idXref,
-                $this->children
+                $this->idXref
             );
         }
     }
@@ -125,8 +124,7 @@ class InefficientDaftNestedRebuild
         int $level,
         int $n,
         array $parents,
-        array $ids,
-        array $children
+        array $ids
     ) : int {
         /**
         * @var scalar|scalar[]
@@ -145,7 +143,7 @@ class InefficientDaftNestedRebuild
 
         if (false !== $parentPos) {
             foreach ($this->children[$parentPos] as $child) {
-                $n = $this->InefficientRebuild($child, $level + 1, $n, $parents, $ids, $this->children);
+                $n = $this->InefficientRebuild($child, $level + 1, $n, $parents, $ids);
             }
         }
 
