@@ -65,6 +65,6 @@
         "roave/security-advisories": "dev-master",
         "sebastian/phpcpd": "^4.0",
         "signpostmarv/php-cs-fixer-config": "^0.5.1",
-        "vimeo/psalm": "^2.0"
+        "vimeo/psalm": "^3.0"
     }
 }
