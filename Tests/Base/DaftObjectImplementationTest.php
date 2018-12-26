@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Base;
 
 use Generator;
+use InvalidArgumentException;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
@@ -40,7 +41,9 @@ class DaftObjectImplementationTest extends BaseTest
         string $property,
         $value
     ) : void {
+        if ( ! is_a($implementation, Fixtures\DaftNestedIntObject::class, true)) {
         static::assertTrue(is_a($implementation, Fixtures\DaftNestedIntObject::class, true));
+        }
 
         $instance = new $implementation();
 
@@ -101,13 +104,24 @@ class DaftObjectImplementationTest extends BaseTest
         foreach ($this->FuzzingImplementationsViaGenerator() as $args) {
             $implementation = (string) $args[0];
 
+            if ( ! is_a($implementation, DaftNestedObject::class, true)) {
+                throw new InvalidArgumentException(
+                    'Index 0 yielded from ' .
+                    static::class .
+                    '::FuzzingImplementationsViaGenerator() must be an implementation of ' .
+                    DaftNestedObject::class .
+                    ', ' .
+                    $implementation .
+                    ' given!'
+                );
+            }
+
             /**
             * @var string[]
             */
             $props = $implementation::DaftNestedObjectParentIdProperties();
 
             if (
-                is_a($implementation, DaftNestedObject::class, true) &&
                 0 === count(array_diff($props, array_keys($args[1])))
             ) {
                 yield $args;
@@ -120,6 +134,18 @@ class DaftObjectImplementationTest extends BaseTest
     */
     public function testNestedObjectParentId(string $implementation, array $args) : void
     {
+        if ( ! is_a($implementation, DaftNestedObject::class, true)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DaftNestedObject::class .
+                ', ' .
+                $implementation .
+                ' given!'
+            );
+        }
+
         /**
         * @var DaftNestedObject
         */

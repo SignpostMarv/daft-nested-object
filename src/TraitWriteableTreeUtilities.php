@@ -113,7 +113,12 @@ trait TraitWriteableTreeUtilities
     */
     protected function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
     {
-        foreach ($this->RecallDaftNestedObjectTreeWithObject($root, false, 1) as $alter) {
+        /**
+        * @var array<int, DaftNestedObject>
+        */
+        $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, 1);
+
+        foreach ($alterThese as $alter) {
             if ($alter instanceof DaftNestedWriteableObject) {
                 $alter->AlterDaftNestedObjectParentId($replacementRootId);
                 $this->RememberDaftObject($alter);

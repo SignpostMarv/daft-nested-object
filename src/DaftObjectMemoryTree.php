@@ -193,6 +193,9 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         parent::RememberDaftObjectData($object, $assumeDoesNotExist);
     }
 
+    /**
+    * @psalm-suppress InvalidStringClass
+    */
     protected function MapDataToObject(array $row) : DaftNestedObject
     {
         $type = $this->type;

@@ -38,8 +38,12 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
+        if ( ! is_a($leafClass, DaftNestedWriteableObject::class, true)) {
         static::assertTrue(is_a($leafClass, DaftNestedWriteableObject::class, true));
+        }
+        if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
         static::assertTrue(is_a($treeClass, DaftNestedWriteableObjectTree::class, true));
+        }
 
         array_unshift($remainingTreeArgs, $leafClass);
 
@@ -220,6 +224,18 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
+        if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
+            throw new InvalidArgumentException(
+                'Argument 2 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DaftNestedWriteableObjectTree::class .
+                ', ' .
+                $treeClass .
+                ' given.'
+            );
+        }
+
         array_unshift($remainingTreeArgs, $leafClass);
 
         /**
@@ -249,6 +265,18 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
+        if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DaftNestedWriteableObjectTree::class .
+                ', ' .
+                $treeClass .
+                ' given.'
+            );
+        }
+
         array_unshift($remainingTreeArgs, $leafClass);
 
         /**
@@ -316,6 +344,18 @@ class WriteableNestedTreeTest extends NestedTreeTest
         ...$remainingTreeArgs
     ) : void {
         array_unshift($remainingTreeArgs, $leafClass);
+
+        if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
+            throw new InvalidArgumentException(
+                'Argument 6 passed to ' .
+                __METHOD__ .
+                ' must be an implementation of ' .
+                DaftNestedWriteableObjectTree::class .
+                ', ' .
+                $treeClass .
+                ' given.'
+            );
+        }
 
         /**
         * @var DaftNestedWriteableObjectTree

@@ -76,6 +76,9 @@ class InefficientDaftNestedRebuild
     {
         $this->Reset();
 
+        /**
+        * @var array<int, DaftNestedWriteableObject>
+        */
         $tree = $this->tree->RecallDaftNestedObjectFullTree();
 
         usort($tree, function (DaftNestedWriteableObject $a, DaftNestedWriteableObject $b) : int {
