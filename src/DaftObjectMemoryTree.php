@@ -13,7 +13,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array
     {
         /**
-        * @var array<int, DefinesOwnUntypedIdInterface&DaftNestedObject|DefinesOwnStringIdInterface&DaftNestedObject|DefinesOwnIntegerIdInterface&DaftNestedObject|DefinesOwnArrayIdInterface&DaftNestedObject>
+        * @var array<int, DaftNestedObject>
         */
         $out = $this->memory;
 

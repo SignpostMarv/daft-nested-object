@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
-interface DaftNestedObject extends DefinesOwnUntypedIdInterface, DaftSortableObject
+interface DaftNestedObject extends DefinesOwnIdPropertiesInterface, DaftSortableObject
 {
     public function GetIntNestedLeft() : int;
 
