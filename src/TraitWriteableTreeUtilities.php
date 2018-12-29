@@ -68,6 +68,16 @@ trait TraitWriteableTreeUtilities
     ) : DaftNestedWriteableObject;
 
     /**
+    * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
+    */
+    abstract public function ModifyDaftNestedObjectTreeInsert(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before = true,
+        bool $above = null
+    ) : DaftNestedWriteableObject;
+
+    /**
     * @param mixed $newLeaf can be an object or an id, MUST NOT be a root id
     * @param mixed $referenceLeaf can be an object, an id, or a root id
     *
