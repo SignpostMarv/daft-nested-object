@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bc4fb1c2aac3701abcbe688e275b5dc8",
+    "content-hash": "9ea33ed7b35818ef285073ec64a93399",
     "packages": [
         {
             "name": "signpostmarv/daft-object",
-            "version": "v0.17.0",
+            "version": "v0.19.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "28f8845b408c5574d02900e0c2ddce4d2b805291"
+                "reference": "2fb39220cc29600d1cf83676ba3606e61691e575"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/28f8845b408c5574d02900e0c2ddce4d2b805291",
-                "reference": "28f8845b408c5574d02900e0c2ddce4d2b805291",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/2fb39220cc29600d1cf83676ba3606e61691e575",
+                "reference": "2fb39220cc29600d1cf83676ba3606e61691e575",
                 "shasum": ""
             },
             "require": {
@@ -26,16 +26,17 @@
                 "php": "^7.1"
             },
             "require-dev": {
-                "maglnet/composer-require-checker": "^1.0",
-                "phpstan/phpstan": "^0.10.1",
+                "infection/infection": "^0.11.4",
+                "maglnet/composer-require-checker": "^1.1",
+                "phpstan/phpstan": "^0.10.7",
                 "phpstan/phpstan-phpunit": "^0.10.0",
-                "phpstan/phpstan-strict-rules": "^0.10.0",
-                "phpunit/phpunit": "^7.2",
+                "phpstan/phpstan-strict-rules": "^0.10.1",
+                "phpunit/phpunit": "^7.5",
                 "povils/phpmnd": "^2.0",
                 "roave/security-advisories": "dev-master",
-                "sebastian/phpcpd": "^4.0",
+                "sebastian/phpcpd": "^4.1",
                 "signpostmarv/php-cs-fixer-config": "^0.6.0",
-                "vimeo/psalm": "^2.0"
+                "vimeo/psalm": "^3.0"
             },
             "type": "library",
             "autoload": {
@@ -54,7 +55,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2018-12-31T00:08:17+00:00"
+            "time": "2019-01-07T03:00:35+00:00"
         }
     ],
     "packages-dev": [
