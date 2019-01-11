@@ -45,17 +45,19 @@ class NestedTreeTest extends Base
         static::assertTrue(class_exists($treeClass));
         if ( ! is_a($leafClass, DaftNestedObject::class, true)) {
             static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
+
+            return;
         }
         if ( ! is_a($treeClass, DaftNestedObjectTree::class, true)) {
             static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
-        }
 
-        array_unshift($remainingTreeArgs, $leafClass);
+            return;
+        }
 
         /**
         * @var DaftNestedObjectTree
         */
-        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
         $a = new $leafClass([
             'id' => 1,
@@ -66,13 +68,6 @@ class NestedTreeTest extends Base
             'intNestedSortOrder' => 0,
         ]);
 
-        if ( ! ($a instanceof DaftNestedObject)) {
-            throw new RuntimeException(
-                'Object instantiation somehow not instance of ' .
-                DaftNestedObject::class
-            );
-        }
-
         $b = new $leafClass([
             'id' => 2,
             'intNestedLeft' => 2,
@@ -82,13 +77,6 @@ class NestedTreeTest extends Base
             'intNestedSortOrder' => 0,
         ]);
 
-        if ( ! ($b instanceof DaftNestedObject)) {
-            throw new RuntimeException(
-                'Object instantiation somehow not instance of ' .
-                DaftNestedObject::class
-            );
-        }
-
         $c = new $leafClass([
             'id' => 3,
             'intNestedLeft' => 3,
@@ -97,13 +85,6 @@ class NestedTreeTest extends Base
             'intNestedParentId' => 2,
             'intNestedSortOrder' => 0,
         ]);
-
-        if ( ! ($c instanceof DaftNestedObject)) {
-            throw new RuntimeException(
-                'Object instantiation somehow not instance of ' .
-                DaftNestedObject::class
-            );
-        }
 
         static::assertSame(0, $repo->CountDaftNestedObjectFullTree());
         static::assertSame(
@@ -374,6 +355,8 @@ class NestedTreeTest extends Base
         static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
         if ( ! is_a($treeClass, DaftNestedObjectTree::class, true)) {
             static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
+
+            return;
         }
 
         $this->expectException(DaftObjectRepositoryTypeByClassMethodAndTypeException::class);
@@ -390,12 +373,13 @@ class NestedTreeTest extends Base
             AbstractArrayBackedDaftObject::class
         ));
 
-        array_unshift($remainingTreeArgs, AbstractArrayBackedDaftObject::class);
-
         /**
         * @var DaftNestedObjectTree
         */
-        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
+        $repo = $treeClass::DaftObjectRepositoryByType(
+            AbstractArrayBackedDaftObject::class,
+            ...$remainingTreeArgs
+        );
     }
 
     protected static function leafClass() : string

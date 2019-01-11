@@ -43,6 +43,8 @@ class DaftObjectImplementationTest extends BaseTest
     ) : void {
         if ( ! is_a($implementation, Fixtures\DaftNestedIntObject::class, true)) {
             static::assertTrue(is_a($implementation, Fixtures\DaftNestedIntObject::class, true));
+
+            return;
         }
 
         $instance = new $implementation();

@@ -40,17 +40,19 @@ class WriteableNestedTreeTest extends NestedTreeTest
     ) : void {
         if ( ! is_a($leafClass, DaftNestedWriteableObject::class, true)) {
             static::assertTrue(is_a($leafClass, DaftNestedWriteableObject::class, true));
+
+            return;
         }
         if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
             static::assertTrue(is_a($treeClass, DaftNestedWriteableObjectTree::class, true));
-        }
 
-        array_unshift($remainingTreeArgs, $leafClass);
+            return;
+        }
 
         /**
         * @var DaftNestedWriteableObjectTree
         */
-        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
         $a0 = static::InitLeafClass($leafClass, ['id' => 1]);
         $b0 = static::InitLeafClass($leafClass, ['id' => 2]);
@@ -104,7 +106,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         /**
         * @var DaftNestedWriteableObjectTree
         */
-        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
         $a0 = static::InitLeafClass($leafClass, ['id' => 1]);
         $b0 = static::InitLeafClass($leafClass, ['id' => 2]);
@@ -236,12 +238,10 @@ class WriteableNestedTreeTest extends NestedTreeTest
             );
         }
 
-        array_unshift($remainingTreeArgs, $leafClass);
-
         /**
         * @var DaftNestedWriteableObjectTree
         */
-        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
         $leaves = $this->setupTestTreeRemovalFailure($leafClass, $repo);
 
@@ -277,12 +277,10 @@ class WriteableNestedTreeTest extends NestedTreeTest
             );
         }
 
-        array_unshift($remainingTreeArgs, $leafClass);
-
         /**
         * @var DaftNestedWriteableObjectTree
         */
-        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
         $leaves = $this->setupTestTreeRemovalFailure($leafClass, $repo);
 
@@ -343,8 +341,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
-        array_unshift($remainingTreeArgs, $leafClass);
-
         if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
             throw new InvalidArgumentException(
                 'Argument 6 passed to ' .
@@ -360,7 +356,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         /**
         * @var DaftNestedWriteableObjectTree
         */
-        $repo = $treeClass::DaftObjectRepositoryByType(...$remainingTreeArgs);
+        $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
         /**
         * @var array<int, DaftNestedWriteableObject>
