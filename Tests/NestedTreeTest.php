@@ -9,7 +9,6 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests;
 
 use Generator;
-use RuntimeException;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedIntObject;
