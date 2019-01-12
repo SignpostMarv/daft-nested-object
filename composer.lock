@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6b7bea348b46bdd13fb2ed085ce444a",
+    "content-hash": "d86b8441f27e28e937fa6d760207465f",
     "packages": [
         {
             "name": "signpostmarv/daft-object",
@@ -4837,16 +4837,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "3.0.10",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "d3324b42fa996bcf4b5a532086c0777153679e04"
+                "reference": "a7005014c2a79065676f5dcd15c889d6c4e1a48b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/d3324b42fa996bcf4b5a532086c0777153679e04",
-                "reference": "d3324b42fa996bcf4b5a532086c0777153679e04",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/a7005014c2a79065676f5dcd15c889d6c4e1a48b",
+                "reference": "a7005014c2a79065676f5dcd15c889d6c4e1a48b",
                 "shasum": ""
             },
             "require": {
@@ -4911,7 +4911,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-01-09T13:49:02+00:00"
+            "time": "2019-01-12T16:40:19+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5064,7 +5064,8 @@
         "phpstan/phpstan": 20,
         "phpstan/phpstan-phpunit": 20,
         "phpstan/phpstan-strict-rules": 20,
-        "roave/security-advisories": 20
+        "roave/security-advisories": 20,
+        "vimeo/psalm": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
