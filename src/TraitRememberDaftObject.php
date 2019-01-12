@@ -46,8 +46,6 @@ trait TraitRememberDaftObject
                 is_string($object) ? $object : get_class($object)
             );
         }
-
-        parent::ThrowIfNotType($object, $type, $argument, $function);
     }
 
     private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
