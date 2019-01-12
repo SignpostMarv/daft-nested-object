@@ -1,0 +1,15 @@
+{
+    "timeout": 20,
+    "source": {
+        "directories": [
+            "PHPStan",
+            "src"
+        ]
+    },
+    "logs": {
+        "text": "infection.log"
+    },
+    "mutators": {
+        "@default": true
+    }
+}

@@ -28,6 +28,10 @@
         "sort-packages": true
     },
     "scripts": {
+        "infection": [
+            "@tests",
+            "infection"
+        ],
         "tests": [
             "phpunit -vvvv --coverage-clover=phpunit.clover",
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests PHPStan",
@@ -45,6 +49,7 @@
         "signpostmarv/daft-object": "^1.0"
     },
     "require-dev": {
+        "infection/infection": "^0.11.4",
         "maglnet/composer-require-checker": "^1.1",
         "phpstan/phpstan": "dev-master",
         "phpstan/phpstan-phpunit": "dev-master",
