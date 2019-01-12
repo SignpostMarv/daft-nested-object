@@ -284,12 +284,14 @@ trait TraitWriteableTreeUtilities
         /**
         * @var array<int, DaftNestedWriteableObject>
         */
+        $siblings = $this->RecallDaftNestedObjectTreeWithId(
+            $referenceLeaf->ObtainDaftNestedObjectParentId(),
+            false,
+            0
+        );
+
         $siblings = array_values(array_filter(
-            $this->RecallDaftNestedObjectTreeWithId(
-                $referenceLeaf->ObtainDaftNestedObjectParentId(),
-                false,
-                0
-            ),
+            $siblings,
             function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
                 return $leaf->GetId() !== $newLeaf->GetId();
             }

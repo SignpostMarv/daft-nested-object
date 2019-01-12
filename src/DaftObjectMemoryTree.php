@@ -109,7 +109,10 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     ) : array {
         $object = $this->RecallDaftObject($id);
 
-        return
+        /**
+        * @var array<int, DaftNestedObject>
+        */
+        $out =
             ($object instanceof DaftNestedObject)
                 ? $this->RecallDaftNestedObjectTreeWithObject(
                     $object,
@@ -121,6 +124,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                         ? $this->RecallDaftNestedObjectFullTree($relativeDepthLimit)
                         : []
                 );
+
+        return $out;
     }
 
     /**
@@ -153,12 +158,17 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
             ++$right;
         }
 
-        return array_values(array_filter(
+        /**
+        * @var array<int, DaftNestedObject>
+        */
+        $out = array_values(array_filter(
             $this->RecallDaftNestedObjectFullTree(),
             function (DaftNestedObject $e) use ($left, $right) : bool {
                 return $e->GetIntNestedLeft() <= $left && $e->GetIntNestedRight() >= $right;
             }
         ));
+
+        return $out;
     }
 
     public function CountDaftNestedObjectPathToObject(
