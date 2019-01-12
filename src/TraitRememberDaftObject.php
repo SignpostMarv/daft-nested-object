@@ -28,14 +28,16 @@ trait TraitRememberDaftObject
 
     abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
-    protected function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
+    private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
     {
         $left = $object->GetIntNestedLeft();
         $right = $object->GetIntNestedRight();
         $level = $object->GetIntNestedLevel();
 
         if (0 === $left && 0 === $right && 0 === $level) {
-            if ($this->CountDaftNestedObjectFullTree() > 0) {
+            $fullTreeCount = $this->CountDaftNestedObjectFullTree();
+
+            if ($fullTreeCount > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY) {
                 $tree = $this->RecallDaftNestedObjectFullTree();
 
                 /**
@@ -45,7 +47,7 @@ trait TraitRememberDaftObject
 
                 $left = $end->GetIntNestedRight() + 1;
             } else {
-                $left = $this->CountDaftNestedObjectFullTree() * 2;
+                $left = $fullTreeCount + $fullTreeCount;
             }
 
             $object->SetIntNestedLeft($left);

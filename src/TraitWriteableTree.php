@@ -77,7 +77,11 @@ trait TraitWriteableTree
         ? DaftNestedWriteableObject $replacementRoot
     ) : int {
         if (
-            $this->CountDaftNestedObjectTreeWithObject($root, false, null) > 0 &&
+            $this->CountDaftNestedObjectTreeWithObject(
+                $root,
+                false,
+                null
+            ) > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY &&
             is_null($replacementRoot)
         ) {
             throw new BadMethodCallException('Cannot leave orphan objects in a tree');
@@ -138,14 +142,18 @@ trait TraitWriteableTree
     /**
     * @param scalar|scalar[]|null $replacementRoot
     */
-    protected function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
+    private function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
         $replacementRoot,
         DaftNestedWriteableObject $rootObject
     ) : ? int {
         $tree = $this->ThrowIfNotTree();
 
         if (
-            $tree->CountDaftNestedObjectTreeWithObject($rootObject, false, null) > 0 &&
+            $tree->CountDaftNestedObjectTreeWithObject(
+                $rootObject,
+                false,
+                null
+            ) > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY &&
             is_null($replacementRoot)
         ) {
             throw new BadMethodCallException('Cannot leave orphan objects in a tree');

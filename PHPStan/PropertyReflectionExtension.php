@@ -14,9 +14,12 @@ use PHPStan\Type\IntegerType;
 use PHPStan\Type\Type;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\PHPStan\PropertyReflectionExtension as Base;
+use SignpostMarv\DaftObject\TypeParanoia;
 
 class PropertyReflectionExtension extends Base
 {
+    const BOOL_NESTED_IS_READABLE = false;
+
     /**
     * @var bool
     */
@@ -39,11 +42,10 @@ class PropertyReflectionExtension extends Base
         $intProperty = static::PropertyIsInt($property);
 
         if ('intNestedParentId' === $property || $intProperty) {
-            $this->nestedReadable = true;
-            $this->nestedWriteable = is_a(
+            $this->nestedReadable = self::BOOL_NESTED_IS_READABLE;
+            $this->nestedWriteable = TypeParanoia::IsThingStrings(
                 $classReflection->getNativeReflection()->getName(),
-                DaftNestedWriteableObject::class,
-                true
+                DaftNestedWriteableObject::class
             );
         }
 
@@ -52,17 +54,16 @@ class PropertyReflectionExtension extends Base
         }
     }
 
-    public static function PropertyIsInt(string $property) : bool
+    private static function PropertyIsInt(string $property) : bool
     {
-        return in_array(
+        return TypeParanoia::MaybeInArray(
             $property,
             [
                 'intNestedLeft',
                 'intNestedRight',
                 'intNestedLevel',
                 'intNestedSortOrder',
-            ],
-            true
+            ]
         );
     }
 

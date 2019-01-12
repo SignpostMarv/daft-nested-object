@@ -100,7 +100,7 @@ trait TraitWriteableTreeUtilities
         ? DaftNestedWriteableObject $replacementRoot
     ) : int;
 
-    protected function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
+    private function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
         DaftNestedWriteableObjectTree $tree,
         ? DaftNestedWriteableObject $leaf,
         ? DaftObject $reference,
@@ -119,7 +119,7 @@ trait TraitWriteableTreeUtilities
         return null;
     }
 
-    protected function RebuildAfterInsert(
+    private function RebuildAfterInsert(
         DaftNestedWriteableObject $newLeaf
     ) : DaftNestedWriteableObject {
         $this->RebuildTreeInefficiently();
@@ -133,7 +133,7 @@ trait TraitWriteableTreeUtilities
         return $newLeaf;
     }
 
-    protected function ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
+    private function ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
         DaftNestedWriteableObject $root,
         DaftNestedWriteableObject $replacementRoot
     ) : void {
@@ -148,7 +148,7 @@ trait TraitWriteableTreeUtilities
     /**
     * @param scalar|scalar[] $replacementRootId
     */
-    protected function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
+    private function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
     {
         /**
         * @var array<int, DaftNestedObject>
@@ -163,7 +163,7 @@ trait TraitWriteableTreeUtilities
         }
     }
 
-    final protected function ThrowIfNotTree() : DaftNestedWriteableObjectTree
+    private function ThrowIfNotTree() : DaftNestedWriteableObjectTree
     {
         if ( ! ($this instanceof DaftNestedWriteableObjectTree)) {
             throw new BadMethodCallException(
@@ -182,7 +182,7 @@ trait TraitWriteableTreeUtilities
     /**
     * @param DaftNestedWriteableObject|mixed $leaf
     */
-    protected function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
+    private function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
     {
         $tree = $this->ThrowIfNotTree();
 
@@ -200,7 +200,7 @@ trait TraitWriteableTreeUtilities
         return ($out instanceof DaftNestedWriteableObject) ? $out : null;
     }
 
-    protected function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
+    private function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
         DaftNestedWriteableObject $leaf,
         bool $before,
         ? bool $above
@@ -228,7 +228,7 @@ trait TraitWriteableTreeUtilities
         return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
     }
 
-    protected function MaybeRemoveWithPossibleObject(
+    private function MaybeRemoveWithPossibleObject(
         DaftNestedWriteableObject $rootObject,
         ? DaftObject $replacementRootObject
     ) : int {
@@ -247,7 +247,7 @@ trait TraitWriteableTreeUtilities
     /**
     * @param scalar|scalar[] $replacementRoot
     */
-    protected function UpdateRemoveThenRebuild(
+    private function UpdateRemoveThenRebuild(
         DaftNestedWriteableObject $rootObject,
         $replacementRoot
     ) : void {
@@ -258,7 +258,7 @@ trait TraitWriteableTreeUtilities
         $this->RebuildTreeInefficiently();
     }
 
-    protected function ModifyDaftNestedObjectTreeInsertAbove(
+    private function ModifyDaftNestedObjectTreeInsertAbove(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : void {
@@ -269,7 +269,7 @@ trait TraitWriteableTreeUtilities
         $this->StoreThenRetrieveFreshLeaf($referenceLeaf);
     }
 
-    protected function ModifyDaftNestedObjectTreeInsertBelow(
+    private function ModifyDaftNestedObjectTreeInsertBelow(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : void {
@@ -277,7 +277,7 @@ trait TraitWriteableTreeUtilities
         $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
 
-    protected function SiblingsExceptLeaf(
+    private function SiblingsExceptLeaf(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : array {
@@ -300,7 +300,7 @@ trait TraitWriteableTreeUtilities
         return $siblings;
     }
 
-    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
+    private function ModifyDaftNestedObjectTreeInsertAdjacent(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
         bool $before

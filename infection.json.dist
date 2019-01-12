@@ -10,6 +10,98 @@
         "text": "infection.log"
     },
     "mutators": {
-        "@default": true
+        "@default": true,
+        "Coalesce": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::getType"
+            ]
+        },
+        "DecrementInteger": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::SiblingsExceptLeaf"
+            ]
+        },
+        "FalseValue": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TraitWriteableTree::ModifyDaftNestedObjectTreeInsert",
+                "SignpostMarv\\DaftObject\\TraitWriteableTree::ModifyDaftNestedObjectTreeInsertLoose",
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::SiblingsExceptLeaf"
+            ]
+        },
+        "GreaterThan": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::FilterLeaf"
+            ]
+        },
+        "Identical": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct"
+            ]
+        },
+        "IncrementInteger": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::UpdateRoots",
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertAdjacent",
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::UpdateRoots"
+            ]
+        },
+        "LessThan": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::FilterLeaf"
+            ]
+        },
+        "LogicalNot": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\InefficientDaftNestedRebuild::ProcessTree",
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\ClassReflectionExtension::getProperty"
+            ]
+        },
+        "LogicalOr": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\ClassReflectionExtension::hasProperty",
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct",
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::isReadable",
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::isWritable",
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::PropertyIsPublic"
+            ]
+        },
+        "MethodCallRemoval": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::RememberDaftObjectData",
+                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::RememberDaftObjectData",
+                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ThrowIfNotType",
+                "SignpostMarv\\DaftObject\\InefficientDaftNestedRebuild::ProcessTree",
+                "SignpostMarv\\DaftObject\\TraitRememberDaftObject::ThrowIfNotType",
+                "SignpostMarv\\DaftObject\\TraitWriteableTree::ModifyDaftNestedObjectTreeInsert",
+                "SignpostMarv\\DaftObject\\TraitWriteableTree::StoreThenRetrieveFreshLeaf",
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertAbove",
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertBelow",
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertLooseIntoTree",
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct"
+            ]
+        },
+        "OneZeroInteger": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertLooseIntoTree",
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::SiblingsExceptLeaf"
+            ]
+        },
+        "Plus": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::RecallDaftNestedObjectPathToObject",
+                "SignpostMarv\\DaftObject\\TraitRememberDaftObject::RememberDaftObjectWriteableTyped"
+            ]
+        },
+        "Throw_": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\ClassReflectionExtension::getProperty"
+            ]
+        },
+        "TrueValue": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\NestedTypeParanoia::MaybeFoundInArray",
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertAdjacent"
+            ]
+        }
     }
 }

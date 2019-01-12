@@ -10,28 +10,30 @@ namespace SignpostMarv\DaftObject;
 
 abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDaftObject implements DaftNestedObject
 {
+    const COUNT_EXPECT_NON_EMPTY = 0;
+
     const SORTABLE_PROPERTIES = [
         'intNestedSortOrder',
     ];
 
     public function GetIntNestedLeft() : int
     {
-        return (int) ($this->RetrievePropertyValueFromData('intNestedLeft') ?? null);
+        return intval($this->RetrievePropertyValueFromData('intNestedLeft') ?? null);
     }
 
     public function GetIntNestedRight() : int
     {
-        return (int) ($this->RetrievePropertyValueFromData('intNestedRight') ?? null);
+        return intval($this->RetrievePropertyValueFromData('intNestedRight') ?? null);
     }
 
     public function GetIntNestedLevel() : int
     {
-        return (int) ($this->RetrievePropertyValueFromData('intNestedLevel') ?? null);
+        return intval($this->RetrievePropertyValueFromData('intNestedLevel') ?? null);
     }
 
     public function GetIntNestedSortOrder() : int
     {
-        return (int) ($this->RetrievePropertyValueFromData('intNestedSortOrder') ?? null);
+        return intval($this->RetrievePropertyValueFromData('intNestedSortOrder') ?? null);
     }
 
     public function ObtainDaftNestedObjectParentId() : array
@@ -54,7 +56,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function SetIntNestedLeft(int $value) : void
     {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
+        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -66,7 +68,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function SetIntNestedRight(int $value) : void
     {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
+        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -78,7 +80,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function SetIntNestedLevel(int $value) : void
     {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
+        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -90,7 +92,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function SetIntNestedSortOrder(int $value) : void
     {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
+        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -105,7 +107,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
     */
     public function AlterDaftNestedObjectParentId($value) : void
     {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
+        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -131,12 +133,15 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
     {
         $out = parent::ChangedProperties();
 
-        foreach (static::DaftNestedObjectParentIdProperties() as $prop) {
-            if (in_array($prop, $out, true)) {
-                $out[] = 'daftNestedObjectParentId';
-
-                break;
+        $props = array_filter(
+            static::DaftNestedObjectParentIdProperties(),
+            function (string $prop) use ($out) : bool {
+                return TypeParanoia::MaybeInArray($prop, $out);
             }
+        );
+
+        if (count($props) > self::COUNT_EXPECT_NON_EMPTY) {
+            $out[] = 'daftNestedObjectParentId';
         }
 
         return $out;

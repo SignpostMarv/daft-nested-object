@@ -10,6 +10,16 @@ namespace SignpostMarv\DaftObject;
 
 abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
 {
+    const DECREMENT = -1;
+
+    const INCREMENT = 1;
+
+    const BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST = false;
+
+    const INT_ARG_INDEX_FIRST = 1;
+
+    const BOOL_DEFAULT_NO_MODIFY = 0;
+
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array
     {
         /**
@@ -34,7 +44,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         $fromMemory = array_filter(
             array_map([$this, 'MapDataToObject'], $this->data),
             function (DaftNestedObject $leaf) use ($outIds) : bool {
-                return ! in_array($leaf->GetId(), $outIds, true);
+                return ! TypeParanoia::MaybeInArray($leaf->GetId(), $outIds);
             }
         );
 
@@ -150,13 +160,12 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         DaftNestedObject $leaf,
         bool $includeLeaf
     ) : array {
-        $left = $leaf->GetIntNestedLeft();
-        $right = $leaf->GetIntNestedRight();
-
-        if ( ! $includeLeaf) {
-            --$left;
-            ++$right;
-        }
+        $left =
+            $leaf->GetIntNestedLeft() +
+            ($includeLeaf ? self::BOOL_DEFAULT_NO_MODIFY : self::DECREMENT);
+        $right =
+            $leaf->GetIntNestedRight() +
+            ($includeLeaf ? self::BOOL_DEFAULT_NO_MODIFY : self::INCREMENT);
 
         /**
         * @var array<int, DaftNestedObject>
@@ -203,14 +212,19 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
     public function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object,
-        bool $assumeDoesNotExist = false
+        bool $assumeDoesNotExist = self::BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST
     ) : void {
-        static::ThrowIfNotType($object, DaftNestedObject::class, 1, __METHOD__);
+        static::ThrowIfNotType(
+            $object,
+            DaftNestedObject::class,
+            self::INT_ARG_INDEX_FIRST,
+            __METHOD__
+        );
 
         parent::RememberDaftObjectData($object, $assumeDoesNotExist);
     }
 
-    protected function MapDataToObject(array $row) : DaftNestedObject
+    private function MapDataToObject(array $row) : DaftNestedObject
     {
         $type = $this->type;
         /**
@@ -221,7 +235,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         return $out;
     }
 
-    protected function FilterLeaf(
+    private function FilterLeaf(
         bool $includeRoot,
         int $left,
         int $right,

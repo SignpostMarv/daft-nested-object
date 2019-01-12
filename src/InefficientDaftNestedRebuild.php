@@ -10,6 +10,8 @@ namespace SignpostMarv\DaftObject;
 
 class InefficientDaftNestedRebuild
 {
+    const INT_RESET_NESTED_VALUE = 0;
+
     /**
     * @var DaftNestedWriteableObjectTree
     */
@@ -52,7 +54,7 @@ class InefficientDaftNestedRebuild
         }
     }
 
-    protected function Reset() : void
+    private function Reset() : void
     {
         $parentIdXref = [(array) $this->tree->GetNestedObjectTreeRootId()];
 
@@ -71,7 +73,7 @@ class InefficientDaftNestedRebuild
         $this->idXref = $idXref;
     }
 
-    protected function ProcessTree() : void
+    private function ProcessTree() : void
     {
         $this->Reset();
 
@@ -86,24 +88,24 @@ class InefficientDaftNestedRebuild
 
         foreach ($tree as $i => $leaf) {
             $leafParentId = $leaf->ObtainDaftNestedObjectParentId();
-            $pos = array_search($leafParentId, $this->parentIdXref, true);
+            $pos = NestedTypeParanoia::MaybeFoundInArray($leafParentId, $this->parentIdXref);
 
-            if (false === $pos) {
+            if (is_null($pos)) {
                 $this->parentIdXref[] = $leafParentId;
 
                 /**
                 * @var int
                 */
-                $pos = array_search($leafParentId, $this->parentIdXref, true);
+                $pos = NestedTypeParanoia::MaybeFoundInArray($leafParentId, $this->parentIdXref);
 
                 $this->children[$pos] = [];
             }
 
-            if ( ! in_array($leaf, $this->children[$pos], true)) {
+            if ( ! TypeParanoia::MaybeInArray($leaf, $this->children[$pos])) {
                 $this->children[$pos][] = $leaf;
             }
 
-            if ( ! in_array($leaf->GetId(), $this->idXref, true)) {
+            if ( ! TypeParanoia::MaybeInArray($leaf, $this->idXref)) {
                 /**
                 * @var scalar|scalar[]
                 */
@@ -111,15 +113,15 @@ class InefficientDaftNestedRebuild
                 $this->idXref[] = $leafId;
             }
 
-            $leaf->SetIntNestedLeft(0);
-            $leaf->SetIntNestedRight(0);
-            $leaf->SetIntNestedLevel(0);
+            $leaf->SetIntNestedLeft(self::INT_RESET_NESTED_VALUE);
+            $leaf->SetIntNestedRight(self::INT_RESET_NESTED_VALUE);
+            $leaf->SetIntNestedLevel(self::INT_RESET_NESTED_VALUE);
 
             $tree[$i] = $this->tree->StoreThenRetrieveFreshLeaf($leaf);
         }
     }
 
-    protected function InefficientRebuild(
+    private function InefficientRebuild(
         DaftNestedWriteableObject $leaf,
         int $level,
         int $n,
@@ -139,9 +141,9 @@ class InefficientDaftNestedRebuild
         /**
         * @var int|false
         */
-        $parentPos = array_search((array) $id, $parents, true);
+        $parentPos = NestedTypeParanoia::MaybeFoundInArray((array) $id, $parents);
 
-        if (false !== $parentPos) {
+        if (is_int($parentPos)) {
             foreach ($this->children[$parentPos] as $child) {
                 $n = $this->InefficientRebuild($child, $level + 1, $n, $parents, $ids);
             }

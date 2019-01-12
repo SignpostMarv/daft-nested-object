@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "signpostmarv/daft-object",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "826751ecc62358bc213fcbd254a065808e53fea6"
+                "reference": "0eff85f3d0e4c83ca40047c6657dfef900418cea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/826751ecc62358bc213fcbd254a065808e53fea6",
-                "reference": "826751ecc62358bc213fcbd254a065808e53fea6",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/0eff85f3d0e4c83ca40047c6657dfef900418cea",
+                "reference": "0eff85f3d0e4c83ca40047c6657dfef900418cea",
                 "shasum": ""
             },
             "require": {
@@ -55,7 +55,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2019-01-10T11:37:18+00:00"
+            "time": "2019-01-12T13:42:25+00:00"
         }
     ],
     "packages-dev": [
