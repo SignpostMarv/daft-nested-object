@@ -92,6 +92,16 @@
                 "SignpostMarv\\DaftObject\\TraitRememberDaftObject::RememberDaftObjectWriteableTyped"
             ]
         },
+        "ProtectedVisibility": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertAdjacent"
+            ]
+        },
+        "PublicVisibility": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::PropertyIsInt"
+            ]
+        },
         "Throw_": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\ClassReflectionExtension::getProperty"

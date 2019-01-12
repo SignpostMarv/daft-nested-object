@@ -300,7 +300,7 @@ trait TraitWriteableTreeUtilities
         return $siblings;
     }
 
-    private function ModifyDaftNestedObjectTreeInsertAdjacent(
+    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
         bool $before

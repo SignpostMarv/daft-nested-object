@@ -54,7 +54,7 @@ class PropertyReflectionExtension extends Base
         }
     }
 
-    private static function PropertyIsInt(string $property) : bool
+    public static function PropertyIsInt(string $property) : bool
     {
         return TypeParanoia::MaybeInArray(
             $property,
