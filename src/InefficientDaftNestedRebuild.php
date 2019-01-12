@@ -37,7 +37,7 @@ class InefficientDaftNestedRebuild
         $this->tree = $tree;
     }
 
-    public function RebuildTree() : void
+    public function RebuildTree()
     {
         $this->ProcessTree();
 
@@ -54,7 +54,7 @@ class InefficientDaftNestedRebuild
         }
     }
 
-    private function Reset() : void
+    private function Reset()
     {
         $parentIdXref = [(array) $this->tree->GetNestedObjectTreeRootId()];
 
@@ -73,7 +73,7 @@ class InefficientDaftNestedRebuild
         $this->idXref = $idXref;
     }
 
-    private function ProcessTree() : void
+    private function ProcessTree()
     {
         $this->Reset();
 

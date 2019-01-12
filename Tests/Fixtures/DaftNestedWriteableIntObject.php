@@ -13,12 +13,12 @@ use TypeError;
 
 class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNestedWriteableObject
 {
-    public function SetIntNestedParentId(int $value) : void
+    public function SetIntNestedParentId(int $value)
     {
         $this->NudgePropertyValue('intNestedParentId', $value);
     }
 
-    public function SetId(int $value) : void
+    public function SetId(int $value)
     {
         $this->NudgePropertyValue('id', $value);
     }

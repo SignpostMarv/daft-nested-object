@@ -40,7 +40,7 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
     */
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
         DaftNestedWriteableObject $root,
-        ? DaftNestedWriteableObject $replacementRoot
+        DaftNestedWriteableObject $replacementRoot = null
     ) : int;
 
     /**

@@ -23,13 +23,13 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : array;
 
     public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : int;
 
     /**
@@ -40,7 +40,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     public function RecallDaftNestedObjectTreeWithId(
         $id,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : array;
 
     /**
@@ -49,7 +49,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     public function CountDaftNestedObjectTreeWithId(
         $id,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : int;
 
     /**

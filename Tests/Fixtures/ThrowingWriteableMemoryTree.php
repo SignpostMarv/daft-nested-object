@@ -16,7 +16,7 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
 {
     use TraitToggleRecallDaftObjectAlwaysNull;
 
-    public function RebuildTreeInefficiently() : void
+    public function RebuildTreeInefficiently()
     {
         $this->ToggleRecallDaftObjectAlwaysNull(false);
 
@@ -35,7 +35,7 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
         bool $before
-    ) : void {
+    ) {
         $this->ModifyDaftNestedObjectTreeInsertAdjacent($newLeaf, $referenceLeaf, $before);
     }
 }

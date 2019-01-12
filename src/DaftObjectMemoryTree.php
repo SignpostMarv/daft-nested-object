@@ -75,7 +75,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
-        ? int $limit
+        int $limit = null
     ) : array {
         $left = $root->GetIntNestedLeft();
         $right = $root->GetIntNestedRight();
@@ -100,7 +100,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : int {
         return count(
             $this->RecallDaftNestedObjectTreeWithObject($root, $includeRoot, $relativeDepthLimit)
@@ -115,7 +115,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function RecallDaftNestedObjectTreeWithId(
         $id,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : array {
         $object = $this->RecallDaftObject($id);
 
@@ -144,7 +144,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function CountDaftNestedObjectTreeWithId(
         $id,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : int {
         return count($this->RecallDaftNestedObjectTreeWithId(
             $id,
@@ -213,7 +213,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = self::BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST
-    ) : void {
+    ) {
         static::ThrowIfNotType(
             $object,
             DaftNestedObject::class,
@@ -232,7 +232,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         string $type,
         int $argument,
         string $function
-    ) : void {
+    ) {
         parent::ThrowIfNotType($object, $type, $argument, $function);
 
         if ( ! is_a($object, DaftNestedObject::class, is_string($object))) {

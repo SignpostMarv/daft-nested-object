@@ -23,7 +23,7 @@ abstract class AbstractTraitRememberDaftObject
         return 0;
     }
 
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object)
     {
     }
 
@@ -35,6 +35,6 @@ abstract class AbstractTraitRememberDaftObject
         string $type,
         int $argument,
         string $function
-    ) : void {
+    ) {
     }
 }

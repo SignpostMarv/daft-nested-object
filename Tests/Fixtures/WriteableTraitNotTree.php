@@ -18,15 +18,17 @@ class WriteableTraitNotTree
 {
     use TraitWriteableTree;
 
-    public function WillFail() : void
+    public function WillFail()
     {
         $this->ThrowIfNotTree();
     }
 
     /**
     * @param mixed $id
+    *
+    * @return DaftObject|null
     */
-    public function RecallDaftObject($id) : ? DaftObject
+    public function RecallDaftObject($id)
     {
         return null;
     }
@@ -34,19 +36,19 @@ class WriteableTraitNotTree
     public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : int {
         return 0;
     }
 
-    public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object)
     {
     }
 
     /**
     * @param mixed $id
     */
-    public function RemoveDaftObjectById($id) : void
+    public function RemoveDaftObjectById($id)
     {
     }
 
@@ -55,25 +57,25 @@ class WriteableTraitNotTree
         return 0;
     }
 
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object)
     {
     }
 
-    public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object)
     {
     }
 
     /**
     * @param mixed $id
     */
-    public function ForgetDaftObjectById($id) : void
+    public function ForgetDaftObjectById($id)
     {
     }
 
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : array {
         return [];
     }
@@ -89,12 +91,12 @@ class WriteableTraitNotTree
     public function RecallDaftNestedObjectTreeWithId(
         $id,
         bool $includeRoot,
-        ? int $relativeDepthLimit
+        int $relativeDepthLimit = null
     ) : array {
         return [];
     }
 
-    protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
+    protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object)
     {
     }
 
@@ -106,6 +108,6 @@ class WriteableTraitNotTree
         string $type,
         int $argument,
         string $function
-    ) : void {
+    ) {
     }
 }

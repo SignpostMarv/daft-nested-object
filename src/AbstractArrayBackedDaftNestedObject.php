@@ -54,7 +54,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         );
     }
 
-    public function SetIntNestedLeft(int $value) : void
+    public function SetIntNestedLeft(int $value)
     {
         if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
@@ -66,7 +66,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         $this->NudgePropertyValue('intNestedLeft', $value);
     }
 
-    public function SetIntNestedRight(int $value) : void
+    public function SetIntNestedRight(int $value)
     {
         if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
@@ -78,7 +78,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         $this->NudgePropertyValue('intNestedRight', $value);
     }
 
-    public function SetIntNestedLevel(int $value) : void
+    public function SetIntNestedLevel(int $value)
     {
         if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
@@ -90,7 +90,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         $this->NudgePropertyValue('intNestedLevel', $value);
     }
 
-    public function SetIntNestedSortOrder(int $value) : void
+    public function SetIntNestedSortOrder(int $value)
     {
         if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(
@@ -105,7 +105,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
     /**
     * @param mixed $value
     */
-    public function AlterDaftNestedObjectParentId($value) : void
+    public function AlterDaftNestedObjectParentId($value)
     {
         if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
             throw new ClassDoesNotImplementClassException(

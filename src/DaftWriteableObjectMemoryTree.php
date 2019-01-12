@@ -16,7 +16,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     public function RememberDaftObjectData(
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = DaftObjectMemoryTree::BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST
-    ) : void {
+    ) {
         static::ThrowIfNotType(
             $object,
             DaftNestedWriteableObject::class,
@@ -35,7 +35,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         string $type,
         int $argument,
         string $function
-    ) : void {
+    ) {
         if ( ! is_a($object, DaftNestedWriteableObject::class, is_string($object))) {
             throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
                 $argument,

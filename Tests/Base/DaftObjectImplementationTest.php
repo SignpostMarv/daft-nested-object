@@ -40,7 +40,7 @@ class DaftObjectImplementationTest extends BaseTest
         string $implementation,
         string $property,
         $value
-    ) : void {
+    ) {
         if ( ! is_a($implementation, Fixtures\DaftNestedIntObject::class, true)) {
             static::assertTrue(is_a($implementation, Fixtures\DaftNestedIntObject::class, true));
 
@@ -134,7 +134,7 @@ class DaftObjectImplementationTest extends BaseTest
     /**
     * @dataProvider DataProviderObjectParentId
     */
-    public function testNestedObjectParentId(string $implementation, array $args) : void
+    public function testNestedObjectParentId(string $implementation, array $args)
     {
         if ( ! is_a($implementation, DaftNestedObject::class, true)) {
             throw new InvalidArgumentException(

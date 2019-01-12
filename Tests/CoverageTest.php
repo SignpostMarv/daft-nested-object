@@ -100,8 +100,8 @@ class CoverageTest extends Base
     public function testModifyDaftNestedObjectTreeInsertFailsRelativeToSelf(
         DaftNestedWriteableObjectTree $repo,
         bool $before,
-        ? bool $above
-    ) : void {
+        bool $above = null
+    ) {
         list($leaf) = static::PrepRepoWriteable(
             $repo,
             Fixtures\DaftNestedWriteableIntObject::class,
@@ -119,7 +119,7 @@ class CoverageTest extends Base
     */
     public function testStoreThenRetrieveFreshLeafFails(
         Fixtures\DaftObjectWriteableThrowingTree $repo
-    ) : void {
+    ) {
         list($leaf) = static::PrepRepoWriteable(
             $repo,
             Fixtures\DaftNestedWriteableIntObject::class,
@@ -140,8 +140,8 @@ class CoverageTest extends Base
     public function testModifyDaftNestedObjectTreeInsertFailsToRetrieveLeaf(
         Fixtures\DaftObjectWriteableThrowingTree $repo,
         bool $before,
-        ? bool $above
-    ) : void {
+        bool $above = null
+    ) {
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
         list($a0, $b0) = static::PrepRepoWriteable(
@@ -163,8 +163,8 @@ class CoverageTest extends Base
     public function testModifyDaftNestedObjectTreeInsertLooseDoesNotAllowRootAsArgOne(
         DaftNestedWriteableObjectTree $repo,
         bool $before,
-        ? bool $above
-    ) : void {
+        bool $above = null
+    ) {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Cannot pass root id as new leaf');
 
@@ -182,8 +182,8 @@ class CoverageTest extends Base
     public function testModifyDaftNestedObjectTreeInsertLooseFailsToRecallReferenceNode(
         Fixtures\DaftObjectWriteableThrowingTree $repo,
         bool $before,
-        ? bool $above
-    ) : void {
+        bool $above = null
+    ) {
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
         list($a0, $b0) = static::PrepRepoWriteable(
@@ -216,8 +216,8 @@ class CoverageTest extends Base
     public function testModifyDaftNestedObjectTreeInsertLooseFailsWithNonRootReferenceLeaf(
         Fixtures\DaftObjectWriteableThrowingTree $repo,
         bool $before,
-        ? bool $above
-    ) : void {
+        bool $above = null
+    ) {
         $repo->ToggleRecallDaftObjectAlwaysNull(false);
 
         list($a0, $b0) = static::PrepRepoWriteable(
@@ -250,8 +250,8 @@ class CoverageTest extends Base
     public function testModifyDaftNestedObjectTreeInsertAdjacentFailsWithNonSibling(
         DaftNestedWriteableObjectTree $repo,
         bool $before,
-        ? bool $above
-    ) : void {
+        bool $above = null
+    ) {
         /**
         * @var Fixtures\DaftWriteableNestedObjectIntTree
         */
@@ -286,7 +286,7 @@ class CoverageTest extends Base
         $ref->invoke($repo, $a0, $b0, $before);
     }
 
-    public function testTraitThrowsIfNotTree() : void
+    public function testTraitThrowsIfNotTree()
     {
         $obj = new Fixtures\WriteableTraitNotTree();
 
@@ -301,7 +301,7 @@ class CoverageTest extends Base
         $obj->WillFail();
     }
 
-    public function testRememberDaftObject() : void
+    public function testRememberDaftObject()
     {
         $obj = new Fixtures\CoverageTraitRememberDaftObject();
 

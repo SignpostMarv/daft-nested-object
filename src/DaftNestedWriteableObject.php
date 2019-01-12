@@ -10,16 +10,16 @@ namespace SignpostMarv\DaftObject;
 
 interface DaftNestedWriteableObject extends DaftNestedObject
 {
-    public function SetIntNestedLeft(int $value) : void;
+    public function SetIntNestedLeft(int $value);
 
-    public function SetIntNestedRight(int $value) : void;
+    public function SetIntNestedRight(int $value);
 
-    public function SetIntNestedLevel(int $value) : void;
+    public function SetIntNestedLevel(int $value);
 
-    public function SetIntNestedSortOrder(int $value) : void;
+    public function SetIntNestedSortOrder(int $value);
 
     /**
     * @param mixed $id
     */
-    public function AlterDaftNestedObjectParentId($id) : void;
+    public function AlterDaftNestedObjectParentId($id);
 }

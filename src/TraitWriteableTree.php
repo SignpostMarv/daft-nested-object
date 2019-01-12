@@ -74,7 +74,7 @@ trait TraitWriteableTree
 
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
         DaftNestedWriteableObject $root,
-        ? DaftNestedWriteableObject $replacementRoot
+        DaftNestedWriteableObject $replacementRoot = null
     ) : int {
         if (
             $this->CountDaftNestedObjectTreeWithObject(
@@ -141,11 +141,13 @@ trait TraitWriteableTree
 
     /**
     * @param scalar|scalar[]|null $replacementRoot
+    *
+    * @return int|null
     */
     private function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
         $replacementRoot,
         DaftNestedWriteableObject $rootObject
-    ) : ? int {
+    ) {
         $tree = $this->ThrowIfNotTree();
 
         if (

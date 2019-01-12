@@ -32,12 +32,12 @@ trait TraitToggleRecallDaftObjectAlwaysNull
     */
     protected $ToggleRecallDaftObjectAfterCallsAfter = 0;
 
-    public function ToggleRecallDaftObjectAlwaysNull(bool $value) : void
+    public function ToggleRecallDaftObjectAlwaysNull(bool $value)
     {
         $this->ToggleRecallDaftObjectAlwaysNull = $value;
     }
 
-    public function ToggleRecallDaftObjectAfterCalls(bool $value, int $after) : void
+    public function ToggleRecallDaftObjectAfterCalls(bool $value, int $after)
     {
         if ($value) {
             $this->ToggleRecallDaftObjectAlwaysNull(false);
@@ -49,8 +49,10 @@ trait TraitToggleRecallDaftObjectAlwaysNull
 
     /**
     * @param mixed $id
+    *
+    * @return DaftObject|null
     */
-    public function RecallDaftObject($id) : ? DaftObject
+    public function RecallDaftObject($id)
     {
         if ($this->ToggleRecallDaftObjectAfterCalls) {
             if ((++$this->ToggleRecallDaftObjectAfterCallsCount) > $this->ToggleRecallDaftObjectAfterCallsAfter) {

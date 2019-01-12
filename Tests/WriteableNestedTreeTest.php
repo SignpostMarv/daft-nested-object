@@ -37,7 +37,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
-    ) : void {
+    ) {
         if ( ! is_a($leafClass, DaftNestedWriteableObject::class, true)) {
             static::assertTrue(is_a($leafClass, DaftNestedWriteableObject::class, true));
 
@@ -225,7 +225,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
-    ) : void {
+    ) {
         if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
             throw new InvalidArgumentException(
                 'Argument 2 passed to ' .
@@ -264,7 +264,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
-    ) : void {
+    ) {
         if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
             throw new InvalidArgumentException(
                 'Argument 1 passed to ' .
@@ -340,7 +340,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
-    ) : void {
+    ) {
         if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
             throw new InvalidArgumentException(
                 'Argument 6 passed to ' .
@@ -469,7 +469,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObjectTree $repo,
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
-                ) : void {
+                ) {
                 },
                 [0, 2, 4, 6],
                 [1, 3, 5, 7],
@@ -484,7 +484,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObjectTree $repo,
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
-                ) : void {
+                ) {
                     $testCase->AssertTreeState(
                         [0, 2, 4, 6],
                         [1, 3, 5, 7],
@@ -545,7 +545,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObjectTree $repo,
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
-                ) : void {
+                ) {
                     $testCase->AssertTreeState(
                         [0, 2, 4, 6],
                         [1, 3, 5, 7],
@@ -591,7 +591,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObjectTree $repo,
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
-                ) : void {
+                ) {
                     /**
                     * @var array<int, int>
                     */
@@ -649,7 +649,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObjectTree $repo,
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
-                ) : void {
+                ) {
                     /**
                     * @var array<int, int>
                     */
@@ -697,7 +697,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObjectTree $repo,
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
-                ) : void {
+                ) {
                     /**
                     * @var array<int, int>
                     */
@@ -735,7 +735,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObjectTree $repo,
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
-                ) : void {
+                ) {
                     static::InsertLooseChunks($repo, false, true,
                         1, 2,
                         1, 3,
@@ -799,7 +799,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     DaftNestedWriteableObjectTree $repo,
                     string $leafClass,
                     DaftNestedWriteableObject ...$leaves
-                ) : void {
+                ) {
                     static::InsertLooseChunks($repo, false, true,
                         100, 2,
                         100, 3,
@@ -847,9 +847,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
     protected static function InsertLooseChunks(
         DaftNestedWriteableObjectTree $repo,
         bool $before,
-        ? bool $above,
+        bool $above = null,
         int ...$ids
-    ) : void {
+    ) {
         if (0 !== (count($ids) % 2)) {
             throw new InvalidArgumentException('ids must be of even length, not odd length!');
         }
@@ -893,7 +893,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array $right,
         array $level,
         array $leaves
-    ) : void {
+    ) {
         /**
         * @var array<int, DaftNestedWriteableObject>
         */
@@ -932,7 +932,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         array $right,
         array $level,
         array $leaves
-    ) : void {
+    ) {
         static::assertCount(count($left), $right);
         static::assertCount(count($right), $leaves);
         static::assertCount(count($leaves), $level);
@@ -966,7 +966,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
         int $right,
         int $level,
         DaftNestedWriteableObject $leaf
-    ) : void {
+    ) {
         static::assertSame($left, $leaf->GetIntNestedLeft(), sprintf(
             'Left does not match state %u (%u), %u, %u',
             $left,

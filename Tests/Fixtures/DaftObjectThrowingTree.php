@@ -13,12 +13,14 @@ use SignpostMarv\DaftObject\DaftObject;
 
 interface DaftObjectThrowingTree extends DaftNestedObjectTree
 {
-    public function ToggleRecallDaftObjectAlwaysNull(bool $value) : void;
+    public function ToggleRecallDaftObjectAlwaysNull(bool $value);
 
-    public function ToggleRecallDaftObjectAfterCalls(bool $value, int $after) : void;
+    public function ToggleRecallDaftObjectAfterCalls(bool $value, int $after);
 
     /**
     * @param mixed $id
+    *
+    * @return DaftObject|null
     */
-    public function RecallDaftObject($id) : ? DaftObject;
+    public function RecallDaftObject($id);
 }

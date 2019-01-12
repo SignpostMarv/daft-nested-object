@@ -10,7 +10,7 @@ namespace SignpostMarv\DaftObject;
 
 trait TraitRememberDaftObject
 {
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object)
     {
         if ($object instanceof DaftNestedWriteableObject) {
             $this->RememberDaftObjectWriteableTyped($object);
@@ -36,7 +36,7 @@ trait TraitRememberDaftObject
         string $type,
         int $argument,
         string $function
-    ) : void {
+    ) {
         if ( ! is_a($object, DaftNestedWriteableObject::class, is_string($object))) {
             throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
                 $argument,
@@ -48,7 +48,7 @@ trait TraitRememberDaftObject
         }
     }
 
-    private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
+    private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object)
     {
         $left = $object->GetIntNestedLeft();
         $right = $object->GetIntNestedRight();
