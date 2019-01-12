@@ -18,22 +18,22 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function GetIntNestedLeft() : int
     {
-        return intval($this->RetrievePropertyValueFromData('intNestedLeft') ?? null);
+        return (int) ($this->RetrievePropertyValueFromData('intNestedLeft') ?? null);
     }
 
     public function GetIntNestedRight() : int
     {
-        return intval($this->RetrievePropertyValueFromData('intNestedRight') ?? null);
+        return (int) ($this->RetrievePropertyValueFromData('intNestedRight') ?? null);
     }
 
     public function GetIntNestedLevel() : int
     {
-        return intval($this->RetrievePropertyValueFromData('intNestedLevel') ?? null);
+        return (int) ($this->RetrievePropertyValueFromData('intNestedLevel') ?? null);
     }
 
     public function GetIntNestedSortOrder() : int
     {
-        return intval($this->RetrievePropertyValueFromData('intNestedSortOrder') ?? null);
+        return (int) ($this->RetrievePropertyValueFromData('intNestedSortOrder') ?? null);
     }
 
     public function ObtainDaftNestedObjectParentId() : array

@@ -100,6 +100,59 @@ trait TraitWriteableTreeUtilities
         ? DaftNestedWriteableObject $replacementRoot
     ) : int;
 
+    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before
+    ) : void {
+        /**
+        * @var array<int, DaftNestedWriteableObject>
+        */
+        $siblings = $this->SiblingsExceptLeaf($newLeaf, $referenceLeaf);
+
+        $siblingIds = [];
+        $siblingSort = [];
+        $j = count($siblings);
+
+        foreach ($siblings as $leaf) {
+            /**
+            * @var scalar|scalar[]
+            */
+            $siblingId = $leaf->GetId();
+            $siblingIds[] = $siblingId;
+            $siblingSort[] = $leaf->GetIntNestedSortOrder();
+        }
+
+        $pos = array_search($referenceLeaf->GetId(), $siblingIds, true);
+
+        if (false === $pos) {
+            throw new RuntimeException('Reference leaf not found in siblings tree!');
+        }
+
+        for ($i = 0; $i < $j; ++$i) {
+            $siblings[$i]->SetIntNestedSortOrder(
+                $siblingSort[$i] +
+                (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
+            );
+            $this->StoreThenRetrieveFreshLeaf($siblings[$i]);
+        }
+
+        $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
+        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
+
+        $this->StoreThenRetrieveFreshLeaf($newLeaf);
+    }
+
+    protected function RebuildTreeInefficiently() : void
+    {
+        /**
+        * @var DaftNestedWriteableObjectTree
+        */
+        $tree = $this->ThrowIfNotTree();
+        $rebuilder = new InefficientDaftNestedRebuild($tree);
+        $rebuilder->RebuildTree();
+    }
+
     private function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
         DaftNestedWriteableObjectTree $tree,
         ? DaftNestedWriteableObject $leaf,
@@ -298,58 +351,5 @@ trait TraitWriteableTreeUtilities
         ));
 
         return $siblings;
-    }
-
-    protected function ModifyDaftNestedObjectTreeInsertAdjacent(
-        DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf,
-        bool $before
-    ) : void {
-        /**
-        * @var array<int, DaftNestedWriteableObject>
-        */
-        $siblings = $this->SiblingsExceptLeaf($newLeaf, $referenceLeaf);
-
-        $siblingIds = [];
-        $siblingSort = [];
-        $j = count($siblings);
-
-        foreach ($siblings as $leaf) {
-            /**
-            * @var scalar|scalar[]
-            */
-            $siblingId = $leaf->GetId();
-            $siblingIds[] = $siblingId;
-            $siblingSort[] = $leaf->GetIntNestedSortOrder();
-        }
-
-        $pos = array_search($referenceLeaf->GetId(), $siblingIds, true);
-
-        if (false === $pos) {
-            throw new RuntimeException('Reference leaf not found in siblings tree!');
-        }
-
-        for ($i = 0; $i < $j; ++$i) {
-            $siblings[$i]->SetIntNestedSortOrder(
-                $siblingSort[$i] +
-                (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
-            );
-            $this->StoreThenRetrieveFreshLeaf($siblings[$i]);
-        }
-
-        $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
-        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
-
-        $this->StoreThenRetrieveFreshLeaf($newLeaf);
-    }
-
-    protected function RebuildTreeInefficiently() : void
-    {
-        /**
-        * @var DaftNestedWriteableObjectTree
-        */
-        $tree = $this->ThrowIfNotTree();
-        $rebuilder = new InefficientDaftNestedRebuild($tree);
-        $rebuilder->RebuildTree();
     }
 }

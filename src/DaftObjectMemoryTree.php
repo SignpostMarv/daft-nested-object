@@ -224,6 +224,28 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         parent::RememberDaftObjectData($object, $assumeDoesNotExist);
     }
 
+    /**
+    * @param DaftObject|string $object
+    */
+    protected static function ThrowIfNotType(
+        $object,
+        string $type,
+        int $argument,
+        string $function
+    ) : void {
+        parent::ThrowIfNotType($object, $type, $argument, $function);
+
+        if ( ! is_a($object, DaftNestedObject::class, is_string($object))) {
+            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
+                $argument,
+                static::class,
+                $function,
+                DaftNestedObject::class,
+                is_string($object) ? $object : get_class($object)
+            );
+        }
+    }
+
     private function MapDataToObject(array $row) : DaftNestedObject
     {
         $type = $this->type;
@@ -246,27 +268,5 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         }
 
         return $e->GetIntNestedLeft() > $left && $e->GetIntNestedRight() < $right;
-    }
-
-    /**
-    * @param DaftObject|string $object
-    */
-    protected static function ThrowIfNotType(
-        $object,
-        string $type,
-        int $argument,
-        string $function
-    ) : void {
-        parent::ThrowIfNotType($object, $type, $argument, $function);
-
-        if ( ! is_a($object, DaftNestedObject::class, is_string($object))) {
-            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
-                $argument,
-                static::class,
-                $function,
-                DaftNestedObject::class,
-                is_string($object) ? $object : get_class($object)
-            );
-        }
     }
 }

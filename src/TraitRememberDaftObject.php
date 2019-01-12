@@ -28,6 +28,28 @@ trait TraitRememberDaftObject
 
     abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
+    /**
+    * @param DaftObject|string $object
+    */
+    protected static function ThrowIfNotType(
+        $object,
+        string $type,
+        int $argument,
+        string $function
+    ) : void {
+        if ( ! is_a($object, DaftNestedWriteableObject::class, is_string($object))) {
+            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
+                $argument,
+                static::class,
+                $function,
+                DaftNestedWriteableObject::class,
+                is_string($object) ? $object : get_class($object)
+            );
+        }
+
+        parent::ThrowIfNotType($object, $type, $argument, $function);
+    }
+
     private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
     {
         $left = $object->GetIntNestedLeft();
@@ -55,27 +77,5 @@ trait TraitRememberDaftObject
         }
 
         parent::RememberDaftObject($object);
-    }
-
-    /**
-    * @param DaftObject|string $object
-    */
-    protected static function ThrowIfNotType(
-        $object,
-        string $type,
-        int $argument,
-        string $function
-    ) : void {
-        if ( ! is_a($object, DaftNestedWriteableObject::class, is_string($object))) {
-            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
-                $argument,
-                static::class,
-                $function,
-                DaftNestedWriteableObject::class,
-                is_string($object) ? $object : get_class($object)
-            );
-        }
-
-        parent::ThrowIfNotType($object, $type, $argument, $function);
     }
 }
