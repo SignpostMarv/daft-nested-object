@@ -69,7 +69,7 @@ class DaftObjectImplementationTest extends BaseTest
             );
         }
 
-        $instance->$property = $value;
+        $instance->__set($property, $value);
     }
 
     public function DataProviderAbstractNestedNotWriteable() : Generator
@@ -163,7 +163,7 @@ class DaftObjectImplementationTest extends BaseTest
             * @return mixed
             */
             function (string $prop) use ($instance) {
-                return $instance->$prop;
+                return $instance->__get($prop);
             },
             $props
         );
@@ -189,7 +189,7 @@ class DaftObjectImplementationTest extends BaseTest
             $instance->AlterDaftNestedObjectParentId($id);
 
             foreach ($props as $prop) {
-                static::assertSame($args[$prop], $instance->$prop);
+                static::assertSame($args[$prop], $instance->__get($prop));
             }
 
             static::assertSame($id, $instance->ObtainDaftNestedObjectParentId());

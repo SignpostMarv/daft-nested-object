@@ -29,7 +29,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         }
 
         /**
-        * @var DaftNestedObject[]
+        * @var array<int, DaftNestedObject>
         */
         $fromMemory = array_filter(
             array_map([$this, 'MapDataToObject'], $this->data),
@@ -99,6 +99,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
     /**
     * @param mixed $id
+    *
+    * @return array<int, DaftNestedObject>
     */
     public function RecallDaftNestedObjectTreeWithId(
         $id,
@@ -136,6 +138,9 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         ));
     }
 
+    /**
+    * @return array<int, DaftNestedObject>
+    */
     public function RecallDaftNestedObjectPathToObject(
         DaftNestedObject $leaf,
         bool $includeLeaf
@@ -165,6 +170,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
     /**
     * @param mixed $id
+    *
+    * @return array<int, DaftNestedObject>
     */
     public function RecallDaftNestedObjectPathToId($id, bool $includeLeaf) : array
     {
@@ -193,9 +200,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         parent::RememberDaftObjectData($object, $assumeDoesNotExist);
     }
 
-    /**
-    * @psalm-suppress InvalidStringClass
-    */
     protected function MapDataToObject(array $row) : DaftNestedObject
     {
         $type = $this->type;

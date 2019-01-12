@@ -46,7 +46,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
             * @return mixed
             */
             function (string $prop) {
-                return $this->$prop;
+                return $this->__get($prop);
             },
             $idProps
         );
