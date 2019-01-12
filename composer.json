@@ -28,20 +28,9 @@
         "sort-packages": true
     },
     "scripts": {
-        "scrutinizer": [
-            "phpunit -vvvv --coverage-clover=phpunit.clover",
-            "@remaining-tests"
-        ],
         "tests": [
-            "phpunit -vvvv",
-            "@remaining-tests",
-            "@phpstan"
-        ],
-        "phpstan": [
+            "phpunit -vvvv --coverage-clover=phpunit.clover",
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests PHPStan",
-            "echo 'if you can see this, phpstan/phpstan#1142 is probably fixed!'"
-        ],
-        "remaining-tests": [
             "psalm",
             "phpcpd src Tests PHPStan",
             "phpmnd src",
