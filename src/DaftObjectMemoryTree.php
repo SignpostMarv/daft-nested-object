@@ -214,10 +214,10 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = self::BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST
     ) : void {
-        static::ThrowIfNotType(
+        NestedTypeParanoia::ThrowIfNotNestedType(
             $object,
-            DaftNestedObject::class,
             self::INT_ARG_INDEX_FIRST,
+            static::class,
             __METHOD__
         );
 
@@ -225,25 +225,20 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param DaftObject|string $object
+    * {@inheritdoc}
     */
-    protected static function ThrowIfNotType(
-        $object,
+    public static function DaftObjectRepositoryByType(
         string $type,
-        int $argument,
-        string $function
-    ) : void {
-        parent::ThrowIfNotType($object, $type, $argument, $function);
-
-        if ( ! is_a($object, DaftNestedObject::class, is_string($object))) {
-            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
-                $argument,
+        ...$args
+    ) : DaftObjectRepository {
+            NestedTypeParanoia::ThrowIfNotNestedType(
+                $type,
+                1,
                 static::class,
-                $function,
-                DaftNestedObject::class,
-                is_string($object) ? $object : get_class($object)
+                __FUNCTION__
             );
-        }
+
+        return parent::DaftObjectRepositoryByType($type, ...$args);
     }
 
     private function MapDataToObject(array $row) : DaftNestedObject

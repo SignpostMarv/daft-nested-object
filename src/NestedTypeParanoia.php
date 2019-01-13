@@ -19,4 +19,44 @@ class NestedTypeParanoia extends TypeParanoia
 
         return is_int($out) ? $out : null;
     }
+
+    /**
+    * @param mixed $object
+    */
+    public static function ThrowIfNotNestedType(
+        $object,
+        int $argument,
+        string $class,
+        string $function,
+        string ...$types
+    ) : void {
+        static::ThrowIfNotType(
+            $object,
+            $argument,
+            $class,
+            $function,
+            DaftNestedObject::class,
+            ...$types
+        );
+    }
+
+    /**
+    * @param mixed $object
+    */
+    public static function ThrowIfNotWriteableNestedType(
+        $object,
+        int $argument,
+        string $class,
+        string $function,
+        string ...$types
+    ) : void {
+        static::ThrowIfNotType(
+            $object,
+            $argument,
+            $class,
+            $function,
+            DaftNestedWriteableObject::class,
+            ...$types
+        );
+    }
 }
