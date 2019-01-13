@@ -12,9 +12,7 @@ use SignpostMarv\DaftObject\AbstractArrayBackedDaftNestedObject;
 use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 
-class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject
-    implements
-        DefinesOwnIntegerIdInterface
+class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements DefinesOwnIntegerIdInterface
 {
     use DaftObjectIdValuesHashLazyInt;
 

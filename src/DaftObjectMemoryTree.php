@@ -8,11 +8,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
-abstract class DaftObjectMemoryTree
-    extends
-        DaftObjectMemoryRepository
-    implements
-        DaftNestedObjectTree
+abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
 {
     const DECREMENT = -1;
 

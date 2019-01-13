@@ -33,7 +33,6 @@ trait TraitRememberDaftObject
 
     abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
-
     private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
     {
         $left = $object->GetIntNestedLeft();
