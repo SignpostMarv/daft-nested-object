@@ -31,7 +31,7 @@ class NestedTypeParanoia extends TypeParanoia
         string $class,
         string $function,
         string ...$types
-    ) : void {
+    ) {
         static::ThrowIfNotType(
             $object,
             $argument,
@@ -51,7 +51,7 @@ class NestedTypeParanoia extends TypeParanoia
         string $class,
         string $function,
         string ...$types
-    ) : void {
+    ) {
         static::ThrowIfNotType(
             $object,
             $argument,
