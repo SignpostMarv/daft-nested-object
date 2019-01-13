@@ -60,6 +60,9 @@ class NestedTypeParanoia extends TypeParanoia
         );
     }
 
+    /**
+    * @param mixed $maybe
+    */
     public static function ForceInt($maybe) : int
     {
         return is_int($maybe) ? $maybe : (int) $maybe;
