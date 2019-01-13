@@ -8,7 +8,11 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
-abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
+abstract class DaftObjectMemoryTree
+    extends
+        DaftObjectMemoryRepository
+    implements
+        DaftNestedObjectTree
 {
     const DECREMENT = -1;
 
@@ -231,12 +235,12 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         string $type,
         ...$args
     ) : DaftObjectRepository {
-            NestedTypeParanoia::ThrowIfNotNestedType(
-                $type,
-                1,
-                static::class,
-                __FUNCTION__
-            );
+        NestedTypeParanoia::ThrowIfNotNestedType(
+            $type,
+            1,
+            static::class,
+            __FUNCTION__
+        );
 
         return parent::DaftObjectRepositoryByType($type, ...$args);
     }
