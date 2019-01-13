@@ -49,7 +49,7 @@
         "signpostmarv/daft-object": "^1.1"
     },
     "require-dev": {
-        "infection/infection": "^0.11.4",
+        "infection/infection": "^0.11.5",
         "maglnet/composer-require-checker": "^1.1",
         "phpstan/phpstan": "dev-master",
         "phpstan/phpstan-phpunit": "dev-master",
