@@ -141,8 +141,13 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
     {
         $out = parent::ChangedProperties();
 
+        /**
+        * @var array<int, string>
+        */
+        $parentIdProperties = static::DaftNestedObjectParentIdProperties();
+
         $props = array_filter(
-            static::DaftNestedObjectParentIdProperties(),
+            $parentIdProperties,
             function (string $prop) use ($out) : bool {
                 return TypeParanoia::MaybeInArray($prop, $out);
             }

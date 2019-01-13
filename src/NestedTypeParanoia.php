@@ -17,6 +17,9 @@ class NestedTypeParanoia extends TypeParanoia
     */
     public static function MaybeFoundInArray($needle, array $haystack)
     {
+        /**
+        * @var int|false
+        */
         $out = array_search($needle, $haystack, true);
 
         return is_int($out) ? $out : null;
