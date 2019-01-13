@@ -10,8 +10,9 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftNestedObject;
 use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
+use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 
-class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject
+class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements DefinesOwnIntegerIdInterface
 {
     use DaftObjectIdValuesHashLazyInt;
 

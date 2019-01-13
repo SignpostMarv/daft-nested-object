@@ -17,10 +17,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DefinesOwnIdPropertiesInterface $object,
         bool $assumeDoesNotExist = DaftObjectMemoryTree::BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST
     ) {
-        static::ThrowIfNotType(
+        NestedTypeParanoia::ThrowIfNotWriteableNestedType(
             $object,
-            DaftNestedWriteableObject::class,
             self::INT_ARG_INDEX_FIRST,
+            static::class,
             __METHOD__
         );
 
@@ -28,24 +28,14 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     }
 
     /**
-    * @param DaftObject|string $object
+    * {@inheritdoc}
     */
-    protected static function ThrowIfNotType(
-        $object,
+    public static function DaftObjectRepositoryByType(
         string $type,
-        int $argument,
-        string $function
-    ) {
-        if ( ! is_a($object, DaftNestedWriteableObject::class, is_string($object))) {
-            throw new DaftObjectRepositoryTypeByClassMethodAndTypeException(
-                $argument,
-                static::class,
-                $function,
-                DaftNestedWriteableObject::class,
-                is_string($object) ? $object : get_class($object)
-            );
-        }
+        ...$args
+    ) : DaftObjectRepository {
+        NestedTypeParanoia::ThrowIfNotWriteableNestedType($type, 1, static::class, __FUNCTION__);
 
-        parent::ThrowIfNotType($object, $type, $argument, $function);
+        return parent::DaftObjectRepositoryByType($type, ...$args);
     }
 }

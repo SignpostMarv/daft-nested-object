@@ -41,7 +41,8 @@
         ]
     },
     "require": {
-        "php": "^7.0,<7.1"
+        "php": "^7.0,<7.1",
+        "signpostmarv/daft-object": "^0.21.0"
     },
     "require-dev": {
         "maglnet/composer-require-checker": "^0.1.6",
@@ -52,7 +53,6 @@
         "povils/phpmnd": "^1.1",
         "roave/security-advisories": "dev-master",
         "sebastian/phpcpd": "^3.0",
-        "signpostmarv/daft-object": "^0.20.1",
         "signpostmarv/php-cs-fixer-config": "^0.6.0",
         "vimeo/psalm": "^1.1"
     }

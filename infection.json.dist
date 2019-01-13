@@ -11,6 +11,11 @@
     },
     "mutators": {
         "@default": true,
+        "CastInt": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\NestedTypeParanoia::ForceInt"
+            ]
+        },
         "Coalesce": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::getType"
