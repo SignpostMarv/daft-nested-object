@@ -174,7 +174,5 @@ trait TraitWriteableTree
         $replacementRoot = $replacementRoot;
 
         $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
-
-        return null;
     }
 }

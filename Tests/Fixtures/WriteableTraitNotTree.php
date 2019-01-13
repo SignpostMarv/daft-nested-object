@@ -30,7 +30,6 @@ class WriteableTraitNotTree
     */
     public function RecallDaftObject($id)
     {
-        return null;
     }
 
     public function CountDaftNestedObjectTreeWithObject(

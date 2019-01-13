@@ -173,8 +173,6 @@ trait TraitWriteableTreeUtilities
 
             return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
         }
-
-        return null;
     }
 
     private function RebuildAfterInsert(
