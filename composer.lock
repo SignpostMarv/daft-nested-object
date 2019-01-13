@@ -583,16 +583,16 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.11.4",
+            "version": "0.11.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "f71d7af4332e0c3760aab45c16a6f750db1475a6"
+                "reference": "20c87babc55e7b49bf2b8410fc1dd1fa87177824"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/f71d7af4332e0c3760aab45c16a6f750db1475a6",
-                "reference": "f71d7af4332e0c3760aab45c16a6f750db1475a6",
+                "url": "https://api.github.com/repos/infection/infection/zipball/20c87babc55e7b49bf2b8410fc1dd1fa87177824",
+                "reference": "20c87babc55e7b49bf2b8410fc1dd1fa87177824",
                 "shasum": ""
             },
             "require": {
@@ -669,7 +669,7 @@
                 "testing",
                 "unit testing"
             ],
-            "time": "2018-12-09T15:26:00+00:00"
+            "time": "2019-01-13T06:56:41+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -2425,12 +2425,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "f8806130a9bf3a6aec8d346c46c764cd576818c3"
+                "reference": "88b723f09e5c37607d8f226d0616445a7180d4c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/f8806130a9bf3a6aec8d346c46c764cd576818c3",
-                "reference": "f8806130a9bf3a6aec8d346c46c764cd576818c3",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/88b723f09e5c37607d8f226d0616445a7180d4c6",
+                "reference": "88b723f09e5c37607d8f226d0616445a7180d4c6",
                 "shasum": ""
             },
             "require": {
@@ -2463,7 +2463,7 @@
                 "MIT"
             ],
             "description": "Extra strict and opinionated rules for PHPStan",
-            "time": "2019-01-11T17:09:50+00:00"
+            "time": "2019-01-13T18:43:35+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -4841,12 +4841,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "a7005014c2a79065676f5dcd15c889d6c4e1a48b"
+                "reference": "94aa51ba6d016ab6c3e72e61508fc1c9f91f975e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/a7005014c2a79065676f5dcd15c889d6c4e1a48b",
-                "reference": "a7005014c2a79065676f5dcd15c889d6c4e1a48b",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/94aa51ba6d016ab6c3e72e61508fc1c9f91f975e",
+                "reference": "94aa51ba6d016ab6c3e72e61508fc1c9f91f975e",
                 "shasum": ""
             },
             "require": {
@@ -4911,7 +4911,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-01-12T16:40:19+00:00"
+            "time": "2019-01-13T18:27:07+00:00"
         },
         {
             "name": "webmozart/assert",
