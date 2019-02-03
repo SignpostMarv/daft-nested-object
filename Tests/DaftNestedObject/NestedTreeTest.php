@@ -6,7 +6,7 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\DaftObject\DaftNestedObject\Tests;
+namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\DaftNestedObject;
 
 use Generator;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftObject;
@@ -31,9 +31,15 @@ class NestedTreeTest extends Base
     }
 
     /**
+    * @template T DaftNestedObjectTree
+    * @template L DaftNestedObject
+    *
     * @dataProvider DataProviderArgs
     *
     * @param mixed ...$remainingTreeArgs
+    *
+    * @psalm-param class-string<T> $treeClass
+    * @psalm-param class-string<L> $leafClass
     */
     public function testRecallFullTree(
         string $treeClass,
@@ -42,19 +48,11 @@ class NestedTreeTest extends Base
     ) : void {
         static::assertTrue(class_exists($leafClass));
         static::assertTrue(class_exists($treeClass));
-        if ( ! is_a($leafClass, DaftNestedObject::class, true)) {
-            static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
-
-            return;
-        }
-        if ( ! is_a($treeClass, DaftNestedObjectTree::class, true)) {
-            static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
-
-            return;
-        }
 
         /**
         * @var DaftNestedObjectTree
+        *
+        * @psalm-var T
         */
         $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
@@ -113,6 +111,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -123,6 +123,9 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -132,6 +135,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectFullTree(0);
 
@@ -141,6 +146,9 @@ class NestedTreeTest extends Base
                 $b->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -156,6 +164,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, true, null);
 
@@ -165,6 +175,9 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -174,6 +187,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->GetId(), true, null);
 
@@ -183,6 +198,9 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -201,6 +219,9 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -210,6 +231,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectPathToId($c->GetId(), true);
 
@@ -219,6 +242,9 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -231,6 +257,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectPathToObject($c, false);
 
@@ -239,6 +267,9 @@ class NestedTreeTest extends Base
                 $b->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -248,6 +279,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectPathToId($c->GetId(), false);
 
@@ -256,6 +289,9 @@ class NestedTreeTest extends Base
                 $b->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -268,6 +304,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, false, null);
 
@@ -276,6 +314,9 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -285,6 +326,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->GetId(), false, null);
 
@@ -293,6 +336,9 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -305,6 +351,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, false, 0);
 
@@ -312,6 +360,9 @@ class NestedTreeTest extends Base
             [
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -321,6 +372,8 @@ class NestedTreeTest extends Base
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, L>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->GetId(), false, 0);
 
@@ -328,6 +381,9 @@ class NestedTreeTest extends Base
             [
             ],
             array_map(
+                /**
+                * @psalm-param L $leaf
+                */
                 function (DaftNestedObject $leaf) : int {
                     return (int) $leaf->GetId();
                 },
@@ -337,48 +393,6 @@ class NestedTreeTest extends Base
 
         static::assertSame(0, $repo->CountDaftNestedObjectTreeWithObject($b, false, 0));
         static::assertSame(0, $repo->CountDaftNestedObjectTreeWithId($b->GetId(), false, 0));
-    }
-
-    /**
-    * @dataProvider DataProviderArgs
-    *
-    * @param mixed ...$remainingTreeArgs
-    */
-    public function testThrowIfNotType(
-        string $treeClass,
-        string $leafClass,
-        ...$remainingTreeArgs
-    ) : void {
-        static::assertTrue(class_exists($leafClass));
-        static::assertTrue(class_exists($treeClass));
-        static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
-        if ( ! is_a($treeClass, DaftNestedObjectTree::class, true)) {
-            static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
-
-            return;
-        }
-
-        $this->expectException(DaftObjectRepositoryTypeByClassMethodAndTypeException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Argument %u passed to %s::%s() must be an implementation of %s, %s given.',
-            1,
-            $treeClass,
-            'DaftObjectRepositoryByType',
-            (
-                is_a($leafClass, DaftNestedWriteableObject::class, true)
-                    ? DaftNestedWriteableObject::class
-                    : DaftNestedObject::class
-            ),
-            AbstractArrayBackedDaftObject::class
-        ));
-
-        /**
-        * @var DaftNestedObjectTree
-        */
-        $repo = $treeClass::DaftObjectRepositoryByType(
-            AbstractArrayBackedDaftObject::class,
-            ...$remainingTreeArgs
-        );
     }
 
     protected static function leafClass() : string

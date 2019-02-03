@@ -18,7 +18,7 @@ class InefficientDaftNestedRebuild
     protected $tree;
 
     /**
-    * @var array<int, scalar|scalar[]>
+    * @var array<int, (scalar|array|object|null)[]>
     */
     protected $parentIdXref = [];
 
@@ -28,7 +28,7 @@ class InefficientDaftNestedRebuild
     protected $children = [[]];
 
     /**
-    * @var array<int, scalar|scalar[]>
+    * @var array<int, (scalar|array|object|null)[]>
     */
     protected $idXref = [];
 
@@ -64,7 +64,7 @@ class InefficientDaftNestedRebuild
         $children = [[]];
 
         /**
-        * @var array<int, scalar|scalar[]>
+        * @var array<int, (scalar|array|object|null)[]>
         */
         $idXref = [];
 
@@ -101,13 +101,15 @@ class InefficientDaftNestedRebuild
                 $this->children[$pos] = [];
             }
 
-            if ( ! TypeParanoia::MaybeInArray($leaf, $this->children[$pos])) {
+            if (
+                ! in_array($leaf, $this->children[$pos], DefinitionAssistant::IN_ARRAY_STRICT_MODE)
+            ) {
                 $this->children[$pos][] = $leaf;
             }
 
-            if ( ! TypeParanoia::MaybeInArray($leaf, $this->idXref)) {
+            if ( ! in_array($leaf, $this->idXref, DefinitionAssistant::IN_ARRAY_STRICT_MODE)) {
                 /**
-                * @var scalar|scalar[]
+                * @var (scalar|array|object|null)[]
                 */
                 $leafId = $leaf->GetId();
                 $this->idXref[] = $leafId;
@@ -129,7 +131,7 @@ class InefficientDaftNestedRebuild
         array $ids
     ) : int {
         /**
-        * @var scalar|scalar[]
+        * @var (scalar|array|object|null)[]
         */
         $id = $leaf->GetId();
 

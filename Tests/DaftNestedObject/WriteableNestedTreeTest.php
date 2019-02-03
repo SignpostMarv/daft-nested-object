@@ -6,7 +6,7 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\DaftObject\DaftNestedObject\Tests;
+namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\DaftNestedObject;
 
 use BadMethodCallException;
 use Closure;

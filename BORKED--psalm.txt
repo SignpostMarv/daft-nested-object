@@ -1,0 +1,221 @@
+Scanning files...
+Analyzing files...
+
+[0;31mERROR[0m: TooManyTemplateParams - PHPStan\PropertyReflectionExtension.php:26:7 - SignpostMarv\DaftObject\DaftNestedObject\PHPStan\PropertyReflectionExtension has too many template params, expecting 0
+class [97;41mPropertyReflectionExtension[0m extends Base
+
+
+[0;31mERROR[0m: InvalidTemplateParam - src\DaftObjectMemoryTree.php:18:16 - Extended template param T expects type SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface&SignpostMarv\DaftObject\DaftObjectCreatedByArray, type T as SignpostMarv\DaftObject\DaftNestedObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray given
+abstract class [97;41mDaftObjectMemoryTree[0m extends DaftObjectMemoryRepository implements DaftNestedObjectTree
+
+
+[0;31mERROR[0m: InvalidArgument - src\InefficientDaftNestedRebuild.php:122:65 - Argument 1 of SignpostMarv\DaftObject\DaftNestedWriteableObjectTree::StoreThenRetrieveFreshLeaf expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, SignpostMarv\DaftObject\DaftNestedWriteableObject provided
+            $tree[$i] = $this->tree->StoreThenRetrieveFreshLeaf([97;41m$leaf[0m);
+
+
+[0;31mERROR[0m: MixedInferredReturnType - src\InefficientDaftNestedRebuild.php:126:9 - Could not verify return type 'int' for SignpostMarv\DaftObject\InefficientDaftNestedRebuild::InefficientRebuild
+    private function InefficientRebuild(
+        DaftNestedWriteableObject $leaf,
+        int $level,
+        int $n,
+        array $parents,
+        array $ids
+    ) : [97;41mint[0m {
+        /**
+        * @var (scalar|array|object|null)[]
+        */
+        $id = $leaf->GetId();
+
+        $leaf->SetIntNestedLevel($level);
+        $leaf->SetIntNestedLeft($n);
+
+        ++$n;
+
+
+
+[0;31mERROR[0m: InvalidArgument - src\InefficientDaftNestedRebuild.php:156:49 - Argument 1 of SignpostMarv\DaftObject\DaftNestedWriteableObjectTree::StoreThenRetrieveFreshLeaf expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, SignpostMarv\DaftObject\DaftNestedWriteableObject provided
+        $this->tree->StoreThenRetrieveFreshLeaf([97;41m$leaf[0m);
+
+
+[0;31mERROR[0m: InvalidReturnType - src\TraitWriteableTree.php:29:7 - The declared return type 'SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray' for SignpostMarv\DaftObject\TraitWriteableTree::ModifyDaftNestedObjectTreeInsert is incorrect, got 'SignpostMarv\DaftObject\DaftNestedWriteableObject'
+    /**
+    * @psalm-param T $newLeaf
+    * @psalm-param T $referenceLeaf
+    *
+    * [97;41m@psalm-return T[0m
+    */
+    public function ModifyDaftNestedObjectTreeInsert(
+        DaftNestedWriteableObject $newLeaf,
+        DaftNestedWriteableObject $referenceLeaf,
+        bool $before = false,
+
+
+[0;31mERROR[0m: TypeCoercion - src\TraitWriteableTree.php:70:13 - Argument 3 of SignpostMarv\DaftObject\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree expects null|SignpostMarv\DaftObject\DaftNestedWriteableObject, parent type null|SignpostMarv\DaftObject\DaftNestedObject provided
+            [97;41m$reference[0m,
+
+
+[0;31mERROR[0m: MixedInferredReturnType - src\TraitWriteableTree.php:91:9 - Could not verify return type 'int' for SignpostMarv\DaftObject\TraitWriteableTree::ModifyDaftNestedObjectTreeRemoveWithObject
+    /**
+    * @psalm-param T $root
+    * @psalm-param T|null $replacementRoot
+    */
+    public function ModifyDaftNestedObjectTreeRemoveWithObject(
+        DaftNestedWriteableObject $root,
+        ? DaftNestedWriteableObject $replacementRoot
+    ) : [97;41mint[0m {
+        if (
+            $this->CountDaftNestedObjectTreeWithObject(
+                $root,
+                false,
+                null
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTree.php:97:17 - Argument 1 of SignpostMarv\DaftObject\DaftObjectMemoryTree::CountDaftNestedObjectTreeWithObject expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray provided
+                [97;41m$root[0m,
+
+
+[0;31mERROR[0m: MixedInferredReturnType - src\TraitWriteableTree.php:132:87 - Could not verify return type 'int' for SignpostMarv\DaftObject\TraitWriteableTree::ModifyDaftNestedObjectTreeRemoveWithId
+    /**
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $root
+    * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
+    *
+    * @psalm-param T|scalar|(scalar|array|object|null)[] $root
+    *
+    * @throws BadMethodCallException if $root has leaves without $replacementRoot specified
+    *
+    * @return int full tree count after removal
+    */
+    public function ModifyDaftNestedObjectTreeRemoveWithId($root, $replacementRoot) : [97;41mint[0m
+    {
+        $rootObject = $this->RecallDaftObject($root);
+
+        $resp = null;
+
+        if ($rootObject instanceof DaftNestedWriteableObject) {
+
+
+[0;31mERROR[0m: PossiblyInvalidArgument - src\TraitWriteableTree.php:134:47 - Argument 1 of SignpostMarv\DaftObject\DaftObjectMemoryRepository::RecallDaftObject expects array<array-key, array<array-key, mixed>|scalar|object|null>|scalar, possibly different type array<array-key, array<array-key, mixed>|scalar|object|null>|T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray|scalar provided
+        $rootObject = $this->RecallDaftObject([97;41m$root[0m);
+
+
+[0;31mERROR[0m: MixedInferredReturnType - src\TraitWriteableTree.php:148:9 - Could not verify return type 'SignpostMarv\DaftObject\DaftNestedWriteableObject' for SignpostMarv\DaftObject\TraitWriteableTree::StoreThenRetrieveFreshLeaf
+    public function StoreThenRetrieveFreshLeaf(
+        DaftNestedWriteableObject $leaf
+    ) : [97;41mDaftNestedWriteableObject[0m {
+        $this->RememberDaftObject($leaf);
+        $this->ForgetDaftObject($leaf);
+        $this->ForgetDaftObjectById($leaf->GetId());
+
+        $fresh = $this->RecallDaftObject($leaf->GetId());
+
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTree.php:151:35 - Argument 1 of SignpostMarv\DaftObject\TraitRememberDaftObject::RememberDaftObject expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, SignpostMarv\DaftObject\DaftNestedWriteableObject provided
+        $this->RememberDaftObject([97;41m$leaf[0m);
+
+
+[0;31mERROR[0m: MixedInferredReturnType - src\TraitWriteableTree.php:167:9 - Could not verify return type 'int|null' for SignpostMarv\DaftObject\TraitWriteableTree::ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject
+    /**
+    * @param scalar|scalar[]|null $replacementRoot
+    */
+    private function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
+        $replacementRoot,
+        DaftNestedWriteableObject $rootObject
+    ) : [97;41m? int[0m {
+        $tree = $this->ThrowIfNotTree();
+
+        if (
+            $tree->CountDaftNestedObjectTreeWithObject(
+                $rootObject,
+                false,
+                null
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTree.php:175:17 - Argument 1 of SignpostMarv\DaftObject\DaftNestedObjectTree::CountDaftNestedObjectTreeWithObject expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, SignpostMarv\DaftObject\DaftNestedWriteableObject provided
+                [97;41m$rootObject[0m,
+
+
+[0;31mERROR[0m: MoreSpecificImplementedParamType - src\TraitWriteableTreeUtilities.php:37:79 - Argument 1 of SignpostMarv\DaftObject\DaftWriteableObjectMemoryTree::RemoveDaftObject has wrong type 'T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray', expecting 'SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface' as defined by SignpostMarv\DaftObject\DaftWriteableObjectMemoryTree::RemoveDaftObject
+    abstract public function RemoveDaftObject(DefinesOwnIdPropertiesInterface [97;41m$object[0m) : void;
+
+
+[0;31mERROR[0m: MoreSpecificImplementedParamType - src\TraitWriteableTreeUtilities.php:49:79 - Argument 1 of SignpostMarv\DaftObject\DaftWriteableObjectMemoryTree::ForgetDaftObject has wrong type 'T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray', expecting 'SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface' as defined by SignpostMarv\DaftObject\DaftWriteableObjectMemoryTree::ForgetDaftObject
+    abstract public function ForgetDaftObject(DefinesOwnIdPropertiesInterface [97;41m$object[0m) : void;
+
+
+[0;31mERROR[0m: MoreSpecificReturnType - src\TraitWriteableTreeUtilities.php:214:7 - The declared return type 'SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray' for SignpostMarv\DaftObject\TraitWriteableTreeUtilities::RebuildAfterInsert is more specific than the inferred return type 'SignpostMarv\DaftObject\DaftNestedObject&SignpostMarv\DaftObject\DaftNestedWriteableObject'
+    /**
+    * @psalm-param T $newLeaf
+    *
+    * [97;41m@psalm-return T[0m
+    */
+    private function RebuildAfterInsert(
+        DaftNestedWriteableObject $newLeaf
+    ) : DaftNestedWriteableObject {
+        $this->RebuildTreeInefficiently();
+
+        /**
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTreeUtilities.php:248:28 - Argument 1 of SignpostMarv\DaftObject\TraitWriteableTreeUtilities::UpdateRoots expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray provided
+        $this->UpdateRoots([97;41m$root[0m, $replacementRootId);
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTreeUtilities.php:261:67 - Argument 1 of SignpostMarv\DaftObject\DaftObjectMemoryTree::RecallDaftNestedObjectTreeWithObject expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray provided
+        $alterThese = $this->RecallDaftNestedObjectTreeWithObject([97;41m$root[0m, false, 1);
+
+
+[0;31mERROR[0m: MixedInferredReturnType - src\TraitWriteableTreeUtilities.php:292:7 - Could not verify return type 'null|SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray' for SignpostMarv\DaftObject\TraitWriteableTreeUtilities::MaybeGetLeaf
+    /**
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $leaf
+    *
+    * @psalm-param T|scalar|(scalar|array|object|null)[] $leaf
+    *
+    * [97;41m@psalm-return T|null[0m
+    */
+    private function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
+    {
+        $tree = $this->ThrowIfNotTree();
+
+        if ($leaf === $tree->GetNestedObjectTreeRootId()) {
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTreeUtilities.php:301:54 - Argument 1 of SignpostMarv\DaftObject\DaftNestedWriteableObjectTree::StoreThenRetrieveFreshLeaf expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray provided
+            return $tree->StoreThenRetrieveFreshLeaf([97;41m$leaf[0m);
+
+
+[0;31mERROR[0m: PossiblyInvalidArgument - src\TraitWriteableTreeUtilities.php:309:40 - Argument 1 of SignpostMarv\DaftObject\DaftObjectRepository::RecallDaftObject expects array<array-key, array<array-key, mixed>|scalar|object|null>|scalar, possibly different type array<array-key, array<array-key, mixed>|scalar|object|null>|scalar|T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray provided
+        return $tree->RecallDaftObject([97;41m$leaf[0m);
+
+
+[0;31mERROR[0m: MixedInferredReturnType - src\TraitWriteableTreeUtilities.php:315:7 - Could not verify return type 'SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray' for SignpostMarv\DaftObject\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertLooseIntoTree
+    /**
+    * @psalm-param T $leaf
+    *
+    * [97;41m@psalm-return T[0m
+    */
+    private function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
+        DaftNestedWriteableObject $leaf,
+        bool $before,
+        ? bool $above
+    ) : DaftNestedWriteableObject {
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTreeUtilities.php:341:54 - Argument 1 of SignpostMarv\DaftObject\DaftNestedWriteableObjectTree::StoreThenRetrieveFreshLeaf expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray provided
+            return $tree->StoreThenRetrieveFreshLeaf([97;41m$leaf[0m);
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTreeUtilities.php:344:56 - Argument 1 of SignpostMarv\DaftObject\TraitWriteableTree::ModifyDaftNestedObjectTreeInsert expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray provided
+        return $this->ModifyDaftNestedObjectTreeInsert([97;41m$leaf[0m, $reference, $before, $above);
+
+
+[0;31mERROR[0m: InvalidArgument - src\TraitWriteableTreeUtilities.php:356:28 - Argument 1 of SignpostMarv\DaftObject\TraitWriteableTreeUtilities::UpdateRoots expects SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray, T as SignpostMarv\DaftObject\DaftNestedWriteableObject&SignpostMarv\DaftObject\DaftObjectCreatedByArray provided
+        $this->UpdateRoots([97;41m$rootObject[0m, $replacementRoot);
+
+
+------------------------------
+[0;31m27 errors[0m found
+------------------------------
+
+Checks took 1.37 seconds and used 115.671MB of memory
+Psalm was able to infer types for 100.000% of analyzed code (23 files)

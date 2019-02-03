@@ -16,10 +16,13 @@ use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
-use SignpostMarv\DaftObject\DaftObjectRepositoryTypeByClassMethodAndTypeException;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 use SignpostMarv\DaftObject\TraitWriteableTree;
 
+/**
+* @template R as DaftNestedObject&\SignpostMarv\DaftObject\DaftObjectCreatedByArray
+* @template W as DaftNestedWriteableObject&\SignpostMarv\DaftObject\DaftObjectCreatedByArray
+*/
 class CoverageTest extends Base
 {
     public function DataProviderCoverageNonWriteableRepo() : Generator
@@ -301,23 +304,6 @@ class CoverageTest extends Base
         $obj->WillFail();
     }
 
-    public function testRememberDaftObject() : void
-    {
-        $obj = new Fixtures\CoverageTraitRememberDaftObject();
-
-        $this->expectException(DaftObjectRepositoryTypeByClassMethodAndTypeException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Argument %s passed to %s::%s() must be an implementation of %s, %s given.',
-            1,
-            Fixtures\CoverageTraitRememberDaftObject::class,
-            'RememberDaftObject',
-            DaftNestedWriteableObject::class,
-            Fixtures\DaftNestedIntObject::class
-        ));
-
-        $obj->RememberDaftObject(new Fixtures\DaftNestedIntObject());
-    }
-
     /**
     * @return array<int, DaftNestedObject>
     */
@@ -350,7 +336,11 @@ class CoverageTest extends Base
     }
 
     /**
+    * @psalm-param class-string<R|W> $type
+    *
     * @return array<int, DaftNestedWriteableObject>
+    *
+    * @psalm-return array<int, R|W>
     */
     protected static function PrepRepoWriteable(
         DaftNestedObjectTree $repo,
@@ -363,6 +353,8 @@ class CoverageTest extends Base
 
         /**
         * @var array<int, DaftNestedWriteableObject>
+        *
+        * @psalm-var array<int, R|W>
         */
         $out = static::PrepRepo($repo, $type, ...$ids);
 

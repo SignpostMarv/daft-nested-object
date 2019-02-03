@@ -6,7 +6,7 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Base;
+namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\DaftObjectRepository;
 
 use Generator;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedIntObject;
@@ -15,7 +15,7 @@ use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedWriteableI
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
-use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as BaseTest;
+use SignpostMarv\DaftObject\Tests\DaftObjectRepository\DaftObjectRepositoryTest as BaseTest;
 
 class DaftNestedObjectIntTreeTest extends BaseTest
 {

@@ -12,10 +12,17 @@ use PHPStan\Broker\Broker;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Type\IntegerType;
 use PHPStan\Type\Type;
+use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
+use SignpostMarv\DaftObject\DefinitionAssistant;
 use SignpostMarv\DaftObject\PHPStan\PropertyReflectionExtension as Base;
 use SignpostMarv\DaftObject\TypeParanoia;
 
+/**
+* @template T as \SignpostMarv\DaftObject\DaftNestedObject&\SignpostMarv\DaftObject\DaftObjectCreatedByArray
+*
+* @template-extends Base<T>
+*/
 class PropertyReflectionExtension extends Base
 {
     const BOOL_NESTED_IS_READABLE = false;
@@ -43,9 +50,10 @@ class PropertyReflectionExtension extends Base
 
         if ('intNestedParentId' === $property || $intProperty) {
             $this->nestedReadable = self::BOOL_NESTED_IS_READABLE;
-            $this->nestedWriteable = TypeParanoia::IsThingStrings(
+            $this->nestedWriteable = is_a(
                 $classReflection->getNativeReflection()->getName(),
-                DaftNestedWriteableObject::class
+                DaftNestedWriteableObject::class,
+                true
             );
         }
 
@@ -56,14 +64,15 @@ class PropertyReflectionExtension extends Base
 
     public static function PropertyIsInt(string $property) : bool
     {
-        return TypeParanoia::MaybeInArray(
+        return in_array(
             $property,
             [
                 'intNestedLeft',
                 'intNestedRight',
                 'intNestedLevel',
                 'intNestedSortOrder',
-            ]
+            ],
+            DefinitionAssistant::IN_ARRAY_STRICT_MODE
         );
     }
 
@@ -82,6 +91,9 @@ class PropertyReflectionExtension extends Base
         return $this->nestedType ?? parent::getType();
     }
 
+    /**
+    * @psalm-param class-string<T> $className
+    */
     protected static function PropertyIsPublic(string $className, string $property) : bool
     {
         return

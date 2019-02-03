@@ -12,10 +12,22 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use RuntimeException;
 
+/**
+* @template T as DaftNestedWriteableObject&DaftObjectCreatedByArray
+*/
 trait TraitWriteableTree
 {
+    /**
+    * @use TraitWriteableTreeUtilities<T>
+    */
     use TraitWriteableTreeUtilities;
 
+    /**
+    * @psalm-param T $newLeaf
+    * @psalm-param T $referenceLeaf
+    *
+    * @psalm-return T
+    */
     public function ModifyDaftNestedObjectTreeInsert(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
@@ -38,8 +50,8 @@ trait TraitWriteableTree
     }
 
     /**
-    * @param mixed $leaf
-    * @param mixed $referenceId
+    * @param (scalar|array|object|null)[] $leaf
+    * @param (scalar|array|object|null)[] $referenceId
     */
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
@@ -72,6 +84,10 @@ trait TraitWriteableTree
         ));
     }
 
+    /**
+    * @psalm-param T $root
+    * @psalm-param T|null $replacementRoot
+    */
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
         DaftNestedWriteableObject $root,
         ? DaftNestedWriteableObject $replacementRoot
@@ -104,8 +120,14 @@ trait TraitWriteableTree
     }
 
     /**
-    * @param mixed $root
-    * @param scalar|scalar[]|null $replacementRoot
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $root
+    * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
+    *
+    * @psalm-param T|scalar|(scalar|array|object|null)[] $root
+    *
+    * @throws BadMethodCallException if $root has leaves without $replacementRoot specified
+    *
+    * @return int full tree count after removal
     */
     public function ModifyDaftNestedObjectTreeRemoveWithId($root, $replacementRoot) : int
     {
@@ -163,7 +185,7 @@ trait TraitWriteableTree
         ) {
             $replacementRoot = $tree->RecallDaftObject($replacementRoot);
 
-            return $this->MaybeRemoveWithPossibleObject($rootObject, $replacementRoot);
+            return $this->ModifyDaftNestedObjectTreeRemoveWithObject($rootObject, $replacementRoot);
         }
 
         /**

@@ -8,32 +8,15 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftNestedWriteableObject&DaftObjectCreatedByArray
+*/
 trait TraitRememberDaftObject
 {
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
-    {
-        if ($object instanceof DaftNestedWriteableObject) {
-            $this->RememberDaftObjectWriteableTyped($object);
-        } else {
-            NestedTypeParanoia::ThrowIfNotWriteableNestedType(
-                $object,
-                1,
-                static::class,
-                __FUNCTION__
-            );
-        }
-    }
-
     /**
-    * @return array<int, DaftNestedObject>
+    * @psalm-param T $object
     */
-    abstract public function RecallDaftNestedObjectFullTree(
-        int $relativeDepthLimit = null
-    ) : array;
-
-    abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
-
-    private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
+    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
     {
         $left = $object->GetIntNestedLeft();
         $right = $object->GetIntNestedRight();
@@ -61,4 +44,15 @@ trait TraitRememberDaftObject
 
         parent::RememberDaftObject($object);
     }
+
+    /**
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
+    */
+    abstract public function RecallDaftNestedObjectFullTree(
+        int $relativeDepthLimit = null
+    ) : array;
+
+    abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 }

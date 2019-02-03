@@ -8,6 +8,13 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftNestedObject&DaftObjectCreatedByArray
+*
+* @template-extends DaftObjectMemoryRepository<T>
+*
+* @template-implements DaftNestedObjectTree<T>
+*/
 abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
 {
     const DECREMENT = -1;
@@ -24,12 +31,14 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     {
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, T>
         */
         $out = $this->memory;
 
         $outIds = [];
 
-        foreach ($out as $obj) {
+        foreach ($this->memory as $obj) {
             /**
             * @var array<int, scalar|scalar[]>
             */
@@ -40,11 +49,17 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, T>
         */
         $fromMemory = array_filter(
             array_map([$this, 'MapDataToObject'], $this->data),
             function (DaftNestedObject $leaf) use ($outIds) : bool {
-                return ! TypeParanoia::MaybeInArray($leaf->GetId(), $outIds);
+                return ! in_array(
+                    $leaf->GetId(),
+                    $outIds,
+                    DefinitionAssistant::IN_ARRAY_STRICT_MODE
+                );
             }
         );
 
@@ -71,6 +86,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
     /**
     * {@inheritdoc}
+    *
+    * @psalm-param T $root
     */
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
@@ -97,6 +114,11 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         ));
     }
 
+    /**
+    * {@inheritdoc}
+    *
+    * @psalm-param T $root
+    */
     public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
@@ -108,7 +130,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
     */
@@ -121,6 +143,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, T>
         */
         $out =
             ($object instanceof DaftNestedObject)
@@ -139,7 +163,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function CountDaftNestedObjectTreeWithId(
         $id,
@@ -188,7 +212,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
     */
@@ -203,42 +227,11 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int
     {
         return count($this->RecallDaftNestedObjectPathToId($id, $includeLeaf));
-    }
-
-    public function RememberDaftObjectData(
-        DefinesOwnIdPropertiesInterface $object,
-        bool $assumeDoesNotExist = self::BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST
-    ) : void {
-        NestedTypeParanoia::ThrowIfNotNestedType(
-            $object,
-            self::INT_ARG_INDEX_FIRST,
-            static::class,
-            __METHOD__
-        );
-
-        parent::RememberDaftObjectData($object, $assumeDoesNotExist);
-    }
-
-    /**
-    * {@inheritdoc}
-    */
-    public static function DaftObjectRepositoryByType(
-        string $type,
-        ...$args
-    ) : DaftObjectRepository {
-        NestedTypeParanoia::ThrowIfNotNestedType(
-            $type,
-            1,
-            static::class,
-            __FUNCTION__
-        );
-
-        return parent::DaftObjectRepositoryByType($type, ...$args);
     }
 
     private function MapDataToObject(array $row) : DaftNestedObject

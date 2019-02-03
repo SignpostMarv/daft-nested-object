@@ -8,17 +8,28 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftNestedObject&DaftObjectCreatedByArray
+*
+* @template-implements DaftObjectRepository<T>
+*/
 interface DaftNestedObjectTree extends DaftObjectRepository
 {
     /**
     * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array;
 
     public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
     /**
+    * @psalm-param T $root
+    *
     * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
@@ -26,6 +37,9 @@ interface DaftNestedObjectTree extends DaftObjectRepository
         ? int $relativeDepthLimit
     ) : array;
 
+    /**
+    * @psalm-param T $root
+    */
     public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
@@ -33,9 +47,11 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     ) : int;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectTreeWithId(
         $id,
@@ -44,7 +60,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     ) : array;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function CountDaftNestedObjectTreeWithId(
         $id,
@@ -53,32 +69,41 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     ) : int;
 
     /**
+    * @psalm-param T $leaf
+    *
     * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectPathToObject(
         DaftNestedObject $leaf,
         bool $includeLeaf
     ) : array;
 
+    /**
+    * @psalm-param T $leaf
+    */
     public function CountDaftNestedObjectPathToObject(
         DaftNestedObject $leaf,
         bool $includeLeaf
     ) : int;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectPathToId($id, bool $includeLeaf) : array;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int;
 
     /**
-    * @return scalar|scalar[]
+    * @return scalar|(scalar|array|object|null)[]
     */
     public function GetNestedObjectTreeRootId();
 }
