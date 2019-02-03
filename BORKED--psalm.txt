@@ -217,5 +217,5 @@ abstract class [97;41mDaftObjectMemoryTree[0m extends DaftObjectMemoryReposito
 [0;31m27 errors[0m found
 ------------------------------
 
-Checks took 1.37 seconds and used 115.671MB of memory
+Checks took 1.39 seconds and used 116.114MB of memory
 Psalm was able to infer types for 100.000% of analyzed code (23 files)
