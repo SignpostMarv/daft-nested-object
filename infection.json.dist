@@ -45,7 +45,6 @@
         },
         "IncrementInteger": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::UpdateRoots",
                 "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertAdjacent",
                 "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::UpdateRoots"
             ]
@@ -74,9 +73,7 @@
             "ignore": [
                 "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::RememberDaftObjectData",
                 "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::RememberDaftObjectData",
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ThrowIfNotType",
                 "SignpostMarv\\DaftObject\\InefficientDaftNestedRebuild::ProcessTree",
-                "SignpostMarv\\DaftObject\\TraitRememberDaftObject::ThrowIfNotType",
                 "SignpostMarv\\DaftObject\\TraitWriteableTree::ModifyDaftNestedObjectTreeInsert",
                 "SignpostMarv\\DaftObject\\TraitWriteableTree::StoreThenRetrieveFreshLeaf",
                 "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertAbove",
@@ -110,12 +107,6 @@
         "Throw_": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\ClassReflectionExtension::getProperty"
-            ]
-        },
-        "TrueValue": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\NestedTypeParanoia::MaybeFoundInArray",
-                "SignpostMarv\\DaftObject\\TraitWriteableTreeUtilities::ModifyDaftNestedObjectTreeInsertAdjacent"
             ]
         }
     }
