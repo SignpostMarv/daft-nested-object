@@ -53,10 +53,15 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
         return array_map(
             /**
-            * @return mixed
+            * @return scalar
             */
             function (string $prop) {
-                return $this->__get($prop);
+                /**
+                * @var scalar
+                */
+                $out = $this->__get($prop);
+
+                return $out;
             },
             $idProps
         );

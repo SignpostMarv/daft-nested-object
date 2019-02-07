@@ -258,6 +258,9 @@ trait TraitWriteableTreeUtilities
         bool $before,
         ? bool $above
     ) : DaftNestedWriteableObject {
+        /**
+        * @var array<int, DaftNestedWriteableObject>
+        */
         $leaves = $this->RecallDaftNestedObjectFullTree(0);
         $leaves = array_filter($leaves, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
             return $e->GetId() !== $leaf->GetId();
