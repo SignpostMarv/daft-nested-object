@@ -44,7 +44,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         $fromMemory = array_filter(
             array_map([$this, 'MapDataToObject'], $this->data),
             function (DaftNestedObject $leaf) use ($outIds) : bool {
-                return ! TypeParanoia::MaybeInArray($leaf->GetId(), $outIds);
+                return ! in_array($leaf->GetId(), $outIds, true);
             }
         );
 
@@ -208,37 +208,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int
     {
         return count($this->RecallDaftNestedObjectPathToId($id, $includeLeaf));
-    }
-
-    public function RememberDaftObjectData(
-        DefinesOwnIdPropertiesInterface $object,
-        bool $assumeDoesNotExist = self::BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST
-    ) : void {
-        NestedTypeParanoia::ThrowIfNotNestedType(
-            $object,
-            self::INT_ARG_INDEX_FIRST,
-            static::class,
-            __METHOD__
-        );
-
-        parent::RememberDaftObjectData($object, $assumeDoesNotExist);
-    }
-
-    /**
-    * {@inheritdoc}
-    */
-    public static function DaftObjectRepositoryByType(
-        string $type,
-        ...$args
-    ) : DaftObjectRepository {
-        NestedTypeParanoia::ThrowIfNotNestedType(
-            $type,
-            1,
-            static::class,
-            __FUNCTION__
-        );
-
-        return parent::DaftObjectRepositoryByType($type, ...$args);
     }
 
     private function MapDataToObject(array $row) : DaftNestedObject

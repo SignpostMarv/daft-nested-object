@@ -9,7 +9,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
-use SignpostMarv\DaftObject\DaftObject;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 interface DaftObjectThrowingTree extends DaftNestedObjectTree
 {
@@ -20,5 +20,5 @@ interface DaftObjectThrowingTree extends DaftNestedObjectTree
     /**
     * @param mixed $id
     */
-    public function RecallDaftObject($id) : ? DaftObject;
+    public function RecallDaftObject($id) : ? SuitableForRepositoryType;
 }

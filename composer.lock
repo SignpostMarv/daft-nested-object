@@ -4,39 +4,89 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "379f5d592b2ed22aecf9a96674d7c165",
+    "content-hash": "fa4e05c9828cd1fd6ff1546606ad1496",
     "packages": [
         {
-            "name": "signpostmarv/daft-object",
-            "version": "v1.1.0",
+            "name": "signpostmarv/daft-magic-property-analysis",
+            "version": "v0.5.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/SignpostMarv/daft-object.git",
-                "reference": "fdc353a5c0737922a51a3cbe2a26a374231d5c78"
+                "url": "https://github.com/SignpostMarv/daft-magic-property-analysis.git",
+                "reference": "591e4c976beb1b66879c2162f0fce1262188ed39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/fdc353a5c0737922a51a3cbe2a26a374231d5c78",
-                "reference": "fdc353a5c0737922a51a3cbe2a26a374231d5c78",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-magic-property-analysis/zipball/591e4c976beb1b66879c2162f0fce1262188ed39",
+                "reference": "591e4c976beb1b66879c2162f0fce1262188ed39",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
-                "ext-mbstring": "*",
                 "php": "^7.1"
             },
             "require-dev": {
-                "infection/infection": "^0.11.4",
+                "infection/infection": "^0.11.5",
                 "maglnet/composer-require-checker": "^1.1",
-                "phpstan/phpstan": "^0.10.7",
-                "phpstan/phpstan-phpunit": "^0.10.0",
-                "phpstan/phpstan-strict-rules": "^0.10.1",
+                "phpstan/phpstan": "^0.11.1",
+                "phpstan/phpstan-phpunit": "^0.11.0",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
                 "phpunit/phpunit": "^7.5",
                 "povils/phpmnd": "^2.0",
                 "roave/security-advisories": "dev-master",
                 "sebastian/phpcpd": "^4.1",
                 "signpostmarv/php-cs-fixer-config": "^0.6.0",
-                "vimeo/psalm": "3.x-dev"
+                "vimeo/psalm": "^3.0,>=3.0.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SignpostMarv\\DaftMagicPropertyAnalysis\\": "./src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SignpostMarv",
+                    "email": "me@signpostmarv.name"
+                }
+            ],
+            "description": "Daft way to implement static analysis for magic properties",
+            "time": "2019-02-02T19:35:25+00:00"
+        },
+        {
+            "name": "signpostmarv/daft-object",
+            "version": "v1.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SignpostMarv/daft-object.git",
+                "reference": "6cf9ce1d1f6a7ef51e2a25b3c837b26c8ecf74a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SignpostMarv/daft-object/zipball/6cf9ce1d1f6a7ef51e2a25b3c837b26c8ecf74a1",
+                "reference": "6cf9ce1d1f6a7ef51e2a25b3c837b26c8ecf74a1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.1",
+                "signpostmarv/daft-magic-property-analysis": "^0.5.0"
+            },
+            "require-dev": {
+                "infection/infection": "^0.12.0",
+                "maglnet/composer-require-checker": "^1.1",
+                "phpstan/phpstan": "^0.11.1",
+                "phpstan/phpstan-phpunit": "^0.11.0",
+                "phpstan/phpstan-strict-rules": "^0.11.0",
+                "phpunit/phpunit": "^7.5",
+                "povils/phpmnd": "^2.1",
+                "roave/security-advisories": "dev-master",
+                "sebastian/phpcpd": "^4.1",
+                "signpostmarv/php-cs-fixer-config": "^0.6.1",
+                "vimeo/psalm": "dev-master"
             },
             "type": "library",
             "autoload": {
@@ -55,7 +105,7 @@
                 }
             ],
             "description": "Daft Object",
-            "time": "2019-01-13T15:58:26+00:00"
+            "time": "2019-02-07T00:10:56+00:00"
         }
     ],
     "packages-dev": [

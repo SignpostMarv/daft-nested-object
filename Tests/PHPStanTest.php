@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests;
 
-use SignpostMarv\DaftObject\Tests\PHPStanTest as Base;
+use SignpostMarv\DaftObject\Tests\PHPStan\PHPStanTest as Base;
 
 class PHPStanTest extends Base
 {

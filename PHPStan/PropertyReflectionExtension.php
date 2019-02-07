@@ -43,9 +43,10 @@ class PropertyReflectionExtension extends Base
 
         if ('intNestedParentId' === $property || $intProperty) {
             $this->nestedReadable = self::BOOL_NESTED_IS_READABLE;
-            $this->nestedWriteable = TypeParanoia::IsThingStrings(
+            $this->nestedWriteable = is_a(
                 $classReflection->getNativeReflection()->getName(),
-                DaftNestedWriteableObject::class
+                DaftNestedWriteableObject::class,
+                true
             );
         }
 
@@ -56,14 +57,15 @@ class PropertyReflectionExtension extends Base
 
     public static function PropertyIsInt(string $property) : bool
     {
-        return TypeParanoia::MaybeInArray(
+        return in_array(
             $property,
             [
                 'intNestedLeft',
                 'intNestedRight',
                 'intNestedLevel',
                 'intNestedSortOrder',
-            ]
+            ],
+            true
         );
     }
 

@@ -11,7 +11,7 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftObject;
-use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
 use SignpostMarv\DaftObject\TraitWriteableTree;
 
 class WriteableTraitNotTree
@@ -39,7 +39,7 @@ class WriteableTraitNotTree
         return 0;
     }
 
-    public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function RemoveDaftObject(SuitableForRepositoryType $object) : void
     {
     }
 
@@ -55,11 +55,11 @@ class WriteableTraitNotTree
         return 0;
     }
 
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function RememberDaftObject(SuitableForRepositoryType $object) : void
     {
     }
 
-    public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    public function ForgetDaftObject(SuitableForRepositoryType $object) : void
     {
     }
 
@@ -94,18 +94,7 @@ class WriteableTraitNotTree
         return [];
     }
 
-    protected function RememberDaftObjectData(DefinesOwnIdPropertiesInterface $object) : void
+    protected function RememberDaftObjectData(SuitableForRepositoryType $object) : void
     {
-    }
-
-    /**
-    * @param DaftObject|string $object
-    */
-    protected static function ThrowIfNotType(
-        $object,
-        string $type,
-        int $argument,
-        string $function
-    ) : void {
     }
 }

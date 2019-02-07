@@ -15,7 +15,7 @@ use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedIntObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedObjectIntTree;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
-use SignpostMarv\DaftObject\DaftObjectRepositoryTypeByClassMethodAndTypeException;
+use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
 class NestedTreeTest extends Base
@@ -112,7 +112,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectFullTree();
 
@@ -123,15 +123,15 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
         );
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectFullTree(0);
 
@@ -141,8 +141,8 @@ class NestedTreeTest extends Base
                 $b->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
@@ -155,7 +155,7 @@ class NestedTreeTest extends Base
         );
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, true, null);
 
@@ -165,15 +165,15 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
         );
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->GetId(), true, null);
 
@@ -183,8 +183,8 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
@@ -201,15 +201,15 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
         );
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectPathToId($c->GetId(), true);
 
@@ -219,8 +219,8 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
@@ -230,7 +230,7 @@ class NestedTreeTest extends Base
         static::assertSame(2, $repo->CountDaftNestedObjectPathToId($c->GetId(), true));
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectPathToObject($c, false);
 
@@ -239,15 +239,15 @@ class NestedTreeTest extends Base
                 $b->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
         );
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectPathToId($c->GetId(), false);
 
@@ -256,8 +256,8 @@ class NestedTreeTest extends Base
                 $b->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
@@ -267,7 +267,7 @@ class NestedTreeTest extends Base
         static::assertSame(1, $repo->CountDaftNestedObjectPathToId($c->GetId(), false));
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, false, null);
 
@@ -276,15 +276,15 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
         );
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->GetId(), false, null);
 
@@ -293,8 +293,8 @@ class NestedTreeTest extends Base
                 $c->GetId(),
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
@@ -304,7 +304,7 @@ class NestedTreeTest extends Base
         static::assertSame(1, $repo->CountDaftNestedObjectTreeWithId($b->GetId(), false, null));
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithObject($b, false, 0);
 
@@ -312,15 +312,15 @@ class NestedTreeTest extends Base
             [
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
         );
 
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DefinesOwnIntegerIdInterface>
         */
         $tree = $repo->RecallDaftNestedObjectTreeWithId($b->GetId(), false, 0);
 
@@ -328,8 +328,8 @@ class NestedTreeTest extends Base
             [
             ],
             array_map(
-                function (DaftNestedObject $leaf) : int {
-                    return (int) $leaf->GetId();
+                function (DefinesOwnIntegerIdInterface $leaf) : int {
+                    return $leaf->GetId();
                 },
                 $tree
             )
@@ -337,48 +337,6 @@ class NestedTreeTest extends Base
 
         static::assertSame(0, $repo->CountDaftNestedObjectTreeWithObject($b, false, 0));
         static::assertSame(0, $repo->CountDaftNestedObjectTreeWithId($b->GetId(), false, 0));
-    }
-
-    /**
-    * @dataProvider DataProviderArgs
-    *
-    * @param mixed ...$remainingTreeArgs
-    */
-    public function testThrowIfNotType(
-        string $treeClass,
-        string $leafClass,
-        ...$remainingTreeArgs
-    ) : void {
-        static::assertTrue(class_exists($leafClass));
-        static::assertTrue(class_exists($treeClass));
-        static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
-        if ( ! is_a($treeClass, DaftNestedObjectTree::class, true)) {
-            static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
-
-            return;
-        }
-
-        $this->expectException(DaftObjectRepositoryTypeByClassMethodAndTypeException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Argument %u passed to %s::%s() must be an implementation of %s, %s given.',
-            1,
-            $treeClass,
-            'DaftObjectRepositoryByType',
-            (
-                is_a($leafClass, DaftNestedWriteableObject::class, true)
-                    ? DaftNestedWriteableObject::class
-                    : DaftNestedObject::class
-            ),
-            AbstractArrayBackedDaftObject::class
-        ));
-
-        /**
-        * @var DaftNestedObjectTree
-        */
-        $repo = $treeClass::DaftObjectRepositoryByType(
-            AbstractArrayBackedDaftObject::class,
-            ...$remainingTreeArgs
-        );
     }
 
     protected static function leafClass() : string

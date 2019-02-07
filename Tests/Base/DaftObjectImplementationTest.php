@@ -15,7 +15,7 @@ use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\NotPublicSetterPropertyException;
-use SignpostMarv\DaftObject\Tests\DaftObjectImplementationTest as BaseTest;
+use SignpostMarv\DaftObject\Tests\DaftObject\DaftObjectImplementationTest as BaseTest;
 
 class DaftObjectImplementationTest extends BaseTest
 {

@@ -17,6 +17,7 @@ use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedWriteableI
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftWriteableNestedObjectIntTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 class WriteableNestedTreeTest extends NestedTreeTest
 {
@@ -992,6 +993,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
     /**
     * @param mixed ...$additionalArgs
+    *
+    * @return DaftNestedWriteableObject&SuitableForRepositoryType
     */
     protected static function InitLeafClass(
         string $type,

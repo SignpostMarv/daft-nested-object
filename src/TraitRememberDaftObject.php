@@ -8,20 +8,28 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+use InvalidArgumentException;
+
 trait TraitRememberDaftObject
 {
-    public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void
+    /**
+    * @param DaftNestedWriteableObject&SuitableForRepositoryType $object
+    */
+    public function RememberDaftObject(SuitableForRepositoryType $object) : void
     {
-        if ($object instanceof DaftNestedWriteableObject) {
-            $this->RememberDaftObjectWriteableTyped($object);
-        } else {
-            NestedTypeParanoia::ThrowIfNotWriteableNestedType(
-                $object,
-                1,
-                static::class,
-                __FUNCTION__
+        if ( ! ($object instanceof DaftNestedWriteableObject)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                '() must be an instance of ' .
+                DaftNestedWriteableObject::class .
+                ', ' .
+                get_class($object) .
+                ' given!'
             );
         }
+
+            $this->RememberDaftObjectWriteableTyped($object);
     }
 
     /**
@@ -33,8 +41,23 @@ trait TraitRememberDaftObject
 
     abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
+    /**
+    * @param DaftNestedWriteableObject&SuitableForRepositoryType $object
+    */
     private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
     {
+        if ( ! ($object instanceof SuitableForRepositoryType)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                '() must be an instance of ' .
+                SuitableForRepositoryType::class .
+                ', ' .
+                get_class($object) .
+                ' given!'
+            );
+        }
+
         $left = $object->GetIntNestedLeft();
         $right = $object->GetIntNestedRight();
         $level = $object->GetIntNestedLevel();

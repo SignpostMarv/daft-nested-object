@@ -9,6 +9,7 @@ declare(strict_types=1);
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 
 use SignpostMarv\DaftObject\DaftObject;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 trait TraitToggleRecallDaftObjectAlwaysNull
 {
@@ -50,7 +51,7 @@ trait TraitToggleRecallDaftObjectAlwaysNull
     /**
     * @param mixed $id
     */
-    public function RecallDaftObject($id) : ? DaftObject
+    public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
         if ($this->ToggleRecallDaftObjectAfterCalls) {
             if ((++$this->ToggleRecallDaftObjectAfterCallsCount) > $this->ToggleRecallDaftObjectAfterCallsAfter) {

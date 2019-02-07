@@ -16,6 +16,8 @@
     },
     "autoload-dev": {
         "psr-4": {
+            "SignpostMarv\\DaftMagicPropertyAnalysis\\": "./vendor/signpostmarv/daft-magic-property-analysis/src/",
+            "SignpostMarv\\DaftMagicPropertyAnalysis\\PHPStan\\": "./vendor/signpostmarv/daft-magic-property-analysis/PHPStan/",
             "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\": "./PHPStan/",
             "SignpostMarv\\DaftObject\\DaftNestedObject\\Tests\\": "./Tests/",
             "SignpostMarv\\DaftObject\\": "./vendor/signpostmarv/daft-object/tests-src/",
@@ -33,7 +35,7 @@
             "infection"
         ],
         "tests": [
-            "phpunit -vvvv --coverage-clover=phpunit.clover",
+            "phpunit -vvvv --coverage-clover=phpunit.clover --stop-on-error --stop-on-warning --stop-on-failure",
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests PHPStan",
             "psalm",
             "phpcpd src Tests PHPStan",
@@ -46,7 +48,7 @@
     },
     "require": {
         "php": "^7.1",
-        "signpostmarv/daft-object": "^1.1"
+        "signpostmarv/daft-object": "^1.11"
     },
     "require-dev": {
         "infection/infection": "^0.12.0",

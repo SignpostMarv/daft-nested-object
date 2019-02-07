@@ -101,15 +101,15 @@ class InefficientDaftNestedRebuild
                 $this->children[$pos] = [];
             }
 
-            if ( ! TypeParanoia::MaybeInArray($leaf, $this->children[$pos])) {
+            if ( ! in_array($leaf, $this->children[$pos], true)) {
                 $this->children[$pos][] = $leaf;
             }
-
-            if ( ! TypeParanoia::MaybeInArray($leaf, $this->idXref)) {
                 /**
                 * @var scalar|scalar[]
                 */
                 $leafId = $leaf->GetId();
+
+            if ( ! in_array($leafId, $this->idXref, true)) {
                 $this->idXref[] = $leafId;
             }
 

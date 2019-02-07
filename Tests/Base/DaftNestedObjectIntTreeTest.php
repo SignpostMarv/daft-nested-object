@@ -14,8 +14,8 @@ use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedObjectIntT
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedWriteableIntObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftObjectRepository;
-use SignpostMarv\DaftObject\DefinesOwnIdPropertiesInterface;
-use SignpostMarv\DaftObject\Tests\DaftObjectRepositoryTest as BaseTest;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
+use SignpostMarv\DaftObject\Tests\DaftObjectRepository\DaftObjectRepositoryTest as BaseTest;
 
 class DaftNestedObjectIntTreeTest extends BaseTest
 {
@@ -25,7 +25,7 @@ class DaftNestedObjectIntTreeTest extends BaseTest
     }
 
     public static function DaftObjectRepositoryByDaftObject(
-        DefinesOwnIdPropertiesInterface $object
+        SuitableForRepositoryType $object
     ) : DaftObjectRepository {
         return DaftNestedObjectIntTree::DaftObjectRepositoryByDaftObject($object);
     }
@@ -48,38 +48,6 @@ class DaftNestedObjectIntTreeTest extends BaseTest
                 $arrayParams
             );
         }
-    }
-
-    public function DaftObjectRepositoryTypeExceptionForgetRemoveDataProvider() : array
-    {
-        $out = [];
-
-        /**
-        * @var mixed[]
-        * @var string $args[0]
-        * @var string $args[1]
-        * @var array $args[2]
-        */
-        foreach (parent::DaftObjectRepositoryTypeExceptionForgetRemoveDataProvider() as $args) {
-            $a = $args;
-            $b = $args;
-            $a[1] = (string) $a[0];
-
-            $a[0] = $b[0] = DaftNestedWriteableIntObject::class;
-
-            /**
-            * @var array
-            */
-            foreach ($this->RepositoryDataProviderParams() as $params) {
-                $a[2] = $params;
-                $b[2] = $params;
-
-                $out[] = $a;
-                $out[] = $b;
-            }
-        }
-
-        return $out;
     }
 
     protected function RepositoryDataProviderParams() : array

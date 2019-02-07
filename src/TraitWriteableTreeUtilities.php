@@ -17,7 +17,7 @@ trait TraitWriteableTreeUtilities
     /**
     * @param mixed $id
     */
-    abstract public function RecallDaftObject($id) : ? DaftObject;
+    abstract public function RecallDaftObject($id) : ? SuitableForRepositoryType;
 
     abstract public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
@@ -25,13 +25,13 @@ trait TraitWriteableTreeUtilities
         ? int $relativeDepthLimit
     ) : int;
 
-    abstract public function RemoveDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
+    abstract public function RemoveDaftObject(SuitableForRepositoryType $object) : void;
 
     abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
-    abstract public function RememberDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
+    abstract public function RememberDaftObject(SuitableForRepositoryType $object) : void;
 
-    abstract public function ForgetDaftObject(DefinesOwnIdPropertiesInterface $object) : void;
+    abstract public function ForgetDaftObject(SuitableForRepositoryType $object) : void;
 
     /**
     * @param mixed $id
@@ -209,7 +209,10 @@ trait TraitWriteableTreeUtilities
         $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, 1);
 
         foreach ($alterThese as $alter) {
-            if ($alter instanceof DaftNestedWriteableObject) {
+            if (
+                ($alter instanceof DaftNestedWriteableObject) &&
+                ($alter instanceof SuitableForRepositoryType)
+            ) {
                 $alter->AlterDaftNestedObjectParentId($replacementRootId);
                 $this->RememberDaftObject($alter);
             }
@@ -308,6 +311,18 @@ trait TraitWriteableTreeUtilities
         $replacementRoot
     ) : void {
         $this->UpdateRoots($rootObject, $replacementRoot);
+
+        if ( ! ($rootObject instanceof SuitableForRepositoryType)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                '() must be an instance of ' .
+                SuitableForRepositoryType::class .
+                ', ' .
+                get_class($rootObject) .
+                ' given!'
+            );
+        }
 
         $this->RemoveDaftObject($rootObject);
 

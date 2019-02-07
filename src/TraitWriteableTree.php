@@ -96,6 +96,18 @@ trait TraitWriteableTree
             );
         }
 
+        if ( ! ($root instanceof SuitableForRepositoryType)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                '() must be an instance of ' .
+                SuitableForRepositoryType::class .
+                ', ' .
+                get_class($root) .
+                ' given!'
+            );
+        }
+
         $this->RemoveDaftObject($root);
 
         $this->RebuildTreeInefficiently();
@@ -126,6 +138,18 @@ trait TraitWriteableTree
     public function StoreThenRetrieveFreshLeaf(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject {
+        if ( ! ($leaf instanceof SuitableForRepositoryType)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                '() must be an instance of ' .
+                SuitableForRepositoryType::class .
+                ', ' .
+                get_class($leaf) .
+                ' given!'
+            );
+        }
+
         $this->RememberDaftObject($leaf);
         $this->ForgetDaftObject($leaf);
         $this->ForgetDaftObjectById($leaf->GetId());

@@ -11,8 +11,11 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 use SignpostMarv\DaftObject\AbstractArrayBackedDaftNestedObject;
 use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
-class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements DefinesOwnIntegerIdInterface
+class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements
+    DefinesOwnIntegerIdInterface,
+    SuitableForRepositoryType
 {
     use DaftObjectIdValuesHashLazyInt;
 

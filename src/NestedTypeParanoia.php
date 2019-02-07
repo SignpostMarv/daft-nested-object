@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
-class NestedTypeParanoia extends TypeParanoia
+class NestedTypeParanoia
 {
     /**
     * @param mixed $needle
@@ -18,46 +18,6 @@ class NestedTypeParanoia extends TypeParanoia
         $out = array_search($needle, $haystack, true);
 
         return is_int($out) ? $out : null;
-    }
-
-    /**
-    * @param mixed $object
-    */
-    public static function ThrowIfNotNestedType(
-        $object,
-        int $argument,
-        string $class,
-        string $function,
-        string ...$types
-    ) : void {
-        static::ThrowIfNotType(
-            $object,
-            $argument,
-            $class,
-            $function,
-            DaftNestedObject::class,
-            ...$types
-        );
-    }
-
-    /**
-    * @param mixed $object
-    */
-    public static function ThrowIfNotWriteableNestedType(
-        $object,
-        int $argument,
-        string $class,
-        string $function,
-        string ...$types
-    ) : void {
-        static::ThrowIfNotType(
-            $object,
-            $argument,
-            $class,
-            $function,
-            DaftNestedWriteableObject::class,
-            ...$types
-        );
     }
 
     /**

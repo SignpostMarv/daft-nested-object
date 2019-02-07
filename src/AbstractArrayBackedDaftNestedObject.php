@@ -69,7 +69,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function SetIntNestedLeft(int $value) : void
     {
-        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
+        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -81,7 +81,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function SetIntNestedRight(int $value) : void
     {
-        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
+        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -93,7 +93,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function SetIntNestedLevel(int $value) : void
     {
-        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
+        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -105,7 +105,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
     public function SetIntNestedSortOrder(int $value) : void
     {
-        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
+        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -120,7 +120,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
     */
     public function AlterDaftNestedObjectParentId($value) : void
     {
-        if ( ! TypeParanoia::IsThingStrings(static::class, DaftNestedWriteableObject::class)) {
+        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
             throw new ClassDoesNotImplementClassException(
                 static::class,
                 DaftNestedWriteableObject::class
@@ -149,7 +149,7 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         $props = array_filter(
             static::DaftNestedObjectParentIdProperties(),
             function (string $prop) use ($out) : bool {
-                return TypeParanoia::MaybeInArray($prop, $out);
+                return in_array($prop, $out, true);
             }
         );
 
