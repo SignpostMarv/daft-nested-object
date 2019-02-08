@@ -768,16 +768,16 @@
         },
         {
             "name": "infection/infection",
-            "version": "0.12.0",
+            "version": "0.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infection/infection.git",
-                "reference": "8a4d0fbf8de0dca0e590ad590a0052154fd7ca56"
+                "reference": "ddd9f5c1c716883c53095183ce5e34f13c892ff3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infection/infection/zipball/8a4d0fbf8de0dca0e590ad590a0052154fd7ca56",
-                "reference": "8a4d0fbf8de0dca0e590ad590a0052154fd7ca56",
+                "url": "https://api.github.com/repos/infection/infection/zipball/ddd9f5c1c716883c53095183ce5e34f13c892ff3",
+                "reference": "ddd9f5c1c716883c53095183ce5e34f13c892ff3",
                 "shasum": ""
             },
             "require": {
@@ -853,7 +853,7 @@
                 "testing",
                 "unit testing"
             ],
-            "time": "2019-01-24T20:28:57+00:00"
+            "time": "2019-02-08T20:40:30+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
