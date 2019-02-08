@@ -21,14 +21,24 @@ class DaftObjectImplementationTest extends BaseTest
 {
     public function dataProviderImplementations() : Generator
     {
-        yield from [
+        foreach (
             [
-                Fixtures\DaftNestedIntObject::class,
-            ],
-            [
-                Fixtures\DaftNestedWriteableIntObject::class,
-            ],
-        ];
+                '/src/*.php' => 'SignpostMarv\\DaftObject\\',
+                '/Tests/Fixtures/*.php' => 'SignpostMarv\\DaftObject\\Fixtures\\',
+            ] as $glob => $ns
+        ) {
+            $files = glob(__DIR__ . '/../..' . $glob);
+
+            foreach ($files as $file) {
+                if (
+                    is_file($file) &&
+                    class_exists($className = ($ns . pathinfo($file, PATHINFO_FILENAME))) &&
+                    is_a($className, DaftNestedObject::class, true)
+                ) {
+                    yield [$className];
+                }
+            }
+        }
     }
 
     /**
