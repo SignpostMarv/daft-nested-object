@@ -10,6 +10,5 @@ namespace SignpostMarv\DaftObject;
 
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
-    use TraitRememberDaftObject;
     use TraitWriteableTree;
 }

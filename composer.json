@@ -38,6 +38,9 @@
             "phpunit -vvvv --coverage-clover=phpunit.clover --stop-on-error --stop-on-warning --stop-on-failure",
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests PHPStan",
             "psalm",
+            "@other-tests"
+        ],
+        "other-tests": [
             "phpcpd src Tests PHPStan",
             "phpmnd src",
             "phpmnd Tests",

@@ -8,6 +8,8 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+use InvalidArgumentException;
+
 /**
 * @template T as DaftNestedObject
 *
@@ -213,6 +215,56 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int
     {
         return count($this->RecallDaftNestedObjectPathToId($id, $includeLeaf));
+    }
+
+    public function RememberDaftObject(SuitableForRepositoryType $object) : void
+    {
+        if ( ! ($object instanceof DaftNestedObject)) {
+            throw new InvalidArgumentException(
+                'Argument 1 passed to ' .
+                __METHOD__ .
+                '() must be an instance of ' .
+                DaftNestedObject::class .
+                ', ' .
+                get_class($object) .
+                ' given!'
+            );
+        }
+
+        if ($object instanceof DaftNestedWriteableObject) {
+            $this->RememberDaftNestedWriteableObject($object);
+        } else {
+            parent::RememberDaftObject($object);
+        }
+    }
+
+    private function RememberDaftNestedWriteableObject(DaftNestedWriteableObject $object) : void
+    {
+        $left = $object->GetIntNestedLeft();
+        $right = $object->GetIntNestedRight();
+        $level = $object->GetIntNestedLevel();
+
+        if (0 === $left && 0 === $right && 0 === $level) {
+            $fullTreeCount = $this->CountDaftNestedObjectFullTree();
+
+            if ($fullTreeCount > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY) {
+                $tree = $this->RecallDaftNestedObjectFullTree();
+
+                /**
+                * @var DaftNestedWriteableObject
+                */
+                $end = end($tree);
+
+                $left = $end->GetIntNestedRight() + 1;
+            } else {
+                $left = $fullTreeCount + $fullTreeCount;
+            }
+
+            $object->SetIntNestedLeft($left);
+            $object->SetIntNestedRight($left + 1);
+        }
+
+        parent::RememberDaftObject($object);
     }
 
     private function MapDataToObject(array $row) : DaftNestedObject
