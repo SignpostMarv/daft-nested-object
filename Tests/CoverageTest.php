@@ -17,7 +17,6 @@ use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
-use SignpostMarv\DaftObject\TraitWriteableTree;
 
 class CoverageTest extends Base
 {
@@ -176,74 +175,6 @@ class CoverageTest extends Base
     }
 
     /**
-    * @dataProvider DataProviderInsertArgsWithThrowingTree
-    */
-    public function testModifyDaftNestedObjectTreeInsertLooseFailsToRecallReferenceNode(
-        Fixtures\DaftObjectWriteableThrowingTree $repo,
-        bool $before,
-        ? bool $above
-    ) : void {
-        $repo->ToggleRecallDaftObjectAlwaysNull(false);
-
-        list($a0, $b0) = static::PrepRepoWriteable(
-            $repo,
-            Fixtures\DaftNestedWriteableIntObject::class,
-            1,
-            2
-        );
-
-        $repo->ToggleRecallDaftObjectAlwaysNull(true);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Argument 1 passed to %s::%s() did not resolve to a leaf node!',
-            TraitWriteableTree::class,
-            'ModifyDaftNestedObjectTreeInsertLoose'
-        ));
-
-        $repo->ModifyDaftNestedObjectTreeInsertLoose(
-            $a0->GetId(),
-            $b0,
-            $before,
-            $above
-        );
-    }
-
-    /**
-    * @dataProvider DataProviderInsertArgsWithThrowingTree
-    */
-    public function testModifyDaftNestedObjectTreeInsertLooseFailsWithNonRootReferenceLeaf(
-        Fixtures\DaftObjectWriteableThrowingTree $repo,
-        bool $before,
-        ? bool $above
-    ) : void {
-        $repo->ToggleRecallDaftObjectAlwaysNull(false);
-
-        list($a0, $b0) = static::PrepRepoWriteable(
-            $repo,
-            Fixtures\DaftNestedWriteableIntObject::class,
-            1,
-            2
-        );
-
-        $repo->ToggleRecallDaftObjectAfterCalls(true, 1);
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage(sprintf(
-            'Argument 2 passed to %s::%s() did not resolve to a leaf node!',
-            TraitWriteableTree::class,
-            'ModifyDaftNestedObjectTreeInsertLoose'
-        ));
-
-        $repo->ModifyDaftNestedObjectTreeInsertLoose(
-            $a0->GetId(),
-            $b0->GetId(),
-            $before,
-            $above
-        );
-    }
-
-    /**
     * @dataProvider DataProviderInsertArgs
     */
     public function testModifyDaftNestedObjectTreeInsertAdjacentFailsWithNonSibling(
@@ -283,21 +214,6 @@ class CoverageTest extends Base
         $this->expectExceptionMessage('Reference leaf not found in siblings tree!');
 
         $ref->invoke($repo, $a0, $b0, $before);
-    }
-
-    public function testTraitThrowsIfNotTree() : void
-    {
-        $obj = new Fixtures\WriteableTraitNotTree();
-
-        $this->expectException(BadMethodCallException::class);
-        $this->expectExceptionMessage(
-            'Cannot call ThrowIfNotTree on ' .
-            Fixtures\WriteableTraitNotTree::class .
-            ', class does not implement ' .
-            DaftNestedWriteableObjectTree::class
-        );
-
-        $obj->WillFail();
     }
 
     /**
