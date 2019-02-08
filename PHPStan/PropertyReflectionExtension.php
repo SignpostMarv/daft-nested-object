@@ -14,7 +14,6 @@ use PHPStan\Type\IntegerType;
 use PHPStan\Type\Type;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\PHPStan\PropertyReflectionExtension as Base;
-use SignpostMarv\DaftObject\TypeParanoia;
 
 /**
 * @template T \SignpostMarv\DaftObject\DaftNestedWriteableObject

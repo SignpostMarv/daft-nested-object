@@ -10,7 +10,6 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Base;
 
 use Generator;
 use InvalidArgumentException;
-use RuntimeException;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
