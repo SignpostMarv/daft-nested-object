@@ -26,7 +26,7 @@ trait TraitRememberDaftObject
             );
         }
 
-            $this->RememberDaftObjectWriteableTyped($object);
+        $this->RememberDaftObjectWriteableTyped($object);
     }
 
     /**

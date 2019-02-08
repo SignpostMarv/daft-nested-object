@@ -104,10 +104,11 @@ class InefficientDaftNestedRebuild
             if ( ! in_array($leaf, $this->children[$pos], true)) {
                 $this->children[$pos][] = $leaf;
             }
-                /**
-                * @var scalar|(scalar|array|object|null)[]
-                */
-                $leafId = $leaf->GetId();
+
+            /**
+            * @var scalar|(scalar|array|object|null)[]
+            */
+            $leafId = $leaf->GetId();
 
             if ( ! in_array($leafId, $this->idXref, true)) {
                 $this->idXref[] = $leafId;
