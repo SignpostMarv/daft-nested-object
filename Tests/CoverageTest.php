@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests;
 
-use BadMethodCallException;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
