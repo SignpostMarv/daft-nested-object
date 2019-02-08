@@ -21,8 +21,8 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
     ) : DaftNestedWriteableObject;
 
     /**
-    * @param mixed $newLeaf can be an object or an id, MUST NOT be a root id
-    * @param mixed $referenceLeaf can be an object, an id, or a root id
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $newLeaf can be an object or an id, MUST NOT be a root id
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $referenceLeaf can be an object, an id, or a root id
     *
     * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
     */
@@ -44,8 +44,8 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
     ) : int;
 
     /**
-    * @param mixed $root
-    * @param scalar|scalar[]|null $replacementRoot
+    * @param scalar|(scalar|array|object|null)[] $root
+    * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
     *
     * @throws \BadMethodCallException if $root has leaves without $replacementRoot specified
     *

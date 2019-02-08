@@ -14,8 +14,7 @@ use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements
-    DefinesOwnIntegerIdInterface,
-    SuitableForRepositoryType
+    DefinesOwnIntegerIdInterface
 {
     use DaftObjectIdValuesHashLazyInt;
 

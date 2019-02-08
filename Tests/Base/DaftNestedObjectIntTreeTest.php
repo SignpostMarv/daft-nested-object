@@ -17,17 +17,25 @@ use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 use SignpostMarv\DaftObject\Tests\DaftObjectRepository\DaftObjectRepositoryTest as BaseTest;
 
+/**
+* @template T as DaftNestedWriteableObject
+* @template TRepo as DaftNestedObjectIntTree
+*
+* @template-extends BaseTest<T, TRepo>
+*/
 class DaftNestedObjectIntTreeTest extends BaseTest
 {
-    public static function DaftObjectRepositoryByType(string $type) : DaftObjectRepository
+    /**
+    * @psalm-return class-string<TRepo>
+    */
+    public static function DaftObjectRepositoryClassString() : string
     {
-        return DaftNestedObjectIntTree::DaftObjectRepositoryByType($type);
-    }
+        /**
+        * @psalm-var class-string<TRepo>
+        */
+        $out = DaftNestedObjectIntTree::class;
 
-    public static function DaftObjectRepositoryByDaftObject(
-        SuitableForRepositoryType $object
-    ) : DaftObjectRepository {
-        return DaftNestedObjectIntTree::DaftObjectRepositoryByDaftObject($object);
+        return $out;
     }
 
     public function RepositoryDataProvider() : Generator

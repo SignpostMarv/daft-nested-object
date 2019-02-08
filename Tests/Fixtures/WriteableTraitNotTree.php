@@ -24,9 +24,9 @@ class WriteableTraitNotTree
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
-    public function RecallDaftObject($id) : ? DaftObject
+    public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
         return null;
     }
@@ -44,7 +44,7 @@ class WriteableTraitNotTree
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function RemoveDaftObjectById($id) : void
     {
@@ -64,7 +64,7 @@ class WriteableTraitNotTree
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function ForgetDaftObjectById($id) : void
     {
@@ -84,7 +84,7 @@ class WriteableTraitNotTree
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function RecallDaftNestedObjectTreeWithId(
         $id,

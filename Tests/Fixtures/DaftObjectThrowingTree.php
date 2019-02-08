@@ -18,7 +18,7 @@ interface DaftObjectThrowingTree extends DaftNestedObjectTree
     public function ToggleRecallDaftObjectAfterCalls(bool $value, int $after) : void;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function RecallDaftObject($id) : ? SuitableForRepositoryType;
 }

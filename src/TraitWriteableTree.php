@@ -38,8 +38,8 @@ trait TraitWriteableTree
     }
 
     /**
-    * @param mixed $leaf
-    * @param mixed $referenceId
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $leaf
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $referenceId
     */
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
@@ -49,7 +49,10 @@ trait TraitWriteableTree
     ) : DaftNestedWriteableObject {
         $leaf = $this->MaybeGetLeaf($leaf);
 
-        $reference = $this->RecallDaftObject($referenceId);
+        $reference =
+            ($referenceId instanceof DaftNestedWriteableObject)
+                ? $referenceId
+                : $this->RecallDaftObject($referenceId);
         $tree = $this->ThrowIfNotTree();
 
         $resp = $this->ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
@@ -96,18 +99,6 @@ trait TraitWriteableTree
             );
         }
 
-        if ( ! ($root instanceof SuitableForRepositoryType)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                '() must be an instance of ' .
-                SuitableForRepositoryType::class .
-                ', ' .
-                get_class($root) .
-                ' given!'
-            );
-        }
-
         $this->RemoveDaftObject($root);
 
         $this->RebuildTreeInefficiently();
@@ -116,8 +107,8 @@ trait TraitWriteableTree
     }
 
     /**
-    * @param mixed $root
-    * @param scalar|scalar[]|null $replacementRoot
+    * @param scalar|(scalar|array|object|null)[] $root
+    * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
     */
     public function ModifyDaftNestedObjectTreeRemoveWithId($root, $replacementRoot) : int
     {
@@ -138,18 +129,6 @@ trait TraitWriteableTree
     public function StoreThenRetrieveFreshLeaf(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject {
-        if ( ! ($leaf instanceof SuitableForRepositoryType)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                '() must be an instance of ' .
-                SuitableForRepositoryType::class .
-                ', ' .
-                get_class($leaf) .
-                ' given!'
-            );
-        }
-
         $this->RememberDaftObject($leaf);
         $this->ForgetDaftObject($leaf);
         $this->ForgetDaftObjectById($leaf->GetId());
@@ -164,7 +143,7 @@ trait TraitWriteableTree
     }
 
     /**
-    * @param scalar|scalar[]|null $replacementRoot
+    * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
     */
     private function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
         $replacementRoot,
@@ -191,7 +170,7 @@ trait TraitWriteableTree
         }
 
         /**
-        * @var scalar|scalar[]
+        * @var scalar|(scalar|array|object|null)[]
         */
         $replacementRoot = $replacementRoot;
 

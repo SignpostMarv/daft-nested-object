@@ -10,6 +10,7 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Base;
 
 use Generator;
 use InvalidArgumentException;
+use RuntimeException;
 use SignpostMarv\DaftObject\ClassDoesNotImplementClassException;
 use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
@@ -133,6 +134,8 @@ class DaftObjectImplementationTest extends BaseTest
 
     /**
     * @dataProvider DataProviderObjectParentId
+    *
+    * @param array<string, scalar|array|object|null> $args
     */
     public function testNestedObjectParentId(string $implementation, array $args) : void
     {
@@ -170,9 +173,12 @@ class DaftObjectImplementationTest extends BaseTest
 
         static::assertSame($instance->ObtainDaftNestedObjectParentId(), $actual);
 
+        /**
+        * @var (scalar|array|object|null)[]
+        */
         $id = array_map(
             /**
-            * @return mixed
+            * @return scalar|array|object|null
             */
             function (string $prop) use ($args) {
                 return $args[$prop];

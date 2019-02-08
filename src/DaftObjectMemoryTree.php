@@ -8,6 +8,11 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftNestedObject
+*
+* @template-extends DaftObjectMemoryRepository<T>
+*/
 abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
 {
     const DECREMENT = -1;
@@ -31,7 +36,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
         foreach ($out as $obj) {
             /**
-            * @var array<int, scalar|scalar[]>
+            * @var array<int, scalar|(scalar|array|object|null)[]>
             */
             $id = $obj->GetId();
 
@@ -108,7 +113,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
     */
@@ -139,7 +144,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function CountDaftNestedObjectTreeWithId(
         $id,
@@ -188,7 +193,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
     */
@@ -203,7 +208,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int
     {

@@ -16,6 +16,9 @@ use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\PHPStan\PropertyReflectionExtension as Base;
 use SignpostMarv\DaftObject\TypeParanoia;
 
+/**
+* @template T \SignpostMarv\DaftObject\DaftNestedWriteableObject
+*/
 class PropertyReflectionExtension extends Base
 {
     const BOOL_NESTED_IS_READABLE = false;
@@ -84,6 +87,9 @@ class PropertyReflectionExtension extends Base
         return $this->nestedType ?? parent::getType();
     }
 
+    /**
+    * @psalm-param class-string<T> $className
+    */
     protected static function PropertyIsPublic(string $className, string $property) : bool
     {
         return

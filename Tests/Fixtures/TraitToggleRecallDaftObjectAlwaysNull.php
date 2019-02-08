@@ -49,16 +49,30 @@ trait TraitToggleRecallDaftObjectAlwaysNull
     }
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
+        /**
+        * @var scalar|scalar[]
+        */
+        $id = $id;
+
         if ($this->ToggleRecallDaftObjectAfterCalls) {
             if ((++$this->ToggleRecallDaftObjectAfterCallsCount) > $this->ToggleRecallDaftObjectAfterCallsAfter) {
                 $this->ToggleRecallDaftObjectAlwaysNull(true);
             }
         }
 
-        return $this->ToggleRecallDaftObjectAlwaysNull ? null : parent::RecallDaftObject($id);
+        if ($this->ToggleRecallDaftObjectAlwaysNull) {
+            return null;
+        }
+
+        /**
+        * @var SuitableForRepositoryType|null
+        */
+        $out = parent::RecallDaftObject($id);
+
+        return $out;
     }
 }

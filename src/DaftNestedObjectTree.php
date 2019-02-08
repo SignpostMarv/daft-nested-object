@@ -33,7 +33,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     ) : int;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
     */
@@ -44,7 +44,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     ) : array;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function CountDaftNestedObjectTreeWithId(
         $id,
@@ -66,19 +66,19 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     ) : int;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
     */
     public function RecallDaftNestedObjectPathToId($id, bool $includeLeaf) : array;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int;
 
     /**
-    * @return scalar|scalar[]
+    * @return scalar|(scalar|array|object|null)[]
     */
     public function GetNestedObjectTreeRootId();
 }

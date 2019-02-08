@@ -12,9 +12,6 @@ use InvalidArgumentException;
 
 trait TraitRememberDaftObject
 {
-    /**
-    * @param DaftNestedWriteableObject&SuitableForRepositoryType $object
-    */
     public function RememberDaftObject(SuitableForRepositoryType $object) : void
     {
         if ( ! ($object instanceof DaftNestedWriteableObject)) {
@@ -41,23 +38,8 @@ trait TraitRememberDaftObject
 
     abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
-    /**
-    * @param DaftNestedWriteableObject&SuitableForRepositoryType $object
-    */
     private function RememberDaftObjectWriteableTyped(DaftNestedWriteableObject $object) : void
     {
-        if ( ! ($object instanceof SuitableForRepositoryType)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                '() must be an instance of ' .
-                SuitableForRepositoryType::class .
-                ', ' .
-                get_class($object) .
-                ' given!'
-            );
-        }
-
         $left = $object->GetIntNestedLeft();
         $right = $object->GetIntNestedRight();
         $level = $object->GetIntNestedLevel();

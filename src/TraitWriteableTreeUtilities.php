@@ -15,7 +15,7 @@ use RuntimeException;
 trait TraitWriteableTreeUtilities
 {
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     abstract public function RecallDaftObject($id) : ? SuitableForRepositoryType;
 
@@ -34,7 +34,7 @@ trait TraitWriteableTreeUtilities
     abstract public function ForgetDaftObject(SuitableForRepositoryType $object) : void;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     abstract public function ForgetDaftObjectById($id) : void;
 
@@ -53,7 +53,7 @@ trait TraitWriteableTreeUtilities
     abstract public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedWriteableObject>
     */
@@ -78,8 +78,8 @@ trait TraitWriteableTreeUtilities
     ) : DaftNestedWriteableObject;
 
     /**
-    * @param mixed $newLeaf can be an object or an id, MUST NOT be a root id
-    * @param mixed $referenceLeaf can be an object, an id, or a root id
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $newLeaf can be an object or an id, MUST NOT be a root id
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $referenceLeaf can be an object, an id, or a root id
     *
     * @return DaftNestedWriteableObject a new instance, modified version of $newLeaf
     */
@@ -116,7 +116,7 @@ trait TraitWriteableTreeUtilities
 
         foreach ($siblings as $leaf) {
             /**
-            * @var scalar|scalar[]
+            * @var scalar|(scalar|array|object|null)[]
             */
             $siblingId = $leaf->GetId();
             $siblingIds[] = $siblingId;
@@ -191,7 +191,7 @@ trait TraitWriteableTreeUtilities
         DaftNestedWriteableObject $replacementRoot
     ) : void {
         /**
-        * @var scalar|scalar[]
+        * @var scalar|(scalar|array|object|null)[]
         */
         $replacementRootId = $this->StoreThenRetrieveFreshLeaf($replacementRoot)->GetId();
 
@@ -199,7 +199,7 @@ trait TraitWriteableTreeUtilities
     }
 
     /**
-    * @param scalar|scalar[] $replacementRootId
+    * @param scalar|(scalar|array|object|null)[] $replacementRootId
     */
     private function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
     {
@@ -209,10 +209,7 @@ trait TraitWriteableTreeUtilities
         $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, 1);
 
         foreach ($alterThese as $alter) {
-            if (
-                ($alter instanceof DaftNestedWriteableObject) &&
-                ($alter instanceof SuitableForRepositoryType)
-            ) {
+            if ($alter instanceof DaftNestedWriteableObject) {
                 $alter->AlterDaftNestedObjectParentId($replacementRootId);
                 $this->RememberDaftObject($alter);
             }
@@ -236,7 +233,7 @@ trait TraitWriteableTreeUtilities
     }
 
     /**
-    * @param DaftNestedWriteableObject|mixed $leaf
+    * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $leaf
     */
     private function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
     {
@@ -304,25 +301,13 @@ trait TraitWriteableTreeUtilities
     }
 
     /**
-    * @param scalar|scalar[] $replacementRoot
+    * @param scalar|(scalar|array|object|null)[] $replacementRoot
     */
     private function UpdateRemoveThenRebuild(
         DaftNestedWriteableObject $rootObject,
         $replacementRoot
     ) : void {
         $this->UpdateRoots($rootObject, $replacementRoot);
-
-        if ( ! ($rootObject instanceof SuitableForRepositoryType)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                '() must be an instance of ' .
-                SuitableForRepositoryType::class .
-                ', ' .
-                get_class($rootObject) .
-                ' given!'
-            );
-        }
 
         $this->RemoveDaftObject($rootObject);
 

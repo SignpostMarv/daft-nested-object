@@ -33,23 +33,15 @@ class WriteableNestedTreeTest extends NestedTreeTest
     * @dataProvider DataProviderArgs
     *
     * @param mixed ...$remainingTreeArgs
+    *
+    * @psalm-param class-string<DaftNestedWriteableObjectTree> $treeClass
+    * @psalm-param class-string<DaftNestedWriteableObject> $leafClass
     */
     public function testTreeModification(
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
-        if ( ! is_a($leafClass, DaftNestedWriteableObject::class, true)) {
-            static::assertTrue(is_a($leafClass, DaftNestedWriteableObject::class, true));
-
-            return;
-        }
-        if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
-            static::assertTrue(is_a($treeClass, DaftNestedWriteableObjectTree::class, true));
-
-            return;
-        }
-
         /**
         * @var DaftNestedWriteableObjectTree
         */
@@ -220,6 +212,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
     * @dataProvider DataProviderArgsTreeRemovalFailure
     *
     * @param mixed ...$remainingTreeArgs
+    *
+    * @psalm-param class-string<DaftNestedWriteableObjectTree> $treeClass
+    * @psalm-param class-string<DaftNestedWriteableObject> $leafClass
     */
     public function testTreeRemovalFailure(
         bool $byObject,
@@ -227,18 +222,6 @@ class WriteableNestedTreeTest extends NestedTreeTest
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
-        if ( ! is_a($treeClass, DaftNestedWriteableObjectTree::class, true)) {
-            throw new InvalidArgumentException(
-                'Argument 2 passed to ' .
-                __METHOD__ .
-                ' must be an implementation of ' .
-                DaftNestedWriteableObjectTree::class .
-                ', ' .
-                $treeClass .
-                ' given.'
-            );
-        }
-
         /**
         * @var DaftNestedWriteableObjectTree
         */
@@ -260,6 +243,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
     * @dataProvider DataProviderArgs
     *
     * @param mixed ...$remainingTreeArgs
+    *
+    * @psalm-param class-string<DaftNestedWriteableObjectTree> $treeClass
+    * @psalm-param class-string<DaftNestedWriteableObject> $leafClass
     */
     public function testTreeRemovalFailureDueToOrphan(
         string $treeClass,
@@ -329,6 +315,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
     * @param array<int, int> $right
     * @param array<int, int> $level
     * @param mixed ...$remainingTreeArgs
+    *
+    * @psalm-param class-string<DaftNestedWriteableObjectTree> $treeClass
+    * @psalm-param class-string<DaftNestedWriteableObject> $leafClass
     *
     * @dataProvider DataProviderAdditionalTreeModification
     */

@@ -19,7 +19,7 @@ interface DaftNestedWriteableObject extends DaftNestedObject
     public function SetIntNestedSortOrder(int $value) : void;
 
     /**
-    * @param mixed $id
+    * @param scalar|(scalar|array|object|null)[] $id
     */
     public function AlterDaftNestedObjectParentId($id) : void;
 }
