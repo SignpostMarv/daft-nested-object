@@ -57,6 +57,16 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($c0, 0, false, null);
         $d1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($d0, 0, false, null);
 
+        $a1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($b0, $a0, false, null);
+        $b1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($a0, $b0, true, null);
+        $c1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($c0, $b0, false, false);
+        $d1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($d0, $b0, false, null);
+
+        static::assertNotSame($a0, $a1);
+        static::assertNotSame($b0, $b1);
+        static::assertNotSame($c0, $c1);
+        static::assertNotSame($d0, $d1);
+
         $a1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($b0, $a0->GetId(), false, null);
         $b1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($a0, $b0->GetId(), true, null);
         $c1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($c0, $b0->GetId(), false, false);
