@@ -15,6 +15,8 @@ use TypeError;
 * @template T as DaftNestedWriteableIntObject
 *
 * @template-extends DaftNestedIntObject<T>
+*
+* @template-implements DaftNestedWriteableObject<T>
 */
 class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNestedWriteableObject
 {

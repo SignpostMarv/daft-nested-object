@@ -13,6 +13,13 @@ use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftObjectMemoryTree;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
+/**
+* @template T as DaftNestedWriteableIntObject
+*
+* @template-extends DaftWriteableNestedObjectIntTree<T>
+*
+* @template-implements DaftObjectWriteableThrowingTree<T>
+*/
 class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree implements DaftObjectWriteableThrowingTree
 {
     /**
@@ -75,6 +82,8 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
 
     /**
     * @param scalar|(scalar|array|object|null)[] $id
+    *
+    * @psalm-return T|null
     */
     public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
@@ -95,6 +104,8 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
 
         /**
         * @var SuitableForRepositoryType|null
+        *
+        * @psalm-var T|null
         */
         $out = parent::RecallDaftObject($id);
 

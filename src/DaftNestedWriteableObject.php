@@ -8,6 +8,11 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftNestedWriteableObject
+*
+* @template-extends DaftNestedObject<T>
+*/
 interface DaftNestedWriteableObject extends DaftNestedObject
 {
     public function SetIntNestedLeft(int $value) : void;

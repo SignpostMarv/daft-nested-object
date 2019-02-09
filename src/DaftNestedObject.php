@@ -8,6 +8,11 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftObject
+*
+* @template-extends DaftSortableObject<T>
+*/
 interface DaftNestedObject extends SuitableForRepositoryType, DaftSortableObject
 {
     public function GetIntNestedLeft() : int;

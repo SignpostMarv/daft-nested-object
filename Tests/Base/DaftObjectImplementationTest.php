@@ -17,11 +17,6 @@ use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\NotPublicSetterPropertyException;
 use SignpostMarv\DaftObject\Tests\DaftObject\DaftObjectImplementationTest as BaseTest;
 
-/**
-* @template T as DaftNestedObject
-*
-* @template-extends BaseTest<T>
-*/
 class DaftObjectImplementationTest extends BaseTest
 {
     public function dataProviderImplementations() : Generator
@@ -229,9 +224,9 @@ class DaftObjectImplementationTest extends BaseTest
         }
     }
 
-    protected function FuzzingImplementationsViaGenerator() : Generator
+    protected function FuzzingImplementationsViaArray() : array
     {
-        yield from [
+        return [
             [
                 Fixtures\DaftNestedWriteableIntObject::class,
                 [

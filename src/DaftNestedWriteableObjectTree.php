@@ -8,6 +8,11 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftNestedWriteableObject
+*
+* @template-extends DaftNestedObjectTree<T>
+*/
 interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
 {
     /**

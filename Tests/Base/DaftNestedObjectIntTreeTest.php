@@ -18,8 +18,6 @@ use SignpostMarv\DaftObject\Tests\DaftObjectRepository\DaftObjectRepositoryTest 
 /**
 * @template T as DaftNestedWriteableObject
 * @template TRepo as DaftNestedObjectIntTree
-*
-* @template-extends BaseTest<T, TRepo>
 */
 class DaftNestedObjectIntTreeTest extends BaseTest
 {

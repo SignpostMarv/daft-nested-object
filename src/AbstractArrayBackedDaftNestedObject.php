@@ -10,6 +10,8 @@ namespace SignpostMarv\DaftObject;
 
 /**
 * @template T as AbstractArrayBackedDaftNestedObject
+*
+* @template-implements DaftNestedObject<T>
 */
 abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDaftObject implements DaftNestedObject
 {

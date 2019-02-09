@@ -19,6 +19,12 @@ use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
+/**
+* @template T as DaftNestedWriteableObject
+* @template TRepo as DaftNestedWriteableObjectTree
+*
+* @template-extends NestedTreeTest<T, TRepo>
+*/
 class WriteableNestedTreeTest extends NestedTreeTest
 {
     const LEFT_1to10 = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18];

@@ -16,6 +16,10 @@ use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
+/**
+* @template T as DaftNestedObject
+* @template TRepo as DaftNestedObjectTree
+*/
 class NestedTreeTest extends Base
 {
     public function DataProviderArgs() : Generator
@@ -32,28 +36,15 @@ class NestedTreeTest extends Base
     * @dataProvider DataProviderArgs
     *
     * @param mixed ...$remainingTreeArgs
+    *
+    * @psalm-param class-string<TRepo> $treeClass
+    * @psalm-param class-string<T> $leafClass
     */
     public function testRecallFullTree(
         string $treeClass,
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
-        static::assertTrue(class_exists($leafClass));
-        static::assertTrue(class_exists($treeClass));
-        if ( ! is_a($leafClass, DaftNestedObject::class, true)) {
-            static::assertTrue(is_a($leafClass, DaftNestedObject::class, true));
-
-            return;
-        }
-        if ( ! is_a($treeClass, DaftNestedObjectTree::class, true)) {
-            static::assertTrue(is_a($treeClass, DaftNestedObjectTree::class, true));
-
-            return;
-        }
-
-        /**
-        * @var DaftNestedObjectTree
-        */
         $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
         $a = new $leafClass([

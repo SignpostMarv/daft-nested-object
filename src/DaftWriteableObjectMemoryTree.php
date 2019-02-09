@@ -12,6 +12,13 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use RuntimeException;
 
+/**
+* @template T as DaftNestedWriteableObject
+*
+* @template-extends DaftObjectMemoryTree<T>
+*
+* @template-implements DaftNestedWriteableObjectTree<T>
+*/
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
     public function ModifyDaftNestedObjectTreeInsert(

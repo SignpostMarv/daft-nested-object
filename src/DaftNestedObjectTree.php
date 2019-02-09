@@ -8,17 +8,22 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftNestedObject
+*
+* @template-extends DaftObjectRepository<T>
+*/
 interface DaftNestedObjectTree extends DaftObjectRepository
 {
     /**
-    * @return array<int, DaftNestedObject>
+    * @return array<int, T>
     */
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array;
 
     public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
     /**
-    * @return array<int, DaftNestedObject>
+    * @return array<int, T>
     */
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
@@ -35,7 +40,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     /**
     * @param scalar|(scalar|array|object|null)[] $id
     *
-    * @return array<int, DaftNestedObject>
+    * @return array<int, T>
     */
     public function RecallDaftNestedObjectTreeWithId(
         $id,
@@ -53,7 +58,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     ) : int;
 
     /**
-    * @return array<int, DaftNestedObject>
+    * @return array<int, T>
     */
     public function RecallDaftNestedObjectPathToObject(
         DaftNestedObject $leaf,
@@ -68,7 +73,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     /**
     * @param scalar|(scalar|array|object|null)[] $id
     *
-    * @return array<int, DaftNestedObject>
+    * @return array<int, T>
     */
     public function RecallDaftNestedObjectPathToId($id, bool $includeLeaf) : array;
 

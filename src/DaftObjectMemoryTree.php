@@ -14,6 +14,8 @@ use InvalidArgumentException;
 * @template T as DaftNestedObject
 *
 * @template-extends DaftObjectMemoryRepository<T>
+*
+* @template-implements DaftNestedObjectTree<T>
 */
 abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
 {
