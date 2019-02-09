@@ -13,6 +13,11 @@ use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
+/**
+* @template T as DaftNestedIntObject
+*
+* @template-extends AbstractArrayBackedDaftNestedObject<T>
+*/
 class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements DefinesOwnIntegerIdInterface
 {
     use DaftObjectIdValuesHashLazyInt;

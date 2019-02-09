@@ -11,6 +11,11 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use TypeError;
 
+/**
+* @template T as DaftNestedWriteableIntObject
+*
+* @template-extends DaftNestedIntObject<T>
+*/
 class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNestedWriteableObject
 {
     public function SetIntNestedParentId(int $value) : void

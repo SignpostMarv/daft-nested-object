@@ -8,8 +8,16 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as AbstractArrayBackedDaftNestedObject
+*/
 abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDaftObject implements DaftNestedObject
 {
+    /**
+    * @use TraitSortableDaftObject<T>
+    */
+    use TraitSortableDaftObject;
+
     const COUNT_EXPECT_NON_EMPTY = 0;
 
     const SORTABLE_PROPERTIES = [

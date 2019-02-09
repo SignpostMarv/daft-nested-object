@@ -51,7 +51,7 @@
     },
     "require": {
         "php": "^7.1",
-        "signpostmarv/daft-object": "^1.11"
+        "signpostmarv/daft-object": "^1.12"
     },
     "require-dev": {
         "infection/infection": "^0.12.0",
