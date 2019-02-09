@@ -23,24 +23,9 @@ use SignpostMarv\DaftObject\SuitableForRepositoryType;
 class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree implements DaftObjectWriteableThrowingTree
 {
     /**
-    * @var bool
+    * @use TraitThrowingTree<TObj>
     */
-    protected $ToggleRecallDaftObjectAlwaysNull = true;
-
-    /**
-    * @var bool
-    */
-    protected $ToggleRecallDaftObjectAfterCalls = false;
-
-    /**
-    * @var int
-    */
-    protected $ToggleRecallDaftObjectAfterCallsCount = 0;
-
-    /**
-    * @var int
-    */
-    protected $ToggleRecallDaftObjectAfterCallsAfter = 0;
+    use TraitThrowingTree;
 
     public function RebuildTreeInefficiently() : void
     {
@@ -74,21 +59,6 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
         $this->ModifyDaftNestedObjectTreeInsertAdjacent($newLeaf, $referenceLeaf, $before);
     }
 
-    public function ToggleRecallDaftObjectAlwaysNull(bool $value) : void
-    {
-        $this->ToggleRecallDaftObjectAlwaysNull = $value;
-    }
-
-    public function ToggleRecallDaftObjectAfterCalls(bool $value, int $after) : void
-    {
-        if ($value) {
-            $this->ToggleRecallDaftObjectAlwaysNull(false);
-        }
-        $this->ToggleRecallDaftObjectAfterCalls = $value;
-        $this->ToggleRecallDaftObjectAfterCallsAfter = $after;
-        $this->ToggleRecallDaftObjectAfterCallsCount = 0;
-    }
-
     /**
     * @param scalar|(scalar|array|object|null)[] $id
     *
@@ -96,16 +66,7 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
     */
     public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
-        /**
-        * @var scalar|scalar[]
-        */
-        $id = $id;
-
-        if ($this->ToggleRecallDaftObjectAfterCalls) {
-            if ((++$this->ToggleRecallDaftObjectAfterCallsCount) > $this->ToggleRecallDaftObjectAfterCallsAfter) {
-                $this->ToggleRecallDaftObjectAlwaysNull(true);
-            }
-        }
+        $this->MaybeToggleAlwaysReturnNull();
 
         if ($this->ToggleRecallDaftObjectAlwaysNull) {
             return null;

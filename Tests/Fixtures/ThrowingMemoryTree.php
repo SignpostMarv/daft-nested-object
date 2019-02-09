@@ -22,39 +22,9 @@ use SignpostMarv\DaftObject\SuitableForRepositoryType;
 class ThrowingMemoryTree extends DaftNestedObjectIntTree implements DaftObjectThrowingTree
 {
     /**
-    * @var bool
+    * @use TraitThrowingTree<TObj>
     */
-    protected $ToggleRecallDaftObjectAlwaysNull = true;
-
-    /**
-    * @var bool
-    */
-    protected $ToggleRecallDaftObjectAfterCalls = false;
-
-    /**
-    * @var int
-    */
-    protected $ToggleRecallDaftObjectAfterCallsCount = 0;
-
-    /**
-    * @var int
-    */
-    protected $ToggleRecallDaftObjectAfterCallsAfter = 0;
-
-    public function ToggleRecallDaftObjectAlwaysNull(bool $value) : void
-    {
-        $this->ToggleRecallDaftObjectAlwaysNull = $value;
-    }
-
-    public function ToggleRecallDaftObjectAfterCalls(bool $value, int $after) : void
-    {
-        if ($value) {
-            $this->ToggleRecallDaftObjectAlwaysNull(false);
-        }
-        $this->ToggleRecallDaftObjectAfterCalls = $value;
-        $this->ToggleRecallDaftObjectAfterCallsAfter = $after;
-        $this->ToggleRecallDaftObjectAfterCallsCount = 0;
-    }
+    use TraitThrowingTree;
 
     /**
     * @param scalar|(scalar|array|object|null)[] $id
@@ -63,16 +33,7 @@ class ThrowingMemoryTree extends DaftNestedObjectIntTree implements DaftObjectTh
     */
     public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
-        /**
-        * @var scalar|scalar[]
-        */
-        $id = $id;
-
-        if ($this->ToggleRecallDaftObjectAfterCalls) {
-            if ((++$this->ToggleRecallDaftObjectAfterCallsCount) > $this->ToggleRecallDaftObjectAfterCallsAfter) {
-                $this->ToggleRecallDaftObjectAlwaysNull(true);
-            }
-        }
+        $this->MaybeToggleAlwaysReturnNull();
 
         if ($this->ToggleRecallDaftObjectAlwaysNull) {
             return null;
