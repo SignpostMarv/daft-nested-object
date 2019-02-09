@@ -184,18 +184,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     */
     public function RememberDaftObject(SuitableForRepositoryType $object) : void
     {
-        if ($object instanceof DaftNestedWriteableObject) {
-            $this->RememberDaftNestedWriteableObject($object);
-        } else {
-            parent::RememberDaftObject($object);
-        }
-    }
+        /**
+        * @var DaftNestedWriteableObject
+        *
+        * @psalm-var T
+        */
+        $object = $object;
 
-    /**
-    * @psalm-param T $object
-    */
-    private function RememberDaftNestedWriteableObject(DaftNestedWriteableObject $object) : void
-    {
         $left = $object->GetIntNestedLeft();
         $right = $object->GetIntNestedRight();
         $level = $object->GetIntNestedLevel();
@@ -385,7 +380,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $out = $this->RecallDaftObject($leaf);
 
-        return ($out instanceof DaftNestedWriteableObject) ? $out : null;
+        return $out;
     }
 
     /**
