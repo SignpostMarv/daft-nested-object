@@ -1,5 +1,9 @@
 <phpunit
   bootstrap="phpunit-bootstrap.php"
+  cacheResult="true"
+  cacheResultFile="./phpunit.cache"
+  resolveDependencies="true"
+  executionOrder="random"
 >
   <testsuites>
     <testsuite name="DaftObject">
