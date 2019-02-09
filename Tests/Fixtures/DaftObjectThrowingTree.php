@@ -13,9 +13,9 @@ use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 /**
-* @template T as DaftNestedObject
+* @template TObj as DaftNestedObject
 *
-* @template-extends DaftNestedObjectTree<T>
+* @template-extends DaftNestedObjectTree<TObj>
 */
 interface DaftObjectThrowingTree extends DaftNestedObjectTree
 {

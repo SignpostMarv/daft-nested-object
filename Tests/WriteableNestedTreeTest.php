@@ -372,6 +372,13 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $this->AssertTreeState($left, $right, $level, $leaves);
 
         $postAssert($this, $repo, $leafClass, ...$leaves);
+
+        static::expectException(InvalidArgumentException::class);
+        static::expectExceptionMessage(
+            'Cannot modify leaf relative to itself!'
+        );
+
+        $repo->ModifyDaftNestedObjectTreeInsert($leaves[1], $leaves[1], false);
     }
 
     public static function InitLeafClassInsertAfterId(

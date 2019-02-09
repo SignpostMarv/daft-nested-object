@@ -14,9 +14,9 @@ use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 /**
-* @template T as DaftNestedIntObject
+* @template TObj as DaftNestedIntObject
 *
-* @template-extends AbstractArrayBackedDaftNestedObject<T>
+* @template-extends AbstractArrayBackedDaftNestedObject<TObj>
 */
 class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements DefinesOwnIntegerIdInterface
 {

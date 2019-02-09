@@ -17,6 +17,9 @@ use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
+/**
+* @template T as DaftNestedWriteableObject
+*/
 class CoverageTest extends Base
 {
     public function DataProviderCoverageNonWriteableRepo() : Generator
@@ -195,6 +198,16 @@ class CoverageTest extends Base
             2
         );
 
+        /**
+        * @psalm-var Fixtures\DaftNestedWriteableIntObject
+        */
+        $a0 = $a0;
+
+        /**
+        * @psalm-var Fixtures\DaftNestedWriteableIntObject
+        */
+        $b0 = $b0;
+
         $repo->ModifyDaftNestedObjectTreeInsert($a0, $b0, false, true);
 
         $a0 = $repo->RecallDaftObject($a0->GetId());
@@ -247,7 +260,11 @@ class CoverageTest extends Base
     }
 
     /**
+    * @psalm-param class-string<T> $type
+    *
     * @return array<int, DaftNestedWriteableObject>
+    *
+    * @psalm-return array<int, T>
     */
     protected static function PrepRepoWriteable(
         DaftNestedObjectTree $repo,
@@ -260,6 +277,8 @@ class CoverageTest extends Base
 
         /**
         * @var array<int, DaftNestedWriteableObject>
+        *
+        * @psalm-var array<int, T>
         */
         $out = static::PrepRepo($repo, $type, ...$ids);
 

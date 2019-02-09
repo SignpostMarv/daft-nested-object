@@ -12,11 +12,11 @@ use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use TypeError;
 
 /**
-* @template T as DaftNestedWriteableIntObject
+* @template TObj as DaftNestedWriteableIntObject
 *
-* @template-extends DaftNestedIntObject<T>
+* @template-extends DaftNestedIntObject<TObj>
 *
-* @template-implements DaftNestedWriteableObject<T>
+* @template-implements DaftNestedWriteableObject<TObj>
 */
 class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNestedWriteableObject
 {

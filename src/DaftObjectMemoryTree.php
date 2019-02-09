@@ -49,6 +49,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, T>
         */
         $fromMemory = array_filter(
             array_map([$this, 'MapDataToObject'], $this->data),
@@ -59,12 +61,22 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
         $out = array_merge($out, $fromMemory);
 
-        usort($out, function (DaftNestedObject $a, DaftNestedObject $b) : int {
+        usort(
+            $out,
+            /**
+            * @psalm-param T $a
+            * @psalm-param T $b
+            */
+            function (DaftNestedObject $a, DaftNestedObject $b) : int {
             return $a->GetIntNestedLeft() <=> $b->GetIntNestedLeft();
         });
 
         if (is_int($relativeDepthLimit)) {
-            $filter = function (DaftNestedObject $e) use ($relativeDepthLimit) : bool {
+            $filter =
+                /**
+                * @psalm-param T $e
+                */
+                function (DaftNestedObject $e) use ($relativeDepthLimit) : bool {
                 return $e->GetIntNestedLevel() <= $relativeDepthLimit;
             };
             $out = array_filter($out, $filter);
@@ -80,6 +92,10 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
     /**
     * {@inheritdoc}
+    *
+    * @psalm-param T $root
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
@@ -100,12 +116,18 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
         return array_values(array_filter(
             $leaves,
+            /**
+            * @psalm-param T $e
+            */
             function (DaftNestedObject $e) use ($includeRoot, $left, $right) : bool {
                 return $this->FilterLeaf($includeRoot, $left, $right, $e);
             }
         ));
     }
 
+    /**
+    * @psalm-param T $root
+    */
     public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
@@ -126,10 +148,15 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         bool $includeRoot,
         ? int $relativeDepthLimit
     ) : array {
+        /**
+        * @psalm-var T|null
+        */
         $object = $this->RecallDaftObject($id);
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, T>
         */
         $out =
             ($object instanceof DaftNestedObject)
@@ -163,7 +190,11 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     }
 
     /**
+    * @psalm-param T $leaf
+    *
     * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectPathToObject(
         DaftNestedObject $leaf,
@@ -178,6 +209,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, T>
         */
         $out = array_values(array_filter(
             $this->RecallDaftNestedObjectFullTree(),
@@ -189,6 +222,9 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         return $out;
     }
 
+    /**
+    * @psalm-param T $leaf
+    */
     public function CountDaftNestedObjectPathToObject(
         DaftNestedObject $leaf,
         bool $includeLeaf
@@ -200,15 +236,29 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectPathToId($id, bool $includeLeaf) : array
     {
+        /**
+        * @var DaftNestedObject|null
+        *
+        * @psalm-var T|null
+        */
         $object = $this->RecallDaftObject($id);
 
-        return
+        /**
+        * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, T>
+        */
+        $out =
             ($object instanceof DaftNestedObject)
                 ? $this->RecallDaftNestedObjectPathToObject($object, $includeLeaf)
                 : [];
+
+        return $out;
     }
 
     /**
@@ -219,67 +269,47 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         return count($this->RecallDaftNestedObjectPathToId($id, $includeLeaf));
     }
 
+    /**
+    * @psalm-param T $object
+    */
     public function RememberDaftObject(SuitableForRepositoryType $object) : void
     {
-        if ( ! ($object instanceof DaftNestedObject)) {
-            throw new InvalidArgumentException(
-                'Argument 1 passed to ' .
-                __METHOD__ .
-                '() must be an instance of ' .
-                DaftNestedObject::class .
-                ', ' .
-                get_class($object) .
-                ' given!'
-            );
-        }
-
-        if ($object instanceof DaftNestedWriteableObject) {
-            $this->RememberDaftNestedWriteableObject($object);
-        } else {
             parent::RememberDaftObject($object);
-        }
     }
 
-    private function RememberDaftNestedWriteableObject(DaftNestedWriteableObject $object) : void
+    /**
+    * {@inheritdoc}
+    *
+    * @psalm-return T|null
+    */
+    public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
-        $left = $object->GetIntNestedLeft();
-        $right = $object->GetIntNestedRight();
-        $level = $object->GetIntNestedLevel();
-
-        if (0 === $left && 0 === $right && 0 === $level) {
-            $fullTreeCount = $this->CountDaftNestedObjectFullTree();
-
-            if ($fullTreeCount > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY) {
-                $tree = $this->RecallDaftNestedObjectFullTree();
-
-                /**
-                * @var DaftNestedWriteableObject
-                */
-                $end = end($tree);
-
-                $left = $end->GetIntNestedRight() + 1;
-            } else {
-                $left = $fullTreeCount + $fullTreeCount;
-            }
-
-            $object->SetIntNestedLeft($left);
-            $object->SetIntNestedRight($left + 1);
-        }
-
-        parent::RememberDaftObject($object);
+        return parent::RecallDaftObject($id);
     }
 
+    /**
+    * @psalm-return T
+    */
     private function MapDataToObject(array $row) : DaftNestedObject
     {
+        /**
+        * @psalm-var class-string<T>
+        */
         $type = $this->type;
+
         /**
         * @var DaftNestedObject
+        *
+        * @psalm-var T
         */
         $out = new $type($row);
 
         return $out;
     }
 
+    /**
+    * @psalm-param T $e
+    */
     private function FilterLeaf(
         bool $includeRoot,
         int $left,

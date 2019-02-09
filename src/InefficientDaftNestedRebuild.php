@@ -8,12 +8,18 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject;
 
+/**
+* @template T as DaftNestedWriteableObject
+* @template TRepo as DaftNestedWriteableObjectTree
+*/
 class InefficientDaftNestedRebuild
 {
     const INT_RESET_NESTED_VALUE = 0;
 
     /**
     * @var DaftNestedWriteableObjectTree
+    *
+    * @psalm-var TRepo
     */
     protected $tree;
 
@@ -24,6 +30,8 @@ class InefficientDaftNestedRebuild
 
     /**
     * @var array<int, array<int, DaftNestedWriteableObject>>
+    *
+    * @psalm-var array<int, array<int, T>>
     */
     protected $children = [[]];
 
@@ -32,6 +40,9 @@ class InefficientDaftNestedRebuild
     */
     protected $idXref = [];
 
+    /**
+    * @psalm-param TRepo $tree
+    */
     public function __construct(DaftNestedWriteableObjectTree $tree)
     {
         $this->tree = $tree;
@@ -60,6 +71,8 @@ class InefficientDaftNestedRebuild
 
         /**
         * @var array<int, array<int, DaftNestedWriteableObject>>
+        *
+        * @psalm-var array<int, array<int, T>>
         */
         $children = [[]];
 
@@ -79,10 +92,18 @@ class InefficientDaftNestedRebuild
 
         /**
         * @var array<int, DaftNestedWriteableObject>
+        *
+        * @psalm-var array<int, T>
         */
         $tree = $this->tree->RecallDaftNestedObjectFullTree();
 
-        usort($tree, function (DaftNestedWriteableObject $a, DaftNestedWriteableObject $b) : int {
+        usort(
+            $tree,
+            /**
+            * @psalm-param T $a
+            * @psalm-param T $b
+            */
+            function (DaftNestedWriteableObject $a, DaftNestedWriteableObject $b) : int {
             return $a->CompareToDaftSortableObject($b);
         });
 
@@ -122,6 +143,9 @@ class InefficientDaftNestedRebuild
         }
     }
 
+    /**
+    * @psalm-param T $leaf
+    */
     private function InefficientRebuild(
         DaftNestedWriteableObject $leaf,
         int $level,

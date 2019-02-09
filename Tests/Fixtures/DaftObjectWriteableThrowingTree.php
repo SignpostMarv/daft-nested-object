@@ -12,15 +12,20 @@ use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
 
 /**
-* @template T as DaftNestedWriteableObject
+* @template TObj as DaftNestedWriteableObject
 *
-* @template-extends DaftObjectThrowingTree<T>
-* @template-extends DaftNestedWriteableObjectTree<T>
+* @template-extends DaftObjectThrowingTree<TObj>
+* @template-extends DaftNestedWriteableObjectTree<TObj>
 */
 interface DaftObjectWriteableThrowingTree extends
         DaftObjectThrowingTree,
         DaftNestedWriteableObjectTree
 {
+    /**
+    * @psalm-param TObj $leaf
+    *
+    * @psalm-return TObj
+    */
     public function StoreThenRetrieveFreshLeafPublic(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject;

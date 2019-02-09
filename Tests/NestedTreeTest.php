@@ -45,6 +45,9 @@ class NestedTreeTest extends Base
         string $leafClass,
         ...$remainingTreeArgs
     ) : void {
+        /**
+        * @psalm-var TRepo
+        */
         $repo = $treeClass::DaftObjectRepositoryByType($leafClass, ...$remainingTreeArgs);
 
         $a = new $leafClass([

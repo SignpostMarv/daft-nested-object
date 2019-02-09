@@ -16,14 +16,20 @@ namespace SignpostMarv\DaftObject;
 interface DaftNestedObjectTree extends DaftObjectRepository
 {
     /**
-    * @return array<int, T>
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array;
 
     public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
 
     /**
-    * @return array<int, T>
+    * @psalm-param T $root
+    *
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
@@ -31,6 +37,9 @@ interface DaftNestedObjectTree extends DaftObjectRepository
         ? int $relativeDepthLimit
     ) : array;
 
+    /**
+    * @psalm-param T $root
+    */
     public function CountDaftNestedObjectTreeWithObject(
         DaftNestedObject $root,
         bool $includeRoot,
@@ -40,7 +49,9 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     /**
     * @param scalar|(scalar|array|object|null)[] $id
     *
-    * @return array<int, T>
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectTreeWithId(
         $id,
@@ -58,13 +69,20 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     ) : int;
 
     /**
-    * @return array<int, T>
+    * @psalm-param T $root
+    *
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectPathToObject(
         DaftNestedObject $leaf,
         bool $includeLeaf
     ) : array;
 
+    /**
+    * @psalm-param T $root
+    */
     public function CountDaftNestedObjectPathToObject(
         DaftNestedObject $leaf,
         bool $includeLeaf
@@ -73,7 +91,9 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     /**
     * @param scalar|(scalar|array|object|null)[] $id
     *
-    * @return array<int, T>
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectPathToId($id, bool $includeLeaf) : array;
 

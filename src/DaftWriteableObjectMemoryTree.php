@@ -21,6 +21,12 @@ use RuntimeException;
 */
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
+    /**
+    * @psalm-param T $newLeaf
+    * @psalm-param T $referenceLeaf
+    *
+    * @psalm-return T
+    */
     public function ModifyDaftNestedObjectTreeInsert(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
@@ -45,6 +51,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     /**
     * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $leaf
     * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $referenceId
+    *
+    * @psalm-param T|scalar|(scalar|array|object|null)[] $leaf
+    * @psalm-param T|scalar|(scalar|array|object|null)[] $referenceId
+    *
+    * @psalm-return T
     */
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
@@ -54,10 +65,23 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     ) : DaftNestedWriteableObject {
         $leaf = $this->MaybeGetLeaf($leaf);
 
-        $reference =
-            ($referenceId instanceof DaftNestedWriteableObject)
-                ? $referenceId
-                : $this->RecallDaftObject($referenceId);
+        $reference = $referenceId;
+
+        if ( ! ($referenceId instanceof DaftNestedWriteableObject)) {
+            /**
+            * @var scalar|(scalar|array|object|null)[]
+            */
+            $referenceId = $referenceId;
+
+            $reference = $this->RecallDaftObject($referenceId);
+        }
+
+        /**
+        * @var DaftNestedWriteableObject|null
+        *
+        * @psalm-var T|null
+        */
+        $reference = $reference;
 
         $resp = $this->ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
             $this,
@@ -79,6 +103,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         ));
     }
 
+    /**
+    * @psalm-param T $root
+    * @psalm-param T|null $replacementRoot
+    */
     public function ModifyDaftNestedObjectTreeRemoveWithObject(
         DaftNestedWriteableObject $root,
         ? DaftNestedWriteableObject $replacementRoot
@@ -130,6 +158,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return is_int($resp) ? $resp : $this->CountDaftNestedObjectFullTree();
     }
 
+    /**
+    * @psalm-param T $leaf
+    *
+    * @psalm-return T
+    */
     public function StoreThenRetrieveFreshLeaf(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject {
@@ -146,6 +179,56 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $fresh;
     }
 
+    /**
+    * @psalm-param T $object
+    */
+    public function RememberDaftObject(SuitableForRepositoryType $object) : void
+    {
+        if ($object instanceof DaftNestedWriteableObject) {
+            $this->RememberDaftNestedWriteableObject($object);
+        } else {
+            parent::RememberDaftObject($object);
+        }
+    }
+
+    /**
+    * @psalm-param T $object
+    */
+    private function RememberDaftNestedWriteableObject(DaftNestedWriteableObject $object) : void
+    {
+        $left = $object->GetIntNestedLeft();
+        $right = $object->GetIntNestedRight();
+        $level = $object->GetIntNestedLevel();
+
+        if (0 === $left && 0 === $right && 0 === $level) {
+            $fullTreeCount = $this->CountDaftNestedObjectFullTree();
+
+            if ($fullTreeCount > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY) {
+                $tree = $this->RecallDaftNestedObjectFullTree();
+
+                /**
+                * @var DaftNestedWriteableObject
+                *
+                * @psalm-var T
+                */
+                $end = end($tree);
+
+                $left = $end->GetIntNestedRight() + 1;
+            } else {
+                $left = $fullTreeCount + $fullTreeCount;
+            }
+
+            $object->SetIntNestedLeft($left);
+            $object->SetIntNestedRight($left + 1);
+        }
+
+        parent::RememberDaftObject($object);
+    }
+
+    /**
+    * @psalm-param T $newLeaf
+    * @psalm-param T $referenceLeaf
+    */
     protected function ModifyDaftNestedObjectTreeInsertAdjacent(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
@@ -153,6 +236,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     ) : void {
         /**
         * @var array<int, DaftNestedWriteableObject>
+        *
+        * @psalm-var array<int, T>
         */
         $siblings = $this->SiblingsExceptLeaf($newLeaf, $referenceLeaf);
 
@@ -195,6 +280,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $rebuilder->RebuildTree();
     }
 
+    /**
+    * @psalm-param T|null $leaf
+    * @psalm-param T|null $reference
+    *
+    * @psalm-return T|null
+    */
     private function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
         DaftNestedWriteableObjectTree $tree,
         ? DaftNestedWriteableObject $leaf,
@@ -214,6 +305,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return null;
     }
 
+    /**
+    * @psalm-param T $newLeaf
+    *
+    * @psalm-return T
+    */
     private function RebuildAfterInsert(
         DaftNestedWriteableObject $newLeaf
     ) : DaftNestedWriteableObject {
@@ -228,6 +324,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $newLeaf;
     }
 
+    /**
+    * @psalm-param T $root
+    * @psalm-param T $replacementRoot
+    */
     private function ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
         DaftNestedWriteableObject $root,
         DaftNestedWriteableObject $replacementRoot
@@ -242,6 +342,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
     /**
     * @param scalar|(scalar|array|object|null)[] $replacementRootId
+    *
+    * @psalm-param T $root
     */
     private function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
     {
@@ -260,6 +362,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
     /**
     * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $leaf
+    *
+    * @psalm-param T|scalar|(scalar|array|object|null)[] $leaf
     */
     private function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
     {
@@ -270,13 +374,25 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         }
 
         /**
+        * @psalm-var scalar|(scalar|array|object|null)[]
+        */
+        $leaf = $leaf;
+
+        /**
         * @var DaftNestedWriteableObject|null
+        *
+        * @psalm-var T|null
         */
         $out = $this->RecallDaftObject($leaf);
 
         return ($out instanceof DaftNestedWriteableObject) ? $out : null;
     }
 
+    /**
+    * @psalm-param T $leaf
+    *
+    * @psalm-return T
+    */
     private function ModifyDaftNestedObjectTreeInsertLooseIntoTree(
         DaftNestedWriteableObject $leaf,
         bool $before,
@@ -284,14 +400,23 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     ) : DaftNestedWriteableObject {
         /**
         * @var array<int, DaftNestedWriteableObject>
+        *
+        * @psalm-var array<int, T>
         */
         $leaves = $this->RecallDaftNestedObjectFullTree(0);
-        $leaves = array_filter($leaves, function (DaftNestedWriteableObject $e) use ($leaf) : bool {
+        $leaves = array_filter(
+            $leaves,
+            /**
+            * @psalm-param T $e
+            */
+            function (DaftNestedWriteableObject $e) use ($leaf) : bool {
             return $e->GetId() !== $leaf->GetId();
         });
 
         /**
         * @var false|DaftNestedWriteableObject
+        *
+        * @psalm-var false|T
         */
         $reference = $before ? current($leaves) : end($leaves);
 
@@ -307,6 +432,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
     }
 
+    /**
+    * @psalm-param T $rootObject
+    * @psalm-param T|null $replacementRootObject
+    */
     private function MaybeRemoveWithPossibleObject(
         DaftNestedWriteableObject $rootObject,
         ? DaftObject $replacementRootObject
@@ -325,6 +454,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
     /**
     * @param scalar|(scalar|array|object|null)[] $replacementRoot
+    *
+    * @psalm-param T $rootObject
     */
     private function UpdateRemoveThenRebuild(
         DaftNestedWriteableObject $rootObject,
@@ -337,6 +468,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $this->RebuildTreeInefficiently();
     }
 
+    /**
+    * @psalm-param T $newLeaf
+    * @psalm-param T $referenceLeaf
+    */
     private function ModifyDaftNestedObjectTreeInsertAbove(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
@@ -348,6 +483,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $this->StoreThenRetrieveFreshLeaf($referenceLeaf);
     }
 
+    /**
+    * @psalm-param T $newLeaf
+    * @psalm-param T $referenceLeaf
+    */
     private function ModifyDaftNestedObjectTreeInsertBelow(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
@@ -356,12 +495,20 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
 
+    /**
+    * @psalm-param T $newLeaf
+    * @psalm-param T $referenceLeaf
+    *
+    * @psalm-return array<int, T>
+    */
     private function SiblingsExceptLeaf(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : array {
         /**
         * @var array<int, DaftNestedWriteableObject>
+        *
+        * @psalm-var array<int, T>
         */
         $siblings = $this->RecallDaftNestedObjectTreeWithId(
             $referenceLeaf->ObtainDaftNestedObjectParentId(),
@@ -371,6 +518,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $siblings = array_values(array_filter(
             $siblings,
+            /**
+            * @psalm-param T $leaf
+            */
             function (DaftNestedWriteableObject $leaf) use ($newLeaf) : bool {
                 return $leaf->GetId() !== $newLeaf->GetId();
             }
@@ -381,6 +531,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
     /**
     * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
+    *
+    * @psalm-param T $rootObject
     */
     private function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
         $replacementRoot,

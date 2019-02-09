@@ -12,9 +12,9 @@ use SignpostMarv\DaftObject\DaftObjectMemoryTree;
 use SignpostMarv\DaftObject\TraitDaftNestedObjectIntTree;
 
 /**
-* @template T as DaftNestedIntObject
+* @template TObj as DaftNestedIntObject
 *
-* @template-extends DaftObjectMemoryTree<T>
+* @template-extends DaftObjectMemoryTree<TObj>
 */
 class DaftNestedObjectIntTree extends DaftObjectMemoryTree
 {

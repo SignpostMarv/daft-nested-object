@@ -14,11 +14,11 @@ use SignpostMarv\DaftObject\DaftObjectMemoryTree;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 /**
-* @template T as DaftNestedWriteableIntObject
+* @template TObj as DaftNestedWriteableIntObject
 *
-* @template-extends DaftWriteableNestedObjectIntTree<T>
+* @template-extends DaftWriteableNestedObjectIntTree<TObj>
 *
-* @template-implements DaftObjectWriteableThrowingTree<T>
+* @template-implements DaftObjectWriteableThrowingTree<TObj>
 */
 class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree implements DaftObjectWriteableThrowingTree
 {
@@ -51,12 +51,21 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
         $this->ToggleRecallDaftObjectAlwaysNull(true);
     }
 
+    /**
+    * @psalm-param TObj $leaf
+    *
+    * @psalm-return TObj
+    */
     public function StoreThenRetrieveFreshLeafPublic(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject {
         return $this->StoreThenRetrieveFreshLeaf($leaf);
     }
 
+    /**
+    * @psalm-param TObj $newLeaf
+    * @psalm-param TObj $referenceLeaf
+    */
     public function ModifyDaftNestedObjectTreeInsertAdjacentPublic(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
@@ -83,7 +92,7 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
     /**
     * @param scalar|(scalar|array|object|null)[] $id
     *
-    * @psalm-return T|null
+    * @psalm-return TObj|null
     */
     public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
@@ -105,7 +114,7 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
         /**
         * @var SuitableForRepositoryType|null
         *
-        * @psalm-var T|null
+        * @psalm-var TObj|null
         */
         $out = parent::RecallDaftObject($id);
 
