@@ -11,6 +11,11 @@
     },
     "mutators": {
         "@default": true,
+        "CastBool": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsert"
+            ]
+        },
         "CastInt": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\NestedTypeParanoia::ForceInt"
@@ -28,7 +33,8 @@
         },
         "Identical": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct"
+                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct",
+                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsertLoose"
             ]
         },
         "LessThan": {
