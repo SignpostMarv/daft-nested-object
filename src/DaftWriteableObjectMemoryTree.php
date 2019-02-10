@@ -297,11 +297,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         bool $before,
         ? bool $above
     ) : DaftNestedWriteableObject {
-            if ($reference instanceof DaftNestedWriteableObject) {
-                return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
-            }
+        if ($reference instanceof DaftNestedWriteableObject) {
+            return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
+        }
 
-            return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
+        return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
     }
 
     /**
