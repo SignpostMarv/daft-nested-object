@@ -417,9 +417,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         *
         * @psalm-var array<int, T>
         */
-        $leaves = $this->RecallDaftNestedObjectFullTree(self::RELATIVE_DEPTH_SAME);
         $leaves = array_filter(
-            $leaves,
+            $this->RecallDaftNestedObjectFullTree(self::RELATIVE_DEPTH_SAME),
             /**
             * @psalm-param T $e
             */
@@ -429,13 +428,13 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         );
 
         /**
-        * @var false|DaftNestedWriteableObject
+        * @var DaftNestedWriteableObject
         *
-        * @psalm-var false|T
+        * @psalm-var T
         */
         $reference = $before ? current($leaves) : end($leaves);
 
-        if ( ! ($reference instanceof DaftNestedWriteableObject)) {
+        if (count($leaves) < 1) {
             $leaf->SetIntNestedLeft(0);
             $leaf->SetIntNestedRight(1);
             $leaf->SetIntNestedLevel(0);
