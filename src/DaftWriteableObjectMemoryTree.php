@@ -445,20 +445,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     }
 
     /**
-    * @psalm-param T $rootObject
-    * @psalm-param T $replacementRootObject
-    */
-    private function MaybeRemoveWithPossibleObject(
-        DaftNestedWriteableObject $rootObject,
-        DaftNestedWriteableObject $replacementRootObject
-    ) : int {
-        return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
-            $rootObject,
-            $replacementRootObject
-        );
-    }
-
-    /**
     * @param scalar|(scalar|array|object|null)[] $replacementRoot
     *
     * @psalm-param T $rootObject
@@ -559,7 +545,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         ) {
             $replacementRoot = $this->RecallDaftNestedWriteableObjectOrThrow($replacementRoot);
 
-            return $this->MaybeRemoveWithPossibleObject($rootObject, $replacementRoot);
+            return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
+                $rootObject,
+                $replacementRoot
+            );
         }
 
         /**
