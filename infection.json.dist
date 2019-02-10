@@ -42,11 +42,6 @@
                 "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::FilterLeaf"
             ]
         },
-        "LogicalAnd": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree"
-            ]
-        },
         "LogicalOr": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\ClassReflectionExtension::hasProperty",
