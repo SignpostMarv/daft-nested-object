@@ -16,6 +16,13 @@ namespace SignpostMarv\DaftObject;
 interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
 {
     /**
+    * @param scalar|(scalar|array|object|null)[] $id
+    *
+    * @psalm-return T
+    */
+    public function RecallDaftNestedWriteableObjectOrThrow($id) : DaftNestedWriteableObject;
+
+    /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf
     *

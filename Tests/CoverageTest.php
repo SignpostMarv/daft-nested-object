@@ -134,9 +134,9 @@ class CoverageTest extends Base
         $this->expectException(DaftObjectNotRecalledException::class);
         $this->expectExceptionMessage(
             'Argument 1 passed to ' .
-            DaftObjectRepository::class .
-            '::RecallDaftObjectOrThrow() did not resolve to an instance of ' .
-            SuitableForRepositoryType::class .
+            DaftNestedObjectTree::class .
+            '::RecallDaftNestedObjectOrThrow() did not resolve to an instance of ' .
+            DaftNestedObject::class .
             ' from ' .
             get_class($repo) .
             '::RecallDaftObject()'
@@ -165,9 +165,9 @@ class CoverageTest extends Base
         $this->expectException(DaftObjectNotRecalledException::class);
         $this->expectExceptionMessage(
             'Argument 1 passed to ' .
-            DaftObjectRepository::class .
-            '::RecallDaftObjectOrThrow() did not resolve to an instance of ' .
-            SuitableForRepositoryType::class .
+            DaftNestedObjectTree::class .
+            '::RecallDaftNestedObjectOrThrow() did not resolve to an instance of ' .
+            DaftNestedObject::class .
             ' from ' .
             get_class($repo) .
             '::RecallDaftObject()'

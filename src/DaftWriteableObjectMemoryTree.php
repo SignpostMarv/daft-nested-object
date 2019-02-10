@@ -34,6 +34,36 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     const INT_ARG_INDEX_SECOND = 2;
 
     /**
+    * {@inheritdoc}
+    *
+    * @psalm-return T
+    */
+    public function RecallDaftNestedWriteableObjectOrThrow($id) : DaftNestedWriteableObject
+    {
+
+        /**
+        * @var DaftNestedWriteableObject|null
+        *
+        * @psalm-var T|null
+        */
+        $out = $this->RecallDaftNestedObjectOrThrow($id);
+
+        if (is_null($out)) {
+            throw new DaftObjectNotRecalledException(
+                'Argument 1 passed to ' .
+                DaftNestedWriteableObjectTree::class .
+                '::RecallDaftNestedWriteableObjectOrThrow() did not resolve to an instance of ' .
+                DaftNestedWriteableObject::class .
+                ' from ' .
+                static::class .
+                '::RecallDaftObject()'
+            );
+        }
+
+        return $out;
+    }
+
+    /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf
     *
@@ -182,7 +212,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $this->ForgetDaftObject($leaf);
         $this->ForgetDaftObjectById($leaf->GetId());
 
-        return $this->RecallDaftObjectOrThrow($leaf->GetId());
+        return $this->RecallDaftNestedWriteableObjectOrThrow($leaf->GetId());
     }
 
     /**
@@ -316,7 +346,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     ) : DaftNestedWriteableObject {
         $this->RebuildTreeInefficiently();
 
-        return $this->RecallDaftObjectOrThrow($newLeaf->GetId());
+        return $this->RecallDaftNestedWriteableObjectOrThrow($newLeaf->GetId());
     }
 
     /**
