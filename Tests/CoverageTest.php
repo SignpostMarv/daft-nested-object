@@ -15,6 +15,9 @@ use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
+use SignpostMarv\DaftObject\DaftObjectRepository;
+use SignpostMarv\DaftObject\DaftObjectNotRecalledException;
+use SignpostMarv\DaftObject\SuitableForRepositoryType;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
 /**
@@ -128,8 +131,16 @@ class CoverageTest extends Base
 
         $repo->ToggleRecallDaftObjectAlwaysNull(true);
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Was not able to obtain a fresh copy of the object!');
+        $this->expectException(DaftObjectNotRecalledException::class);
+        $this->expectExceptionMessage(
+            'Argument 1 passed to ' .
+            DaftObjectRepository::class .
+            '::RecallDaftObjectOrThrow() did not resolve to an instance of ' .
+            SuitableForRepositoryType::class .
+            ' from ' .
+            get_class($repo) .
+            '::RecallDaftObject()'
+        );
 
         $repo->StoreThenRetrieveFreshLeafPublic($leaf);
     }
@@ -151,8 +162,16 @@ class CoverageTest extends Base
             2
         );
 
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Could not retrieve leaf from tree after rebuilding!');
+        $this->expectException(DaftObjectNotRecalledException::class);
+        $this->expectExceptionMessage(
+            'Argument 1 passed to ' .
+            DaftObjectRepository::class .
+            '::RecallDaftObjectOrThrow() did not resolve to an instance of ' .
+            SuitableForRepositoryType::class .
+            ' from ' .
+            get_class($repo) .
+            '::RecallDaftObject()'
+        );
 
         $repo->ModifyDaftNestedObjectTreeInsert($a0, $b0, $before, $above);
     }
