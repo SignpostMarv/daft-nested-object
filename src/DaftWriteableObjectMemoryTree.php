@@ -341,15 +341,15 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     private function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
     {
         /**
-        * @var array<int, DaftNestedObject>
+        * @var array<int, DaftNestedWriteableObject>
+        *
+        * @psalm-var array<int, T>
         */
         $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, self::LIMIT_ONE);
 
         foreach ($alterThese as $alter) {
-            if ($alter instanceof DaftNestedWriteableObject) {
                 $alter->AlterDaftNestedObjectParentId($replacementRootId);
                 $this->RememberDaftObject($alter);
-            }
         }
     }
 
