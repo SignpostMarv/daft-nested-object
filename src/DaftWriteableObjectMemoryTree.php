@@ -113,9 +113,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $root = $this->StoreThenRetrieveFreshLeaf($root);
 
         if ( ! is_null($replacementRoot)) {
-            $this->ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
+            $this->UpdateRoots(
                 $root,
-                $replacementRoot
+                $this->StoreThenRetrieveFreshLeaf($replacementRoot)->GetId()
             );
         }
 
@@ -287,17 +287,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $out = $this->RecallDaftObjectOrThrow($newLeaf->GetId(), $type);
 
         return $out;
-    }
-
-    /**
-    * @psalm-param T $root
-    * @psalm-param T $replacementRoot
-    */
-    private function ModifyDaftNestedObjectTreeRemoveWithObjectPrepareRemovalAndRebuild(
-        DaftNestedWriteableObject $root,
-        DaftNestedWriteableObject $replacementRoot
-    ) : void {
-        $this->UpdateRoots($root, $this->StoreThenRetrieveFreshLeaf($replacementRoot)->GetId());
     }
 
     /**
