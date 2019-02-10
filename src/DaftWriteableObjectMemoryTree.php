@@ -398,12 +398,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             return $this->StoreThenRetrieveFreshLeaf($leaf);
         }
 
-        /**
-        * @psalm-var T
-        */
-        $reference = $before ? current($leaves) : end($leaves);
-
-        return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
+        return $this->ModifyDaftNestedObjectTreeInsert(
+            $leaf,
+            NestedTypeParanoia::ObtainFirstOrLast($before, ...$leaves),
+            $before,
+            $above
+        );
     }
 
     /**

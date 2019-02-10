@@ -36,4 +36,16 @@ class NestedTypeParanoia
 
         return 0 === $left && 0 === $right && 0 === $level;
     }
+
+    public static function ObtainFirstOrLast(
+        bool $before,
+        DaftNestedWriteableObject $first,
+        DaftNestedWriteableObject ...$leaves
+    ) : DaftNestedWriteableObject {
+        array_unshift($leaves, $first);
+
+        $reference = $before ? current($leaves) : end($leaves);
+
+        return $reference;
+    }
 }
