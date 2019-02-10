@@ -243,11 +243,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DaftNestedWriteableObject $referenceLeaf,
         bool $before
     ) : void {
-        /**
-        * @var array<int, DaftNestedWriteableObject>
-        *
-        * @psalm-var array<int, T>
-        */
         $siblings = $this->SiblingsExceptLeaf($newLeaf, $referenceLeaf);
 
         $siblingIds = [];
@@ -490,6 +485,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf
+    *
+    * @return array<int, DaftNestedWriteableObject>
     *
     * @psalm-return array<int, T>
     */
