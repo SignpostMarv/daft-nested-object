@@ -449,18 +449,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
     /**
     * @psalm-param T $rootObject
-    * @psalm-param T|null $replacementRootObject
+    * @psalm-param T $replacementRootObject
     */
     private function MaybeRemoveWithPossibleObject(
         DaftNestedWriteableObject $rootObject,
-        ? DaftObject $replacementRootObject
+        DaftNestedWriteableObject $replacementRootObject
     ) : int {
-        if ( ! ($replacementRootObject instanceof DaftNestedWriteableObject)) {
-            throw new InvalidArgumentException(
-                'Could not locate replacement root, cannot leave orphan objects!'
-            );
-        }
-
         return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
             $rootObject,
             $replacementRootObject
@@ -566,7 +560,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             ! is_null($replacementRoot) &&
             $replacementRoot !== $this->GetNestedObjectTreeRootId()
         ) {
-            $replacementRoot = $this->RecallDaftObject($replacementRoot);
+            $replacementRoot = $this->RecallDaftNestedWriteableObjectOrThrow($replacementRoot);
 
             return $this->MaybeRemoveWithPossibleObject($rootObject, $replacementRoot);
         }

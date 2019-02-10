@@ -13,10 +13,13 @@ use Closure;
 use Generator;
 use InvalidArgumentException;
 use RuntimeException;
+use SignpostMarv\DaftObject\DaftNestedObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedWriteableIntObject;
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftWriteableNestedObjectIntTree;
+use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
+use SignpostMarv\DaftObject\DaftObjectNotRecalledException;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 /**
@@ -287,9 +290,15 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
         $leaves = $this->setupTestTreeRemovalFailure($leafClass, $repo);
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(DaftObjectNotRecalledException::class);
         $this->expectExceptionMessage(
-            'Could not locate replacement root, cannot leave orphan objects!'
+            'Argument 1 passed to ' .
+            DaftNestedObjectTree::class .
+            '::RecallDaftNestedObjectOrThrow() did not resolve to an instance of ' .
+            DaftNestedObject::class .
+            ' from ' .
+            get_class($repo) .
+            '::RecallDaftObject()'
         );
 
         $repo->ModifyDaftNestedObjectTreeRemoveWithId($leaves[0]->GetId(), 11);
