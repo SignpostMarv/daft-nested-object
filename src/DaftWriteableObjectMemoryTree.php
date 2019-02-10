@@ -40,7 +40,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     */
     public function RecallDaftNestedWriteableObjectOrThrow($id) : DaftNestedWriteableObject
     {
-
         /**
         * @var DaftNestedWriteableObject|null
         *
