@@ -185,11 +185,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $object = $object;
 
-        $left = $object->GetIntNestedLeft();
-        $right = $object->GetIntNestedRight();
-        $level = $object->GetIntNestedLevel();
-
-        if (0 === $left && 0 === $right && 0 === $level) {
+        if (NestedTypeParanoia::NotYetAppendedToTree($object)) {
             $fullTreeCount = $this->CountDaftNestedObjectFullTree();
 
             if ($fullTreeCount > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY) {

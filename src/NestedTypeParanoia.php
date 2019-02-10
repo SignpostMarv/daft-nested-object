@@ -27,4 +27,13 @@ class NestedTypeParanoia
     {
         return is_int($maybe) ? $maybe : (int) $maybe;
     }
+
+    public static function NotYetAppendedToTree(DaftNestedObject $object) : bool
+    {
+        $left = $object->GetIntNestedLeft();
+        $right = $object->GetIntNestedRight();
+        $level = $object->GetIntNestedLevel();
+
+        return 0 === $left && 0 === $right && 0 === $level;
+    }
 }
