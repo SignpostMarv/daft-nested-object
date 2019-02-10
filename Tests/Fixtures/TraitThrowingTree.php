@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures;
 
-use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftNestedObject;
+use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftObjectMemoryTree;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
