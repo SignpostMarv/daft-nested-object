@@ -104,8 +104,9 @@ class InefficientDaftNestedRebuild
             * @psalm-param T $b
             */
             function (DaftNestedWriteableObject $a, DaftNestedWriteableObject $b) : int {
-            return $a->CompareToDaftSortableObject($b);
-        });
+                return $a->CompareToDaftSortableObject($b);
+            }
+        );
 
         foreach ($tree as $i => $leaf) {
             $leafParentId = $leaf->ObtainDaftNestedObjectParentId();

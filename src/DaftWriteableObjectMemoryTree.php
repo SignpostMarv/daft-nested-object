@@ -405,8 +405,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             * @psalm-param T $e
             */
             function (DaftNestedWriteableObject $e) use ($leaf) : bool {
-            return $e->GetId() !== $leaf->GetId();
-        });
+                return $e->GetId() !== $leaf->GetId();
+            }
+        );
 
         /**
         * @var false|DaftNestedWriteableObject

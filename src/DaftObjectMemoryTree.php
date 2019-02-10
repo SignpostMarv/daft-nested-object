@@ -68,8 +68,9 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
             * @psalm-param T $b
             */
             function (DaftNestedObject $a, DaftNestedObject $b) : int {
-            return $a->GetIntNestedLeft() <=> $b->GetIntNestedLeft();
-        });
+                return $a->GetIntNestedLeft() <=> $b->GetIntNestedLeft();
+            }
+        );
 
         if (is_int($relativeDepthLimit)) {
             $filter =
@@ -77,8 +78,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
                 * @psalm-param T $e
                 */
                 function (DaftNestedObject $e) use ($relativeDepthLimit) : bool {
-                return $e->GetIntNestedLevel() <= $relativeDepthLimit;
-            };
+                    return $e->GetIntNestedLevel() <= $relativeDepthLimit;
+                };
             $out = array_filter($out, $filter);
         }
 
@@ -274,7 +275,7 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     */
     public function RememberDaftObject(SuitableForRepositoryType $object) : void
     {
-            parent::RememberDaftObject($object);
+        parent::RememberDaftObject($object);
     }
 
     /**
