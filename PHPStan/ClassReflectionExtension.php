@@ -12,18 +12,24 @@ use PHPStan\Broker\Broker;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertyReflection;
 use RuntimeException;
+use SignpostMarv\DaftObject\DaftNestedObject;
+use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\PHPStan\ClassReflectionExtension as Base;
 
+/**
+* @template TObj as DaftNestedObject
+*
+* @template-extends Base<TObj>
+*/
 class ClassReflectionExtension extends Base
 {
-    /**
-    * @var Broker|null
-    */
-    private $broker;
 
-    public function setBroker(Broker $broker) : void
-    {
-        $this->broker = $broker;
+    protected function ObtainPropertyReflection(
+        ClassReflection $ref,
+        Broker $broker,
+        string $propertyName
+    ) : PropertyReflection {
+        return new PropertyReflectionExtension($ref, $broker, $propertyName);
     }
 
     public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
@@ -33,14 +39,5 @@ class ClassReflectionExtension extends Base
         return
             parent::hasProperty($classReflection, $property) ||
             PropertyReflectionExtension::PropertyIsInt($property);
-    }
-
-    public function getProperty(ClassReflection $ref, string $propertyName) : PropertyReflection
-    {
-        if ( ! ($this->broker instanceof Broker)) {
-            throw new RuntimeException('Broker not available!');
-        }
-
-        return new PropertyReflectionExtension($ref, $this->broker, $propertyName);
     }
 }

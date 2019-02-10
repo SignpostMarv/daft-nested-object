@@ -21,6 +21,18 @@ use RuntimeException;
 */
 abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implements DaftNestedWriteableObjectTree
 {
+    const DEFINITELY_BELOW = false;
+
+    const EXCLUDE_ROOT = false;
+
+    const INSERT_AFTER = false;
+
+    const LIMIT_ONE = 1;
+
+    const RELATIVE_DEPTH_SAME = 0;
+
+    const INT_ARG_INDEX_SECOND = 2;
+
     /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf
@@ -30,16 +42,16 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     public function ModifyDaftNestedObjectTreeInsert(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
-        bool $before = false,
+        bool $before = self::INSERT_AFTER,
         bool $above = null
     ) : DaftNestedWriteableObject {
         if ($newLeaf->GetId() === $referenceLeaf->GetId()) {
             throw new InvalidArgumentException('Cannot modify leaf relative to itself!');
         }
 
-        if (true === $above) {
+        if ($above) {
             $this->ModifyDaftNestedObjectTreeInsertAbove($newLeaf, $referenceLeaf);
-        } elseif (false === $above) {
+        } elseif (self::DEFINITELY_BELOW === $above) {
             $this->ModifyDaftNestedObjectTreeInsertBelow($newLeaf, $referenceLeaf);
         } else {
             $this->ModifyDaftNestedObjectTreeInsertAdjacent($newLeaf, $referenceLeaf, $before);
@@ -60,7 +72,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
         $referenceId,
-        bool $before = false,
+        bool $before = self::INSERT_AFTER,
         bool $above = null
     ) : DaftNestedWriteableObject {
         $leaf = $this->MaybeGetLeaf($leaf);
@@ -98,7 +110,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         throw new InvalidArgumentException(sprintf(
             'Argument %u passed to %s() did not resolve to a leaf node!',
-            is_null($leaf) ? 1 : 2,
+            is_null($leaf) ? self::INT_ARG_INDEX_FIRST : self::INT_ARG_INDEX_SECOND,
             __METHOD__
         ));
     }
@@ -258,7 +270,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         for ($i = 0; $i < $j; ++$i) {
             $siblings[$i]->SetIntNestedSortOrder(
                 $siblingSort[$i] +
-                (($before ? ($i < $pos) : ($i <= $pos)) ? -1 : 1)
+                (($before ? ($i < $pos) : ($i <= $pos)) ? self::DECREMENT : self::INCREMENT)
             );
             $this->StoreThenRetrieveFreshLeaf($siblings[$i]);
         }
@@ -345,7 +357,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         /**
         * @var array<int, DaftNestedObject>
         */
-        $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, 1);
+        $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, self::LIMIT_ONE);
 
         foreach ($alterThese as $alter) {
             if ($alter instanceof DaftNestedWriteableObject) {
@@ -398,7 +410,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         *
         * @psalm-var array<int, T>
         */
-        $leaves = $this->RecallDaftNestedObjectFullTree(0);
+        $leaves = $this->RecallDaftNestedObjectFullTree(self::RELATIVE_DEPTH_SAME);
         $leaves = array_filter(
             $leaves,
             /**
@@ -508,8 +520,8 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $siblings = $this->RecallDaftNestedObjectTreeWithId(
             $referenceLeaf->ObtainDaftNestedObjectParentId(),
-            false,
-            0
+            self::EXCLUDE_ROOT,
+            self::RELATIVE_DEPTH_SAME
         );
 
         $siblings = array_values(array_filter(
