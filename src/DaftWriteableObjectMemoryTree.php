@@ -49,7 +49,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             throw new InvalidArgumentException('Cannot modify leaf relative to itself!');
         }
 
-        if ($above) {
+        if ((bool) $above) {
             $this->ModifyDaftNestedObjectTreeInsertAbove($newLeaf, $referenceLeaf);
         } elseif (self::DEFINITELY_BELOW === $above) {
             $this->ModifyDaftNestedObjectTreeInsertBelow($newLeaf, $referenceLeaf);
