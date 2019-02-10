@@ -499,9 +499,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     ) : array {
         return array_values(array_filter(
             $this->RecallDaftNestedObjectTreeWithId(
-            $referenceLeaf->ObtainDaftNestedObjectParentId(),
-            self::EXCLUDE_ROOT,
-            self::RELATIVE_DEPTH_SAME
+                $referenceLeaf->ObtainDaftNestedObjectParentId(),
+                self::EXCLUDE_ROOT,
+                self::RELATIVE_DEPTH_SAME
             ),
             /**
             * @psalm-param T $leaf
