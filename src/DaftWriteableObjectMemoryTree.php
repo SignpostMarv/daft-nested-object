@@ -435,22 +435,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     }
 
     /**
-    * @param scalar|(scalar|array|object|null)[] $replacementRoot
-    *
-    * @psalm-param T $rootObject
-    */
-    private function UpdateRemoveThenRebuild(
-        DaftNestedWriteableObject $rootObject,
-        $replacementRoot
-    ) : void {
-        $this->UpdateRoots($rootObject, $replacementRoot);
-
-        $this->RemoveDaftObject($rootObject);
-
-        $this->RebuildTreeInefficiently();
-    }
-
-    /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf
     */
@@ -544,7 +528,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $replacementRoot = $replacementRoot;
 
-        $this->UpdateRemoveThenRebuild($rootObject, $replacementRoot);
+        $this->UpdateRoots($rootObject, $replacementRoot);
+
+        $this->RemoveDaftObject($rootObject);
+
+        $this->RebuildTreeInefficiently();
 
         return null;
     }
