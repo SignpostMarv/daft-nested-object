@@ -11,9 +11,7 @@ namespace SignpostMarv\DaftObject\DaftNestedObject\PHPStan;
 use PHPStan\Broker\Broker;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\PropertyReflection;
-use RuntimeException;
 use SignpostMarv\DaftObject\DaftNestedObject;
-use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\PHPStan\ClassReflectionExtension as Base;
 
 /**
@@ -23,15 +21,6 @@ use SignpostMarv\DaftObject\PHPStan\ClassReflectionExtension as Base;
 */
 class ClassReflectionExtension extends Base
 {
-
-    protected function ObtainPropertyReflection(
-        ClassReflection $ref,
-        Broker $broker,
-        string $propertyName
-    ) : PropertyReflection {
-        return new PropertyReflectionExtension($ref, $broker, $propertyName);
-    }
-
     public function hasProperty(ClassReflection $classReflection, string $propertyName) : bool
     {
         $property = ucfirst($propertyName);
@@ -39,5 +28,13 @@ class ClassReflectionExtension extends Base
         return
             parent::hasProperty($classReflection, $property) ||
             PropertyReflectionExtension::PropertyIsInt($property);
+    }
+
+    protected function ObtainPropertyReflection(
+        ClassReflection $ref,
+        Broker $broker,
+        string $propertyName
+    ) : PropertyReflection {
+        return new PropertyReflectionExtension($ref, $broker, $propertyName);
     }
 }
