@@ -104,7 +104,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         bool $before = self::INSERT_AFTER,
         bool $above = null
     ) : DaftNestedWriteableObject {
-        $leaf = $this->MaybeGetLeaf($leaf);
+        /**
+        * @var DaftNestedWriteableObject
+        *
+        * @psalm-var T
+        */
+        $leaf = $this->MaybeGetLeafOrThrow($leaf);
 
         $reference = $referenceId;
 
@@ -139,7 +144,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         throw new InvalidArgumentException(sprintf(
             'Argument %u passed to %s() did not resolve to a leaf node!',
-            is_null($leaf) ? self::INT_ARG_INDEX_FIRST : self::INT_ARG_INDEX_SECOND,
+            self::INT_ARG_INDEX_SECOND,
             __METHOD__
         ));
     }
@@ -311,20 +316,20 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     }
 
     /**
-    * @psalm-param T|null $leaf
+    * @psalm-param T $leaf
     * @psalm-param T|null $reference
     *
     * @psalm-return T|null
     */
     private function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
         DaftNestedWriteableObjectTree $tree,
-        ? DaftNestedWriteableObject $leaf,
+        DaftNestedWriteableObject $leaf,
         ? DaftObject $reference,
         bool $isRoot,
         bool $before,
         ? bool $above
     ) : ? DaftNestedWriteableObject {
-        if ( ! is_null($leaf) && (($reference instanceof DaftNestedWriteableObject) || $isRoot)) {
+        if (($reference instanceof DaftNestedWriteableObject) || $isRoot) {
             if ($reference instanceof DaftNestedWriteableObject) {
                 return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
             }
@@ -388,8 +393,10 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $leaf
     *
     * @psalm-param T|scalar|(scalar|array|object|null)[] $leaf
+    *
+    * @psalm-return T
     */
-    private function MaybeGetLeaf($leaf) : ? DaftNestedWriteableObject
+    private function MaybeGetLeafOrThrow($leaf) : DaftNestedWriteableObject
     {
         if ($leaf === $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
@@ -402,14 +409,7 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $leaf = $leaf;
 
-        /**
-        * @var DaftNestedWriteableObject|null
-        *
-        * @psalm-var T|null
-        */
-        $out = $this->RecallDaftObject($leaf);
-
-        return $out;
+        return $this->RecallDaftNestedWriteableObjectOrThrow($leaf);
     }
 
     /**
