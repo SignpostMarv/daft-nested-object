@@ -497,19 +497,12 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : array {
-        /**
-        * @var array<int, DaftNestedWriteableObject>
-        *
-        * @psalm-var array<int, T>
-        */
-        $siblings = $this->RecallDaftNestedObjectTreeWithId(
+        return array_values(array_filter(
+            $this->RecallDaftNestedObjectTreeWithId(
             $referenceLeaf->ObtainDaftNestedObjectParentId(),
             self::EXCLUDE_ROOT,
             self::RELATIVE_DEPTH_SAME
-        );
-
-        $siblings = array_values(array_filter(
-            $siblings,
+            ),
             /**
             * @psalm-param T $leaf
             */
@@ -517,8 +510,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
                 return $leaf->GetId() !== $newLeaf->GetId();
             }
         ));
-
-        return $siblings;
     }
 
     /**

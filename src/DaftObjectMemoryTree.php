@@ -170,6 +170,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     * @param scalar|(scalar|array|object|null)[] $id
     *
     * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
     */
     public function RecallDaftNestedObjectTreeWithId(
         $id,
