@@ -84,14 +84,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
         $reference = $this->MaybeRecallLoose($referenceId);
 
-        return $this->ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
-            $this,
-            $leaf,
-            $reference,
-            $referenceId === $this->GetNestedObjectTreeRootId(),
-            $before,
-            $above
-        );
+        if ($reference instanceof DaftNestedWriteableObject) {
+            return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
+        }
+
+        return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
     }
 
     /**
@@ -265,21 +262,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     {
         $rebuilder = new InefficientDaftNestedRebuild($this);
         $rebuilder->RebuildTree();
-    }
-
-    private function ModifyDaftNestedObjectTreeInsertMaybeLooseIntoTree(
-        DaftNestedWriteableObjectTree $tree,
-        DaftNestedWriteableObject $leaf,
-        ? DaftNestedWriteableObject $reference,
-        bool $isRoot,
-        bool $before,
-        ? bool $above
-    ) : DaftNestedWriteableObject {
-        if ($reference instanceof DaftNestedWriteableObject) {
-            return $tree->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
-        }
-
-        return $this->ModifyDaftNestedObjectTreeInsertLooseIntoTree($leaf, $before, $above);
     }
 
     /**
