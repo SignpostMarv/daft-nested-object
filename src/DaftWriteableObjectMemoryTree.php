@@ -543,11 +543,9 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             ! is_null($replacementRoot) &&
             $replacementRoot !== $this->GetNestedObjectTreeRootId()
         ) {
-            $replacementRoot = $this->RecallDaftNestedWriteableObjectOrThrow($replacementRoot);
-
             return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
                 $rootObject,
-                $replacementRoot
+                $this->RecallDaftNestedWriteableObjectOrThrow($replacementRoot)
             );
         }
 
