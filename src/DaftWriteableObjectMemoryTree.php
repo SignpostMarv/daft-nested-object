@@ -427,13 +427,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             }
         );
 
-        /**
-        * @var DaftNestedWriteableObject
-        *
-        * @psalm-var T
-        */
-        $reference = $before ? current($leaves) : end($leaves);
-
         if (count($leaves) < 1) {
             $leaf->SetIntNestedLeft(0);
             $leaf->SetIntNestedRight(1);
@@ -442,6 +435,11 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
 
             return $this->StoreThenRetrieveFreshLeaf($leaf);
         }
+
+        /**
+        * @psalm-var T
+        */
+        $reference = $before ? current($leaves) : end($leaves);
 
         return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
     }
