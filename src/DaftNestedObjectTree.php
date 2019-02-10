@@ -16,11 +16,16 @@ namespace SignpostMarv\DaftObject;
 interface DaftNestedObjectTree extends DaftObjectRepository
 {
     /**
-    * @param scalar|(scalar|array|object|null)[] $id
+    * {@inheritdoc}
+    *
+    * @psalm-param class-string<T> $type
     *
     * @psalm-return T
     */
-    public function RecallDaftNestedObjectOrThrow($id) : DaftNestedObject;
+    public function RecallDaftObjectOrThrow(
+        $id,
+        string $type = DaftNestedObject::class
+    ) : SuitableForRepositoryType;
 
     /**
     * @return array<int, DaftNestedObject>

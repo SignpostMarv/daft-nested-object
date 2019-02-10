@@ -30,30 +30,17 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     /**
     * {@inheritdoc}
     *
+    * @param scalar|(scalar|array|object|null)[] $id
+    *
+    * @psalm-param class-string<T> $type
+    *
     * @psalm-return T
     */
-    public function RecallDaftNestedObjectOrThrow($id) : DaftNestedObject
-    {
-        /**
-        * @var DaftNestedObject|null
-        *
-        * @psalm-var T|null
-        */
-        $out = $this->RecallDaftObject($id);
-
-        if (is_null($out)) {
-            throw new DaftObjectNotRecalledException(
-                'Argument 1 passed to ' .
-                DaftNestedObjectTree::class .
-                '::RecallDaftNestedObjectOrThrow() did not resolve to an instance of ' .
-                DaftNestedObject::class .
-                ' from ' .
-                static::class .
-                '::RecallDaftObject()'
-            );
-        }
-
-        return $out;
+    public function RecallDaftObjectOrThrow(
+        $id,
+        string $type = DaftNestedObject::class
+    ) : SuitableForRepositoryType {
+        return parent::RecallDaftObjectOrThrow($id, $type);
     }
 
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array

@@ -36,30 +36,19 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     /**
     * {@inheritdoc}
     *
+    * @param scalar|(scalar|array|object|null)[] $id
+    *
+    * @psalm-param class-string<T> $type
+    *
+    * @return DaftNestedWriteableObject
+    *
     * @psalm-return T
     */
-    public function RecallDaftNestedWriteableObjectOrThrow($id) : DaftNestedWriteableObject
-    {
-        /**
-        * @var DaftNestedWriteableObject|null
-        *
-        * @psalm-var T|null
-        */
-        $out = $this->RecallDaftNestedObjectOrThrow($id);
-
-        if (is_null($out)) {
-            throw new DaftObjectNotRecalledException(
-                'Argument 1 passed to ' .
-                DaftNestedWriteableObjectTree::class .
-                '::RecallDaftNestedWriteableObjectOrThrow() did not resolve to an instance of ' .
-                DaftNestedWriteableObject::class .
-                ' from ' .
-                static::class .
-                '::RecallDaftObject()'
-            );
-        }
-
-        return $out;
+    public function RecallDaftObjectOrThrow(
+        $id,
+        string $type = DaftNestedWriteableObject::class
+    ) : SuitableForRepositoryType {
+        return parent::RecallDaftObjectOrThrow($id, $type);
     }
 
     /**
@@ -190,7 +179,19 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         $this->ForgetDaftObject($leaf);
         $this->ForgetDaftObjectById($leaf->GetId());
 
-        return $this->RecallDaftNestedWriteableObjectOrThrow($leaf->GetId());
+        /**
+        * @psalm-var class-string<T>
+        */
+        $type = get_class($leaf);
+
+        /**
+        * @var DaftNestedWriteableObject
+        *
+        * @psalm-var T
+        */
+        $out = $this->RecallDaftObjectOrThrow($leaf->GetId(), $type);
+
+        return $out;
     }
 
     /**
@@ -309,7 +310,19 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     ) : DaftNestedWriteableObject {
         $this->RebuildTreeInefficiently();
 
-        return $this->RecallDaftNestedWriteableObjectOrThrow($newLeaf->GetId());
+        /**
+        * @psalm-var class-string<T>
+        */
+        $type = get_class($newLeaf);
+
+        /**
+        * @var DaftNestedWriteableObject
+        *
+        * @psalm-var T
+        */
+        $out = $this->RecallDaftObjectOrThrow($newLeaf->GetId(), $type);
+
+        return $out;
     }
 
     /**
@@ -347,11 +360,14 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     * @param DaftNestedWriteableObject|scalar|(scalar|array|object|null)[] $leaf
     *
     * @psalm-param T|scalar|(scalar|array|object|null)[] $leaf
+    * @psalm-param class-string<T> $type
     *
     * @psalm-return T
     */
-    private function MaybeGetLeafOrThrow($leaf) : DaftNestedWriteableObject
-    {
+    private function MaybeGetLeafOrThrow(
+        $leaf,
+        string $type = DaftNestedWriteableObject::class
+    ) : DaftNestedWriteableObject {
         if ($leaf === $this->GetNestedObjectTreeRootId()) {
             throw new InvalidArgumentException('Cannot pass root id as new leaf');
         } elseif ($leaf instanceof DaftNestedWriteableObject) {
@@ -363,7 +379,14 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
         */
         $leaf = $leaf;
 
-        return $this->RecallDaftNestedWriteableObjectOrThrow($leaf);
+        /**
+        * @var DaftNestedWriteableObject
+        *
+        * @psalm-var T
+        */
+        $out = $this->RecallDaftObjectOrThrow($leaf, $type);
+
+        return $out;
     }
 
     /**
@@ -517,9 +540,21 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
             ! is_null($replacementRoot) &&
             $replacementRoot !== $this->GetNestedObjectTreeRootId()
         ) {
+            /**
+            * @psalm-var class-string<T>
+            */
+            $type = get_class($rootObject);
+
+            /**
+            * @var DaftNestedWriteableObject
+            *
+            * @psalm-var T
+            */
+            $replacement = $this->RecallDaftObjectOrThrow($replacementRoot, $type);
+
             return $this->ModifyDaftNestedObjectTreeRemoveWithObject(
                 $rootObject,
-                $this->RecallDaftNestedWriteableObjectOrThrow($replacementRoot)
+                $replacement
             );
         }
 

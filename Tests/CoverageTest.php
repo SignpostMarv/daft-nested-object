@@ -16,6 +16,7 @@ use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
 use SignpostMarv\DaftObject\DaftObjectNotRecalledException;
+use SignpostMarv\DaftObject\DaftObjectRepository;
 use SignpostMarv\DaftObject\Tests\TestCase as Base;
 
 /**
@@ -132,9 +133,9 @@ class CoverageTest extends Base
         $this->expectException(DaftObjectNotRecalledException::class);
         $this->expectExceptionMessage(
             'Argument 1 passed to ' .
-            DaftNestedObjectTree::class .
-            '::RecallDaftNestedObjectOrThrow() did not resolve to an instance of ' .
-            DaftNestedObject::class .
+            DaftObjectRepository::class .
+            '::RecallDaftObjectOrThrow() did not resolve to an instance of ' .
+            Fixtures\DaftNestedWriteableIntObject::class .
             ' from ' .
             get_class($repo) .
             '::RecallDaftObject()'
@@ -163,9 +164,9 @@ class CoverageTest extends Base
         $this->expectException(DaftObjectNotRecalledException::class);
         $this->expectExceptionMessage(
             'Argument 1 passed to ' .
-            DaftNestedObjectTree::class .
-            '::RecallDaftNestedObjectOrThrow() did not resolve to an instance of ' .
-            DaftNestedObject::class .
+            DaftObjectRepository::class .
+            '::RecallDaftObjectOrThrow() did not resolve to an instance of ' .
+            Fixtures\DaftNestedWriteableIntObject::class .
             ' from ' .
             get_class($repo) .
             '::RecallDaftObject()'
