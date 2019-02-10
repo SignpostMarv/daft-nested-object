@@ -27,22 +27,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
 
     const BOOL_DEFAULT_NO_MODIFY = 0;
 
-    /**
-    * {@inheritdoc}
-    *
-    * @param scalar|(scalar|array|object|null)[] $id
-    *
-    * @psalm-param class-string<T> $type
-    *
-    * @psalm-return T
-    */
-    public function RecallDaftObjectOrThrow(
-        $id,
-        string $type = DaftNestedObject::class
-    ) : SuitableForRepositoryType {
-        return parent::RecallDaftObjectOrThrow($id, $type);
-    }
-
     public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array
     {
         /**

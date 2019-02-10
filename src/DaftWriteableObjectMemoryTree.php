@@ -34,24 +34,6 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     const INT_ARG_INDEX_SECOND = 2;
 
     /**
-    * {@inheritdoc}
-    *
-    * @param scalar|(scalar|array|object|null)[] $id
-    *
-    * @psalm-param class-string<T> $type
-    *
-    * @return DaftNestedWriteableObject
-    *
-    * @psalm-return T
-    */
-    public function RecallDaftObjectOrThrow(
-        $id,
-        string $type = DaftNestedWriteableObject::class
-    ) : SuitableForRepositoryType {
-        return parent::RecallDaftObjectOrThrow($id, $type);
-    }
-
-    /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf
     *
