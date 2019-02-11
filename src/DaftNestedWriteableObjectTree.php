@@ -15,6 +15,16 @@ namespace SignpostMarv\DaftObject;
 */
 interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
 {
+    const DEFINITELY_BELOW = false;
+
+    const EXCLUDE_ROOT = false;
+
+    const INSERT_AFTER = false;
+
+    const LIMIT_ONE = 1;
+
+    const RELATIVE_DEPTH_SAME = 0;
+
     /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf

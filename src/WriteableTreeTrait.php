@@ -26,7 +26,7 @@ trait WriteableTreeTrait
     public function ModifyDaftNestedObjectTreeInsert(
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf,
-        bool $before = self::INSERT_AFTER,
+        bool $before = DaftNestedWriteableObjectTree::INSERT_AFTER,
         bool $above = null
     ) : DaftNestedWriteableObject {
         if ($newLeaf->GetId() === $referenceLeaf->GetId()) {
@@ -35,7 +35,7 @@ trait WriteableTreeTrait
 
         if ((bool) $above) {
             $this->ModifyDaftNestedObjectTreeInsertAbove($newLeaf, $referenceLeaf);
-        } elseif (self::DEFINITELY_BELOW === $above) {
+        } elseif (DaftNestedWriteableObjectTree::DEFINITELY_BELOW === $above) {
             $this->ModifyDaftNestedObjectTreeInsertBelow($newLeaf, $referenceLeaf);
         } else {
             $this->ModifyDaftNestedObjectTreeInsertAdjacent($newLeaf, $referenceLeaf, $before);
@@ -56,7 +56,7 @@ trait WriteableTreeTrait
     public function ModifyDaftNestedObjectTreeInsertLoose(
         $leaf,
         $referenceId,
-        bool $before = self::INSERT_AFTER,
+        bool $before = DaftNestedWriteableObjectTree::INSERT_AFTER,
         bool $above = null
     ) : DaftNestedWriteableObject {
         /**
@@ -227,7 +227,7 @@ trait WriteableTreeTrait
         for ($i = 0; $i < $j; ++$i) {
             $siblings[$i]->SetIntNestedSortOrder(
                 $siblingSort[$i] +
-                (($before ? ($i < $pos) : ($i <= $pos)) ? self::DECREMENT : self::INCREMENT)
+                (($before ? ($i < $pos) : ($i <= $pos)) ? DaftNestedObjectTree::DECREMENT : DaftNestedObjectTree::INCREMENT)
             );
             $this->StoreThenRetrieveFreshLeaf($siblings[$i]);
         }
@@ -281,7 +281,7 @@ trait WriteableTreeTrait
         *
         * @psalm-var array<int, T>
         */
-        $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, self::LIMIT_ONE);
+        $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, DaftNestedWriteableObjectTree::LIMIT_ONE);
 
         foreach ($alterThese as $alter) {
             $alter->AlterDaftNestedObjectParentId($replacementRootId);
@@ -364,7 +364,7 @@ trait WriteableTreeTrait
         * @psalm-var array<int, T>
         */
         $leaves = array_filter(
-            $this->RecallDaftNestedObjectFullTree(self::RELATIVE_DEPTH_SAME),
+            $this->RecallDaftNestedObjectFullTree(DaftNestedWriteableObjectTree::RELATIVE_DEPTH_SAME),
             /**
             * @psalm-param T $e
             */
@@ -437,8 +437,8 @@ trait WriteableTreeTrait
         $out = array_values(array_filter(
             $this->RecallDaftNestedObjectTreeWithId(
                 $referenceLeaf->ObtainDaftNestedObjectParentId(),
-                self::EXCLUDE_ROOT,
-                self::RELATIVE_DEPTH_SAME
+                DaftNestedWriteableObjectTree::EXCLUDE_ROOT,
+                DaftNestedWriteableObjectTree::RELATIVE_DEPTH_SAME
             ),
             /**
             * @psalm-param T $leaf

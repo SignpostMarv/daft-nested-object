@@ -15,6 +15,10 @@ namespace SignpostMarv\DaftObject;
 */
 interface DaftNestedObjectTree extends DaftObjectRepository
 {
+    const DECREMENT = -1;
+
+    const INCREMENT = 1;
+
     /**
     * {@inheritdoc}
     *

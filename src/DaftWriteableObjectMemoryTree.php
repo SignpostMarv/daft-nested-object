@@ -21,16 +21,4 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     * @use WriteableTreeTrait<T>
     */
     use WriteableTreeTrait;
-
-    const DEFINITELY_BELOW = false;
-
-    const EXCLUDE_ROOT = false;
-
-    const INSERT_AFTER = false;
-
-    const LIMIT_ONE = 1;
-
-    const RELATIVE_DEPTH_SAME = 0;
-
-    const INT_ARG_INDEX_SECOND = 2;
 }

@@ -17,13 +17,7 @@ namespace SignpostMarv\DaftObject;
 */
 abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implements DaftNestedObjectTree
 {
-    const DECREMENT = -1;
-
-    const INCREMENT = 1;
-
     const BOOL_DEFAULT_ASSUME_DOES_NOT_EXIST = false;
-
-    const INT_ARG_INDEX_FIRST = 1;
 
     const BOOL_DEFAULT_NO_MODIFY = 0;
 
