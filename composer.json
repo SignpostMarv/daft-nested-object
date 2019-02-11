@@ -42,9 +42,7 @@
         ],
         "other-tests": [
             "phpcpd src Tests PHPStan",
-            "phpmnd src",
-            "phpmnd Tests",
-            "phpmnd PHPStan",
+            "phpmnd ./ --exclude=./phpunit/ --exclude=./vendor/ --non-zero-exit-on-violation --hint",
             "composer-require-checker check ./composer.json",
             "php-cs-fixer fix --verbose --allow-risky=yes --dry-run"
         ]
