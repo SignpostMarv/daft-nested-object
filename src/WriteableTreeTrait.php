@@ -318,7 +318,7 @@ trait WriteableTreeTrait
     protected function RebuildTreeInefficiently() : void
     {
         /**
-        * @var DaftNestedObjectTree
+        * @var DaftNestedWriteableObjectTree
         */
         $tree = $this;
 
