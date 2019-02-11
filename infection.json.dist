@@ -13,7 +13,7 @@
         "@default": true,
         "CastBool": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsert"
+                "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsert"
             ]
         },
         "CastInt": {
@@ -59,23 +59,23 @@
         "MethodCallRemoval": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct",
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsert",
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsertAbove",
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsertBelow",
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsertLooseIntoTree",
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::StoreThenRetrieveFreshLeaf",
+                "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsert",
+                "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsertAbove",
+                "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsertBelow",
+                "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsertLooseIntoTree",
+                "SignpostMarv\\DaftObject\\WriteableTreeTrait::StoreThenRetrieveFreshLeaf",
                 "SignpostMarv\\DaftObject\\InefficientDaftNestedRebuild::ProcessTree"
             ]
         },
         "Plus": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::RecallDaftNestedObjectPathToObject",
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::RememberDaftObject"
+                "SignpostMarv\\DaftObject\\WriteableTreeTrait::RememberDaftObject"
             ]
         },
         "ProtectedVisibility": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ModifyDaftNestedObjectTreeInsertAdjacent"
+                "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsertAdjacent"
             ]
         },
         "PublicVisibility": {
