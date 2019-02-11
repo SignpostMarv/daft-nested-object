@@ -12,7 +12,6 @@ use BadMethodCallException;
 use InvalidArgumentException;
 use RuntimeException;
 
-
 /**
 * @template T as DaftNestedWriteableObject
 */
