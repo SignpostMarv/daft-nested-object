@@ -80,6 +80,20 @@ trait WriteableTreeTrait
         ? int $relativeDepthLimit
     ) : array;
 
+    abstract public function CountDaftNestedObjectFullTree(int $relativeDepthLimit = null) : int;
+
+    /**
+    * {@inheritdoc}
+    *
+    * @psalm-param class-string<T> $type
+    *
+    * @psalm-return T
+    */
+    abstract public function RecallDaftObjectOrThrow(
+        $id,
+        string $type = DaftNestedObject::class
+    ) : SuitableForRepositoryType;
+
     /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf
