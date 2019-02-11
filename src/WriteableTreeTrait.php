@@ -18,6 +18,69 @@ use RuntimeException;
 trait WriteableTreeTrait
 {
     /**
+    * @psalm-param T $root
+    */
+    abstract public function CountDaftNestedObjectTreeWithObject(
+        DaftNestedObject $root,
+        bool $includeRoot,
+        ? int $relativeDepthLimit
+    ) : int;
+
+    abstract public function RemoveDaftObject(SuitableForRepositoryType $object) : void;
+
+    /**
+    * @param scalar|(scalar|array|object|null)[] $id
+    *
+    * @psalm-return T|null
+    */
+    abstract public function RecallDaftObject($id) : ? SuitableForRepositoryType;
+
+    abstract public function ForgetDaftObject(SuitableForRepositoryType $object) : void;
+
+    /**
+    * @param scalar|(scalar|array|object|null)[] $id
+    */
+    abstract public function ForgetDaftObjectById($id) : void;
+
+    /**
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
+    */
+    abstract public function RecallDaftNestedObjectFullTree(int $relativeDepthLimit = null) : array;
+
+    /**
+    * @psalm-param T $root
+    *
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
+    */
+    abstract public function RecallDaftNestedObjectTreeWithObject(
+        DaftNestedObject $root,
+        bool $includeRoot,
+        ? int $relativeDepthLimit
+    ) : array;
+
+    /**
+    * @return scalar|(scalar|array|object|null)[]
+    */
+    abstract public function GetNestedObjectTreeRootId();
+
+    /**
+    * @param scalar|(scalar|array|object|null)[] $id
+    *
+    * @return array<int, DaftNestedObject>
+    *
+    * @psalm-return array<int, T>
+    */
+    abstract public function RecallDaftNestedObjectTreeWithId(
+        $id,
+        bool $includeRoot,
+        ? int $relativeDepthLimit
+    ) : array;
+
+    /**
     * @psalm-param T $newLeaf
     * @psalm-param T $referenceLeaf
     *
@@ -68,7 +131,7 @@ trait WriteableTreeTrait
 
         $reference = $this->MaybeRecallLoose($referenceId);
 
-        if ($reference instanceof DaftNestedWriteableObject) {
+        if ( ! is_null($reference)) {
             return $this->ModifyDaftNestedObjectTreeInsert($leaf, $reference, $before, $above);
         }
 
