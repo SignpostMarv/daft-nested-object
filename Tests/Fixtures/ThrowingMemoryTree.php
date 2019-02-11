@@ -21,9 +21,6 @@ use SignpostMarv\DaftObject\SuitableForRepositoryType;
 */
 class ThrowingMemoryTree extends DaftNestedObjectIntTree implements DaftObjectThrowingTree
 {
-    /**
-    * @use TraitThrowingTree<TObj>
-    */
     use TraitThrowingTree;
 
     /**

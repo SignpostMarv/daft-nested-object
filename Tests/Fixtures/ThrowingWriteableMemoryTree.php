@@ -22,9 +22,6 @@ use SignpostMarv\DaftObject\SuitableForRepositoryType;
 */
 class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree implements DaftObjectWriteableThrowingTree
 {
-    /**
-    * @use TraitThrowingTree<TObj>
-    */
     use TraitThrowingTree;
 
     public function RebuildTreeInefficiently() : void
@@ -44,7 +41,12 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
     public function StoreThenRetrieveFreshLeafPublic(
         DaftNestedWriteableObject $leaf
     ) : DaftNestedWriteableObject {
-        return $this->StoreThenRetrieveFreshLeaf($leaf);
+        /**
+        * @psalm-var TObj
+        */
+        $out = $this->StoreThenRetrieveFreshLeaf($leaf);
+
+        return $out;
     }
 
     /**

@@ -13,9 +13,6 @@ use SignpostMarv\DaftObject\DaftObject;
 use SignpostMarv\DaftObject\DaftObjectMemoryTree;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
-/**
-* @template TObj as DaftNestedObject
-*/
 trait TraitThrowingTree
 {
     /**
