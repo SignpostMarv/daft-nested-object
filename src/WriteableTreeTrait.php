@@ -317,12 +317,7 @@ trait WriteableTreeTrait
 
     protected function RebuildTreeInefficiently() : void
     {
-        /**
-        * @var DaftNestedWriteableObjectTree
-        */
-        $tree = $this;
-
-        $rebuilder = new InefficientDaftNestedRebuild($tree);
+        $rebuilder = new InefficientDaftNestedRebuild($this);
         $rebuilder->RebuildTree();
     }
 
