@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0938648aa382f029b93aa5378b8aa152",
+    "content-hash": "e83de09367577100bc3f56edf6283ffd",
     "packages": [
         {
             "name": "signpostmarv/daft-magic-property-analysis",
@@ -2476,16 +2476,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.11.1",
+            "version": "0.11.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "a138b8a2731b2c19f1dffa2f1411984a638fe977"
+                "reference": "8e185a74004920419ee97bf9dc62e6a175e8dca5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/a138b8a2731b2c19f1dffa2f1411984a638fe977",
-                "reference": "a138b8a2731b2c19f1dffa2f1411984a638fe977",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8e185a74004920419ee97bf9dc62e6a175e8dca5",
+                "reference": "8e185a74004920419ee97bf9dc62e6a175e8dca5",
                 "shasum": ""
             },
             "require": {
@@ -2545,7 +2545,7 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2019-01-19T20:23:08+00:00"
+            "time": "2019-02-12T14:54:38+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -4913,16 +4913,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "dev-master",
+            "version": "3.0.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "c66802c2fa16498017375a8a8a94c487bac27cd6"
+                "reference": "c310a2dd86660944b3f15fb8486ab73d45066618"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/c66802c2fa16498017375a8a8a94c487bac27cd6",
-                "reference": "c66802c2fa16498017375a8a8a94c487bac27cd6",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/c310a2dd86660944b3f15fb8486ab73d45066618",
+                "reference": "c310a2dd86660944b3f15fb8486ab73d45066618",
                 "shasum": ""
             },
             "require": {
@@ -4987,7 +4987,7 @@
                 "inspection",
                 "php"
             ],
-            "time": "2019-02-11T17:08:29+00:00"
+            "time": "2019-02-11T23:39:19+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -5137,8 +5137,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "roave/security-advisories": 20,
-        "vimeo/psalm": 20
+        "roave/security-advisories": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
