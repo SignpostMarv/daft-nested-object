@@ -250,14 +250,7 @@ trait WriteableTreeTrait
             $fullTreeCount = $this->CountDaftNestedObjectFullTree();
 
             if ($fullTreeCount > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY) {
-                $tree = $this->RecallDaftNestedObjectFullTree();
-
-                /**
-                * @var DaftNestedWriteableObject
-                *
-                * @psalm-var T
-                */
-                $end = end($tree);
+                $end = $this->ObtainLastLeafInTree();
 
                 $left = $end->GetIntNestedRight() + 1;
             } else {
@@ -269,6 +262,23 @@ trait WriteableTreeTrait
         }
 
         parent::RememberDaftObject($object);
+    }
+
+    /**
+    * @psalm-return T
+    */
+    protected function ObtainLastLeafInTree() : DaftNestedWriteableObject
+    {
+        $tree = $this->RecallDaftNestedObjectFullTree();
+
+        /**
+        * @var DaftNestedWriteableObject
+        *
+        * @psalm-var T
+        */
+        $end = end($tree);
+
+        return $end;
     }
 
     /**
