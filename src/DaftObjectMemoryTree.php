@@ -25,6 +25,8 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     {
         /**
         * @var array<int, DaftNestedObject>
+        *
+        * @psalm-var array<int, T>
         */
         $out = $this->memory;
 
@@ -65,14 +67,15 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         );
 
         if (is_int($relativeDepthLimit)) {
-            $filter =
+            $out = array_filter(
+                $out,
                 /**
                 * @psalm-param T $e
                 */
                 function (DaftNestedObject $e) use ($relativeDepthLimit) : bool {
                     return $e->GetIntNestedLevel() <= $relativeDepthLimit;
-                };
-            $out = array_filter($out, $filter);
+                }
+            );
         }
 
         return $out;
@@ -143,9 +146,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
         bool $includeRoot,
         ? int $relativeDepthLimit
     ) : array {
-        /**
-        * @psalm-var T|null
-        */
         $object = $this->RecallDaftObject($id);
 
         /**
@@ -287,9 +287,6 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     */
     private function MapDataToObject(array $row) : DaftNestedObject
     {
-        /**
-        * @psalm-var class-string<T>
-        */
         $type = $this->type;
 
         /**
