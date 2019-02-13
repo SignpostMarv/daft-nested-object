@@ -21,4 +21,21 @@ abstract class DaftWriteableObjectMemoryTree extends DaftObjectMemoryTree implem
     * @use WriteableTreeTrait<T>
     */
     use WriteableTreeTrait;
+
+    /**
+    * @psalm-return T
+    */
+    protected function ObtainLastLeafInTree() : DaftNestedWriteableObject
+    {
+        $tree = $this->RecallDaftNestedObjectFullTree();
+
+        /**
+        * @var DaftNestedWriteableObject
+        *
+        * @psalm-var T
+        */
+        $end = end($tree);
+
+        return $end;
+    }
 }

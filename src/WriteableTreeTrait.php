@@ -267,19 +267,7 @@ trait WriteableTreeTrait
     /**
     * @psalm-return T
     */
-    protected function ObtainLastLeafInTree() : DaftNestedWriteableObject
-    {
-        $tree = $this->RecallDaftNestedObjectFullTree();
-
-        /**
-        * @var DaftNestedWriteableObject
-        *
-        * @psalm-var T
-        */
-        $end = end($tree);
-
-        return $end;
-    }
+    abstract protected function ObtainLastLeafInTree() : DaftNestedWriteableObject;
 
     /**
     * @psalm-param T $newLeaf
