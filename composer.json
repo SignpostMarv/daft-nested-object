@@ -20,9 +20,15 @@
             "SignpostMarv\\DaftMagicPropertyAnalysis\\PHPStan\\": "./vendor/signpostmarv/daft-magic-property-analysis/PHPStan/",
             "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\": "./PHPStan/",
             "SignpostMarv\\DaftObject\\DaftNestedObject\\Tests\\": "./Tests/",
-            "SignpostMarv\\DaftObject\\": "./vendor/signpostmarv/daft-object/tests-src/",
+            "SignpostMarv\\DaftObject\\": [
+                "./vendor/signpostmarv/daft-object/tests-src/",
+                "./vendor/signpostmarv/daft-object-repository/tests-src/"
+            ],
             "SignpostMarv\\DaftObject\\PHPStan\\": "./vendor/signpostmarv/daft-object/PHPStan/",
-            "SignpostMarv\\DaftObject\\Tests\\": "./vendor/signpostmarv/daft-object/Tests/"
+            "SignpostMarv\\DaftObject\\Tests\\": [
+                "./vendor/signpostmarv/daft-object/Tests/",
+                "./vendor/signpostmarv/daft-object-repository/Tests/"
+            ]
         }
     },
     "config": {
@@ -49,7 +55,8 @@
     },
     "require": {
         "php": "^7.1",
-        "signpostmarv/daft-object": "^1.14"
+        "signpostmarv/daft-object": "^1.15",
+        "signpostmarv/daft-object-repository": "^0.1.0"
     },
     "require-dev": {
         "infection/infection": "^0.12.2",
