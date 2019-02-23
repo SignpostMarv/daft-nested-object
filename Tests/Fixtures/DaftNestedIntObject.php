@@ -17,6 +17,13 @@ use SignpostMarv\DaftObject\SuitableForRepositoryType;
 * @template TObj as DaftNestedIntObject
 *
 * @template-extends AbstractArrayBackedDaftNestedObject<TObj>
+*
+* @property-read int $id
+* @property-read int $intNestedParentId
+* @property-read int $intNestedLeft
+* @property-read int $intNestedRight
+* @property-read int $intNestedLevel
+* @property-read int $intNestedSortOrder
 */
 class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements DefinesOwnIntegerIdInterface
 {

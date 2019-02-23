@@ -19,6 +19,7 @@ trait DataProviderTrait
         foreach (
             [
                 '/src/*.php' => 'SignpostMarv\\DaftObject\\',
+                '/Tests/Fixtures/*.php' => 'SignpostMarv\\DaftObject\\DaftNestedObject\\Tests\\Fixtures\\',
             ] as $glob => $ns
         ) {
             $files = glob(__DIR__ . '/..' . $glob);

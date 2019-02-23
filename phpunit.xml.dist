@@ -6,24 +6,6 @@
   executionOrder="random"
 >
   <testsuites>
-    <testsuite name="DaftObject">
-      <directory>./vendor/signpostmarv/daft-object/Tests/DaftObject/</directory>
-    </testsuite>
-    <testsuite name="DaftJson">
-      <directory>./vendor/signpostmarv/daft-object/Tests/DaftJson/</directory>
-    </testsuite>
-    <testsuite name="DaftObjectRepository">
-      <directory>./vendor/signpostmarv/daft-object/Tests/DaftObjectRepository/</directory>
-    </testsuite>
-    <testsuite name="DaftSortableObject">
-      <directory>./vendor/signpostmarv/daft-object/Tests/DaftSortableObject/</directory>
-    </testsuite>
-    <testsuite name="PHPStan">
-      <directory>./vendor/signpostmarv/daft-object/Tests/PHPStan/</directory>
-    </testsuite>
-    <testsuite name="DefinitionAssistant">
-      <directory>./vendor/signpostmarv/daft-object/Tests/DefinitionAssistant/</directory>
-    </testsuite>
     <testsuite name="DaftNestedObject">
       <directory>./Tests/</directory>
     </testsuite>

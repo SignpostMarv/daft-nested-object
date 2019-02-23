@@ -12,6 +12,11 @@ namespace SignpostMarv\DaftObject;
 * @template T as AbstractArrayBackedDaftNestedObject
 *
 * @template-implements DaftNestedObject<T>
+*
+* @property-read int $intNestedLeft
+* @property-read int $intNestedRight
+* @property-read int $intNestedLevel
+* @property-read int $intNestedSortOrder
 */
 abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDaftObject implements DaftNestedObject
 {
@@ -75,81 +80,6 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
             },
             $idProps
         );
-    }
-
-    public function SetIntNestedLeft(int $value) : void
-    {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
-            throw new ClassDoesNotImplementClassException(
-                static::class,
-                DaftNestedWriteableObject::class
-            );
-        }
-
-        $this->NudgePropertyValue('intNestedLeft', $value);
-    }
-
-    public function SetIntNestedRight(int $value) : void
-    {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
-            throw new ClassDoesNotImplementClassException(
-                static::class,
-                DaftNestedWriteableObject::class
-            );
-        }
-
-        $this->NudgePropertyValue('intNestedRight', $value);
-    }
-
-    public function SetIntNestedLevel(int $value) : void
-    {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
-            throw new ClassDoesNotImplementClassException(
-                static::class,
-                DaftNestedWriteableObject::class
-            );
-        }
-
-        $this->NudgePropertyValue('intNestedLevel', $value);
-    }
-
-    public function SetIntNestedSortOrder(int $value) : void
-    {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
-            throw new ClassDoesNotImplementClassException(
-                static::class,
-                DaftNestedWriteableObject::class
-            );
-        }
-
-        $this->NudgePropertyValue('intNestedSortOrder', $value);
-    }
-
-    /**
-    * @param mixed $value
-    */
-    public function AlterDaftNestedObjectParentId($value) : void
-    {
-        if ( ! is_a(static::class, DaftNestedWriteableObject::class, true)) {
-            throw new ClassDoesNotImplementClassException(
-                static::class,
-                DaftNestedWriteableObject::class
-            );
-        }
-
-        /**
-        * @var string[]
-        */
-        $props = static::DaftNestedObjectParentIdProperties();
-
-        /**
-        * @var array<string, scalar|array|object|null>
-        */
-        $propsAndVals = array_combine($props, (is_array($value) ? $value : [$value]));
-
-        foreach ($propsAndVals as $prop => $val) {
-            $this->NudgePropertyValue($prop, $val);
-        }
     }
 
     public function ChangedProperties() : array
