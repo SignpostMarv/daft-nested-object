@@ -12,6 +12,11 @@ namespace SignpostMarv\DaftObject;
 * @template T as DaftObject
 *
 * @template-extends DaftSortableObject<T>
+*
+* @property-read int $intNestedLeft
+* @property-read int $intNestedRight
+* @property-read int $intNestedLevel
+* @property-read int $intNestedSortOrder
 */
 interface DaftNestedObject extends SuitableForRepositoryType, DaftSortableObject
 {

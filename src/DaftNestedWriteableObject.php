@@ -12,6 +12,11 @@ namespace SignpostMarv\DaftObject;
 * @template T as DaftNestedWriteableObject
 *
 * @template-extends DaftNestedObject<T>
+*
+* @property int $intNestedLeft
+* @property int $intNestedRight
+* @property int $intNestedLevel
+* @property int $intNestedSortOrder
 */
 interface DaftNestedWriteableObject extends DaftNestedObject
 {

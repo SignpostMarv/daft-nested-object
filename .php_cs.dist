@@ -6,11 +6,10 @@
 */
 declare(strict_types=1);
 
-namespace SignpostMarv\CS;
+namespace SignpostMarv\DaftObject\CS;
 
-return ConfigUsedWithPhpstan::createWithPaths(
+return ConfigUsedWithStaticAnalysis::createWithPaths(...[
     __FILE__,
-    (__DIR__ . '/PHPStan/'),
     (__DIR__ . '/Tests/'),
     (__DIR__ . '/src/')
-);
+]);
