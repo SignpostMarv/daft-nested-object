@@ -54,6 +54,11 @@ trait WriteableObjectTrait
     }
 
     /**
+    * @return array<int, string>
+    */
+    abstract public static function DaftNestedObjectParentIdProperties() : array;
+
+    /**
     * @see AbstractDaftObject::NudgePropertyValue()
     *
     * @param string $property property being nudged
@@ -65,9 +70,4 @@ trait WriteableObjectTrait
         bool $autoTrimStrings = AbstractArrayBackedDaftObject::BOOL_DEFAULT_AUTOTRIMSTRINGS,
         bool $throwIfNotUnique = AbstractArrayBackedDaftObject::BOOL_DEFAULT_THROWIFNOTUNIQUE
     ) : void;
-
-    /**
-    * @return array<int, string>
-    */
-    abstract public static function DaftNestedObjectParentIdProperties() : array;
 }
