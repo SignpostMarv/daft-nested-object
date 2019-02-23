@@ -2,7 +2,6 @@
     "timeout": 20,
     "source": {
         "directories": [
-            "PHPStan",
             "src"
         ]
     },
@@ -21,19 +20,10 @@
                 "SignpostMarv\\DaftObject\\NestedTypeParanoia::ForceInt"
             ]
         },
-        "Coalesce": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::getType"
-            ]
-        },
         "GreaterThan": {
             "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftNestedObject::ChangedProperties",
                 "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::FilterLeaf"
-            ]
-        },
-        "Identical": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct"
             ]
         },
         "LessThan": {
@@ -46,18 +36,8 @@
                 "SignpostMarv\\DaftObject\\InefficientDaftNestedRebuild::ProcessTree"
             ]
         },
-        "LogicalOr": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\ClassReflectionExtension::hasProperty",
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct",
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::isReadable",
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::isWritable",
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::PropertyIsPublic"
-            ]
-        },
         "MethodCallRemoval": {
             "ignore": [
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::__construct",
                 "SignpostMarv\\DaftObject\\InefficientDaftNestedRebuild::ProcessTree",
                 "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsert",
                 "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsertAbove",
@@ -75,12 +55,8 @@
         },
         "ProtectedVisibility": {
             "ignore": [
+                "SignpostMarv\\DaftObject\\DaftWriteableObjectMemoryTree::ObtainLastLeafInTree",
                 "SignpostMarv\\DaftObject\\WriteableTreeTrait::ModifyDaftNestedObjectTreeInsertAdjacent"
-            ]
-        },
-        "PublicVisibility": {
-            "ignore": [
-                "SignpostMarv\\DaftObject\\DaftNestedObject\\PHPStan\\PropertyReflectionExtension::PropertyIsInt"
             ]
         }
     }
