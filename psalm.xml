@@ -8,7 +8,6 @@
 >
     <projectFiles>
         <file name="./.php_cs.dist" />
-        <file name="phpunit-bootstrap.php" />
         <directory name="src" />
         <directory name="Tests" />
     </projectFiles>
