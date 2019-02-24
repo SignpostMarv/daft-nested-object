@@ -40,16 +40,6 @@ trait TraitThrowingTree
         $this->ToggleRecallDaftObjectAlwaysNull = $value;
     }
 
-    public function ToggleRecallDaftObjectAfterCalls(bool $value, int $after) : void
-    {
-        if ($value) {
-            $this->ToggleRecallDaftObjectAlwaysNull(false);
-        }
-        $this->ToggleRecallDaftObjectAfterCalls = $value;
-        $this->ToggleRecallDaftObjectAfterCallsAfter = $after;
-        $this->ToggleRecallDaftObjectAfterCallsCount = 0;
-    }
-
     protected function MaybeToggleAlwaysReturnNull() : void
     {
         if ($this->ToggleRecallDaftObjectAfterCalls) {

@@ -50,18 +50,6 @@ class ThrowingWriteableMemoryTree extends DaftWriteableNestedObjectIntTree imple
     }
 
     /**
-    * @psalm-param TObj $newLeaf
-    * @psalm-param TObj $referenceLeaf
-    */
-    public function ModifyDaftNestedObjectTreeInsertAdjacentPublic(
-        DaftNestedWriteableObject $newLeaf,
-        DaftNestedWriteableObject $referenceLeaf,
-        bool $before
-    ) : void {
-        $this->ModifyDaftNestedObjectTreeInsertAdjacent($newLeaf, $referenceLeaf, $before);
-    }
-
-    /**
     * @param scalar|(scalar|array|object|null)[] $id
     *
     * @psalm-return TObj|null
