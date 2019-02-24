@@ -16,6 +16,10 @@
       target="phpunit"
     />
     <log
+      type="coverage-clover"
+      target="phpunit.clover"
+    />
+    <log
       type="coverage-text"
       target="php://stdout"
       showUncoveredFiles="true"

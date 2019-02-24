@@ -39,7 +39,7 @@
             "infection"
         ],
         "tests": [
-            "phpunit -vvvv --coverage-clover=phpunit.clover --stop-on-error --stop-on-warning --stop-on-failure",
+            "phpunit -vvvv --stop-on-error --stop-on-warning --stop-on-failure",
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests",
             "psalm --find-dead-code",
             "@other-tests"
