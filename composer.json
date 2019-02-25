@@ -53,8 +53,9 @@
     },
     "require": {
         "php": "^7.1",
-        "signpostmarv/daft-object": "^2.0",
-        "signpostmarv/daft-object-repository": "^1.0"
+        "signpostmarv/daft-object": "dev-master",
+        "signpostmarv/daft-object-repository": "dev-master",
+        "signpostmarv/sprintf-exception-factory": "dev-master"
     },
     "require-dev": {
         "infection/infection": "^0.12.2",

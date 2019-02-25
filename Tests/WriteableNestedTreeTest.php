@@ -17,8 +17,8 @@ use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedWriteableI
 use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftWriteableNestedObjectIntTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;
-use SignpostMarv\DaftObject\DaftObjectNotRecalledException;
 use SignpostMarv\DaftObject\DaftObjectRepository;
+use SignpostMarv\DaftObject\DaftObjectRepository\Exceptions\DaftObjectNotRecalledException;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
 
 /**
