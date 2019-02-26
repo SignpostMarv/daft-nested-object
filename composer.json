@@ -36,7 +36,7 @@
     "scripts": {
         "infection": [
             "@tests",
-            "infection"
+            "infection --min-msi=100 -vvv"
         ],
         "tests": [
             "phpunit -vvvv --stop-on-error --stop-on-warning --stop-on-failure",
@@ -53,9 +53,8 @@
     },
     "require": {
         "php": "^7.1",
-        "signpostmarv/daft-object": "dev-master",
-        "signpostmarv/daft-object-repository": "dev-master",
-        "signpostmarv/sprintf-exception-factory": "dev-master"
+        "signpostmarv/daft-object": "^2.1",
+        "signpostmarv/daft-object-repository": "^1.1"
     },
     "require-dev": {
         "infection/infection": "^0.12.2",
