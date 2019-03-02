@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d88eaa9d57abe957282a8a9b8e4cb9d",
+    "content-hash": "5a27a759442455b46a3f7ded298b9141",
     "packages": [
         {
             "name": "signpostmarv/daft-magic-property-analysis",
@@ -3192,16 +3192,16 @@
         },
         {
             "name": "psalm/plugin-phpunit",
-            "version": "0.5.1",
+            "version": "dev-variadic-tests",
             "source": {
                 "type": "git",
-                "url": "https://github.com/psalm/phpunit-psalm-plugin.git",
-                "reference": "2fcf618ba9a710e22a0da9fab465770ee6314cfa"
+                "url": "https://github.com/weirdan/phpunit-psalm-plugin.git",
+                "reference": "c386b3e45d4e460cf547bbdc88fccaf6de0f3e50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/psalm/phpunit-psalm-plugin/zipball/2fcf618ba9a710e22a0da9fab465770ee6314cfa",
-                "reference": "2fcf618ba9a710e22a0da9fab465770ee6314cfa",
+                "url": "https://api.github.com/repos/weirdan/phpunit-psalm-plugin/zipball/c386b3e45d4e460cf547bbdc88fccaf6de0f3e50",
+                "reference": "c386b3e45d4e460cf547bbdc88fccaf6de0f3e50",
                 "shasum": ""
             },
             "require": {
@@ -3234,7 +3234,32 @@
                     ]
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Psalm\\PhpUnitPlugin\\Tests\\": [
+                        "tests/_support"
+                    ]
+                }
+            },
+            "scripts": {
+                "check": [
+                    "@cs-check",
+                    "@analyze",
+                    "@test"
+                ],
+                "analyze": [
+                    "psalm"
+                ],
+                "cs-check": [
+                    "phpcs"
+                ],
+                "cs-fix": [
+                    "phpcbf"
+                ],
+                "test": [
+                    "codecept run -v"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -3245,7 +3270,10 @@
                 }
             ],
             "description": "Psalm plugin for PHPUnit",
-            "time": "2019-03-01T18:53:36+00:00"
+            "support": {
+                "source": "https://github.com/weirdan/phpunit-psalm-plugin/tree/variadic-tests"
+            },
+            "time": "2019-03-02T17:41:12+00:00"
         },
         {
             "name": "psr/container",
@@ -5387,6 +5415,7 @@
     "stability-flags": {
         "signpostmarv/daft-object": 20,
         "signpostmarv/daft-object-repository": 20,
+        "psalm/plugin-phpunit": 20,
         "roave/security-advisories": 20,
         "vimeo/psalm": 20
     },

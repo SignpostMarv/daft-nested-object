@@ -21,22 +21,11 @@
       <code>public function SetId(int $value) : void</code>
     </PossiblyUnusedMethod>
   </file>
-  <file src="Tests\NestedTreeTest.php">
-    <TooFewArguments occurrences="1">
-      <code>@dataProvider DataProviderArgs</code>
-    </TooFewArguments>
-  </file>
   <file src="Tests\WriteableNestedTreeTest.php">
     <InvalidArgument occurrences="2">
       <code>@dataProvider DataProviderArgs</code>
       <code>@dataProvider DataProviderArgs</code>
     </InvalidArgument>
-    <TooFewArguments occurrences="4">
-      <code>@dataProvider DataProviderArgs</code>
-      <code>@dataProvider DataProviderArgsTreeRemovalFailure</code>
-      <code>@dataProvider DataProviderArgs</code>
-      <code>@dataProvider DataProviderAdditionalTreeModification</code>
-    </TooFewArguments>
     <UnusedParam occurrences="5">
       <code>$leafClass</code>
       <code>$leafClass</code>
