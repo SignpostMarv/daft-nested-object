@@ -103,4 +103,14 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
 
         return $out;
     }
+
+    public static function DaftObjectExportableProperties() : array
+    {
+        return array_filter(
+            parent::DaftObjectExportableProperties(),
+            function (string $prop) : bool {
+                return 'daftNestedObjectParentId' !== $prop;
+            }
+        );
+    }
 }
