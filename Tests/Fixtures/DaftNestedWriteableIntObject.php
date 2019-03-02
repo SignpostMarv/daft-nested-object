@@ -32,7 +32,9 @@ class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNe
     /**
     * @use WriteableObjectTrait<DaftNestedWriteableIntObject>
     */
-    use WriteableObjectTrait;
+    use WriteableObjectTrait {
+        SetDaftNestedObjectParentId as _SetDaftNestedObjectParentId;
+    }
 
     public function SetIntNestedParentId(int $value) : void
     {
@@ -51,11 +53,6 @@ class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNe
     */
     public function SetDaftNestedObjectParentId(array $id) : void
     {
-        /**
-        * @var int
-        */
-        $id = $id[0];
-
-        $this->SetIntNestedParentId($id);
+        $this->_SetDaftNestedObjectParentId($id);
     }
 }

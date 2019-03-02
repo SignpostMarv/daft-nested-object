@@ -60,6 +60,31 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $c0 = static::InitLeafClass($leafClass, ['id' => 3]);
         $d0 = static::InitLeafClass($leafClass, ['id' => 4]);
 
+        if ($a0 instanceof DaftNestedWriteableIntObject) {
+            static::assertSame([0], $a0->GetDaftNestedObjectParentId());
+
+            $a0->SetDaftNestedObjectParentId([2]);
+
+            static::assertSame([2], $a0->GetDaftNestedObjectParentId());
+
+            $a0->SetIntNestedParentId(3);
+
+            static::assertSame([3], $a0->GetDaftNestedObjectParentId());
+
+            $repo_root = $repo->GetNestedObjectTreeRootId();
+
+            static::assertSame([0], $repo_root);
+
+            /**
+            * @psalm-var array{0:int}
+            */
+            $repo_root = $repo_root;
+
+            $a0->SetDaftNestedObjectParentId($repo_root);
+
+            static::assertSame([0], $a0->GetDaftNestedObjectParentId());
+        }
+
         $a1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($a0, 0, false, null);
         $b1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($b0, 0, false, null);
         $c1 = $repo->ModifyDaftNestedObjectTreeInsertLoose($c0, 0, false, null);
