@@ -67,7 +67,7 @@ class InefficientDaftNestedRebuild
 
     private function Reset() : void
     {
-        $parentIdXref = [(array) $this->tree->GetNestedObjectTreeRootId()];
+        $parentIdXref = [$this->tree->GetNestedObjectTreeRootId()];
 
         /**
         * @var array<int, array<int, DaftNestedWriteableObject>>
@@ -109,7 +109,7 @@ class InefficientDaftNestedRebuild
         );
 
         foreach ($tree as $i => $leaf) {
-            $leafParentId = $leaf->ObtainDaftNestedObjectParentId();
+            $leafParentId = $leaf->GetDaftNestedObjectParentId();
             $pos = NestedTypeParanoia::MaybeFoundInArray($leafParentId, $this->parentIdXref);
 
             if (is_null($pos)) {

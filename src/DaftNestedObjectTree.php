@@ -119,7 +119,7 @@ interface DaftNestedObjectTree extends DaftObjectRepository
     public function CountDaftNestedObjectPathToId($id, bool $includeLeaf) : int;
 
     /**
-    * @return scalar|(scalar|array|object|null)[]
+    * @return scalar[]
     */
-    public function GetNestedObjectTreeRootId();
+    public function GetNestedObjectTreeRootId() : array;
 }

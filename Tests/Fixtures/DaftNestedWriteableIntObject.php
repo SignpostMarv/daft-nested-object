@@ -25,6 +25,7 @@ use TypeError;
 * @property int $intNestedRight
 * @property int $intNestedLevel
 * @property int $intNestedSortOrder
+* @property int[] $daftNestedObjectParentId
 */
 class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNestedWriteableObject
 {
@@ -41,5 +42,20 @@ class DaftNestedWriteableIntObject extends DaftNestedIntObject implements DaftNe
     public function SetId(int $value) : void
     {
         $this->NudgePropertyValue('id', $value);
+    }
+
+    /**
+    * {@inheritdoc}
+    *
+    * @psalm-param array{0:int} $id
+    */
+    public function SetDaftNestedObjectParentId(array $id) : void
+    {
+        /**
+        * @var int
+        */
+        $id = $id[0];
+
+        $this->SetIntNestedParentId($id);
     }
 }

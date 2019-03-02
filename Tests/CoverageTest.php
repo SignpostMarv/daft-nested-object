@@ -12,6 +12,7 @@ use Generator;
 use InvalidArgumentException;
 use RuntimeException;
 use SignpostMarv\DaftObject\DaftNestedObject;
+use SignpostMarv\DaftObject\DaftNestedObject\Tests\Fixtures\DaftNestedWriteableIntObject;
 use SignpostMarv\DaftObject\DaftNestedObjectTree;
 use SignpostMarv\DaftObject\DaftNestedWriteableObject;
 use SignpostMarv\DaftObject\DaftNestedWriteableObjectTree;

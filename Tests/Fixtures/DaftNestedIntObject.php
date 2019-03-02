@@ -12,6 +12,7 @@ use SignpostMarv\DaftObject\AbstractArrayBackedDaftNestedObject;
 use SignpostMarv\DaftObject\DaftObjectIdValuesHashLazyInt;
 use SignpostMarv\DaftObject\DefinesOwnIntegerIdInterface;
 use SignpostMarv\DaftObject\SuitableForRepositoryType;
+use SignpostMarv\DaftObject\TypeUtilities;
 
 /**
 * @template TObj as DaftNestedIntObject
@@ -24,6 +25,7 @@ use SignpostMarv\DaftObject\SuitableForRepositoryType;
 * @property-read int $intNestedRight
 * @property-read int $intNestedLevel
 * @property-read int $intNestedSortOrder
+* @property-read int[] $daftNestedObjectParentId
 */
 class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements DefinesOwnIntegerIdInterface
 {
@@ -36,18 +38,27 @@ class DaftNestedIntObject extends AbstractArrayBackedDaftNestedObject implements
         'id',
         'intNestedParentId',
         'intNestedSortOrder',
+        'daftNestedObjectParentId',
     ];
 
     const EXPORTABLE_PROPERTIES = self::PROPERTIES;
 
     public function GetId() : int
     {
-        return (int) ($this->RetrievePropertyValueFromData('id') ?? null);
+        return TypeUtilities::ExpectRetrievedValueIsIntish(
+            'id',
+            $this->RetrievePropertyValueFromData('id'),
+            static::class
+        );
     }
 
     public function GetIntNestedParentId() : int
     {
-        return (int) ($this->RetrievePropertyValueFromData('intNestedParentId') ?? null);
+        return TypeUtilities::ExpectRetrievedValueIsIntish(
+            'intNestedParentId',
+            $this->RetrievePropertyValueFromData('intNestedParentId'),
+            static::class
+        );
     }
 
     public static function DaftObjectIdProperties() : array

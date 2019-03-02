@@ -17,6 +17,7 @@ namespace SignpostMarv\DaftObject;
 * @property int $intNestedRight
 * @property int $intNestedLevel
 * @property int $intNestedSortOrder
+* @property scalar[] $daftNestedObjectParentId
 */
 interface DaftNestedWriteableObject extends DaftNestedObject
 {
@@ -29,7 +30,7 @@ interface DaftNestedWriteableObject extends DaftNestedObject
     public function SetIntNestedSortOrder(int $value) : void;
 
     /**
-    * @param scalar|(scalar|array|object|null)[] $id
+    * @param scalar[] $id
     */
-    public function AlterDaftNestedObjectParentId($id) : void;
+    public function SetDaftNestedObjectParentId(array $id) : void;
 }

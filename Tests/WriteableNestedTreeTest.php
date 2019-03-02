@@ -98,20 +98,20 @@ class WriteableNestedTreeTest extends NestedTreeTest
         );
 
         static::assertSame(
-            (array) $repo->GetNestedObjectTreeRootId(),
-            $a0->ObtainDaftNestedObjectParentId()
+            $repo->GetNestedObjectTreeRootId(),
+            $a0->GetDaftNestedObjectParentId()
         );
         static::assertSame(
-            (array) $repo->GetNestedObjectTreeRootId(),
-            $b0->ObtainDaftNestedObjectParentId()
+            $repo->GetNestedObjectTreeRootId(),
+            $b0->GetDaftNestedObjectParentId()
         );
         static::assertSame(
-            (array) $repo->GetNestedObjectTreeRootId(),
-            $c0->ObtainDaftNestedObjectParentId()
+            $repo->GetNestedObjectTreeRootId(),
+            $c0->GetDaftNestedObjectParentId()
         );
         static::assertSame(
-            (array) $repo->GetNestedObjectTreeRootId(),
-            $d0->ObtainDaftNestedObjectParentId()
+            $repo->GetNestedObjectTreeRootId(),
+            $d0->GetDaftNestedObjectParentId()
         );
 
         $repo->RememberDaftObject($a0);
@@ -177,7 +177,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [$a0, $b0, $d0]
         );
 
-        $repo->ModifyDaftNestedObjectTreeRemoveWithId($c0->GetId(), null);
+        $repo->ModifyDaftNestedObjectTreeRemoveWithId((array) $c0->GetId(), [0]);
 
         $this->AssertTreeStateRecallLeaves(
             $repo,
@@ -187,7 +187,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [$a0, $b0, $d0]
         );
 
-        $repo->ModifyDaftNestedObjectTreeRemoveWithId($c0->GetId(), null);
+        $repo->ModifyDaftNestedObjectTreeRemoveWithId((array) $c0->GetId(), [0]);
 
         /**
         * @var DaftNestedWriteableObject
@@ -211,7 +211,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
             [$a0, $b0, $d0]
         );
 
-        $repo->ModifyDaftNestedObjectTreeRemoveWithId($b0->GetId(), null);
+        $repo->ModifyDaftNestedObjectTreeRemoveWithId((array) $b0->GetId(), [0]);
 
         /**
         * @var DaftNestedWriteableObject
@@ -252,13 +252,24 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
         $leaves = $this->setupTestTreeRemovalFailure($leafClass, $repo);
 
+        if ($byObject) {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage('Cannot leave orphan objects in a tree');
 
-        if ($byObject) {
             $repo->ModifyDaftNestedObjectTreeRemoveWithObject($leaves[0], null);
         } else {
-            $repo->ModifyDaftNestedObjectTreeRemoveWithId($leaves[0]->GetId(), null);
+            $this->expectException(DaftObjectNotRecalledException::class);
+            $this->expectExceptionMessage(
+                'Argument 1 passed to ' .
+                DaftObjectRepository::class .
+                '::RecallDaftObjectOrThrow() did not resolve to an instance of ' .
+                $leafClass .
+                ' from ' .
+                get_class($repo) .
+                '::RecallDaftObject()'
+            );
+
+            $repo->ModifyDaftNestedObjectTreeRemoveWithId((array) ($leaves[0]->GetId()), []);
         }
     }
 
@@ -305,7 +316,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
             '::RecallDaftObject()'
         );
 
-        $repo->ModifyDaftNestedObjectTreeRemoveWithId($leaves[0]->GetId(), 11);
+        $repo->ModifyDaftNestedObjectTreeRemoveWithId((array) ($leaves[0]->GetId()), [11]);
     }
 
     /**
@@ -667,7 +678,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
 
                     static::assertSame(
                         9,
-                        $repo->ModifyDaftNestedObjectTreeRemoveWithId(2, 1)
+                        $repo->ModifyDaftNestedObjectTreeRemoveWithId([2], [1])
                     );
 
                     /**
@@ -701,7 +712,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     static::InsertLooseChunks($repo, false, true, ...$ids);
                     $repo->ModifyDaftNestedObjectTreeInsertLoose(10, 1, true, null);
                     $repo->ModifyDaftNestedObjectTreeRemoveWithId(
-                        2,
+                        [2],
                         $repo->GetNestedObjectTreeRootId()
                     );
 
@@ -749,7 +760,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                     );
 
                     $repo->ModifyDaftNestedObjectTreeRemoveWithId(
-                        1,
+                        [1],
                         $repo->GetNestedObjectTreeRootId()
                     );
 

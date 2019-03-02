@@ -10,8 +10,11 @@ namespace SignpostMarv\DaftObject;
 
 trait TraitDaftNestedObjectIntTree
 {
-    public function GetNestedObjectTreeRootId() : int
+    /**
+    * @return int[]
+    */
+    public function GetNestedObjectTreeRootId() : array
     {
-        return 0;
+        return [0];
     }
 }

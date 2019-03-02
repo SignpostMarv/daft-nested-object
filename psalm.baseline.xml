@@ -14,8 +14,10 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\Fixtures\DaftNestedWriteableIntObject.php">
-    <PossiblyUnusedMethod occurrences="2">
-      <code>public function SetIntNestedParentId(int $value) : void</code>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$id</code>
+    </MoreSpecificImplementedParamType>
+    <PossiblyUnusedMethod occurrences="1">
       <code>public function SetId(int $value) : void</code>
     </PossiblyUnusedMethod>
   </file>
@@ -42,5 +44,10 @@
       <code>$leafClass</code>
       <code>$leafClass</code>
     </UnusedParam>
+  </file>
+  <file src="src\DaftNestedObject.php">
+    <PossiblyUnusedMethod occurrences="1">
+      <code>public static function DaftNestedObjectParentIdProperties() : array;</code>
+    </PossiblyUnusedMethod>
   </file>
 </files>

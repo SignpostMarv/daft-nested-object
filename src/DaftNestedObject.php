@@ -17,6 +17,7 @@ namespace SignpostMarv\DaftObject;
 * @property-read int $intNestedRight
 * @property-read int $intNestedLevel
 * @property-read int $intNestedSortOrder
+* @property-read scalar[] $daftNestedObjectParentId
 */
 interface DaftNestedObject extends SuitableForRepositoryType, DaftSortableObject
 {
@@ -31,7 +32,7 @@ interface DaftNestedObject extends SuitableForRepositoryType, DaftSortableObject
     /**
     * @return scalar[]
     */
-    public function ObtainDaftNestedObjectParentId() : array;
+    public function GetDaftNestedObjectParentId() : array;
 
     /**
     * @return array<int, string>

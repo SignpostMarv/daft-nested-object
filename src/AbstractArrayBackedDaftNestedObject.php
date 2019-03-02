@@ -17,6 +17,7 @@ namespace SignpostMarv\DaftObject;
 * @property-read int $intNestedRight
 * @property-read int $intNestedLevel
 * @property-read int $intNestedSortOrder
+* @property-read scalar[] $daftNestedObjectParentId
 */
 abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDaftObject implements DaftNestedObject
 {
@@ -59,7 +60,10 @@ abstract class AbstractArrayBackedDaftNestedObject extends AbstractArrayBackedDa
         );
     }
 
-    public function ObtainDaftNestedObjectParentId() : array
+    /**
+    * @return scalar[]
+    */
+    public function GetDaftNestedObjectParentId() : array
     {
         /**
         * @var string[]

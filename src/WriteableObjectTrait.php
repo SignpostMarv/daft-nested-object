@@ -34,22 +34,24 @@ trait WriteableObjectTrait
     }
 
     /**
-    * @param mixed $value
+    * @param scalar[] $value
     */
-    public function AlterDaftNestedObjectParentId($value) : void
+    public function SetDaftNestedObjectParentId(array $value) : void
     {
         /**
         * @var string[]
         */
         $props = static::DaftNestedObjectParentIdProperties();
 
-        /**
-        * @var array<string, scalar|array|object|null>
-        */
-        $propsAndVals = array_combine($props, (is_array($value) ? $value : [$value]));
+        $propsAndVals = array_combine($props, $value);
 
-        foreach ($propsAndVals as $prop => $val) {
-            $this->NudgePropertyValue($prop, $val);
+        /**
+        * @var array<string, scalar>
+        */
+        $propsAndVals = $propsAndVals;
+
+        foreach (static::DaftNestedObjectParentIdProperties() as $i => $prop) {
+            $this->NudgePropertyValue($prop, $value[$i] ?? null);
         }
     }
 

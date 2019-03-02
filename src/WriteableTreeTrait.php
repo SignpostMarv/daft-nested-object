@@ -63,9 +63,9 @@ trait WriteableTreeTrait
     ) : array;
 
     /**
-    * @return scalar|(scalar|array|object|null)[]
+    * @return scalar[]
     */
-    abstract public function GetNestedObjectTreeRootId();
+    abstract public function GetNestedObjectTreeRootId() : array;
 
     /**
     * @param scalar|(scalar|array|object|null)[] $id
@@ -176,7 +176,7 @@ trait WriteableTreeTrait
         if ( ! is_null($replacementRoot)) {
             $this->UpdateRoots(
                 $root,
-                $this->StoreThenRetrieveFreshLeaf($replacementRoot)->GetId()
+                (array) $this->StoreThenRetrieveFreshLeaf($replacementRoot)->GetId()
             );
         }
 
@@ -188,11 +188,13 @@ trait WriteableTreeTrait
     }
 
     /**
-    * @param scalar|(scalar|array|object|null)[] $root
-    * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
+    * @param scalar[] $root
+    * @param scalar[] $replacementRoot
     */
-    public function ModifyDaftNestedObjectTreeRemoveWithId($root, $replacementRoot) : int
-    {
+    public function ModifyDaftNestedObjectTreeRemoveWithId(
+        array $root,
+        array $replacementRoot
+    ) : int {
         $rootObject = $this->RecallDaftObject($root);
 
         $resp = null;
@@ -308,7 +310,7 @@ trait WriteableTreeTrait
         }
 
         $newLeaf->SetIntNestedSortOrder($siblingSort[$pos]);
-        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
+        $newLeaf->SetDaftNestedObjectParentId($referenceLeaf->GetDaftNestedObjectParentId());
 
         $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
@@ -345,11 +347,11 @@ trait WriteableTreeTrait
     }
 
     /**
-    * @param scalar|(scalar|array|object|null)[] $replacementRootId
+    * @param scalar[] $replacementRootId
     *
     * @psalm-param T $root
     */
-    private function UpdateRoots(DaftNestedWriteableObject $root, $replacementRootId) : void
+    private function UpdateRoots(DaftNestedWriteableObject $root, array $replacementRootId) : void
     {
         /**
         * @var array<int, DaftNestedWriteableObject>
@@ -359,7 +361,7 @@ trait WriteableTreeTrait
         $alterThese = $this->RecallDaftNestedObjectTreeWithObject($root, false, DaftNestedWriteableObjectTree::LIMIT_ONE);
 
         foreach ($alterThese as $alter) {
-            $alter->AlterDaftNestedObjectParentId($replacementRootId);
+            $alter->SetDaftNestedObjectParentId($replacementRootId);
             $this->RememberDaftObject($alter);
         }
     }
@@ -452,7 +454,7 @@ trait WriteableTreeTrait
             $leaf->SetIntNestedLeft(0);
             $leaf->SetIntNestedRight(1);
             $leaf->SetIntNestedLevel(0);
-            $leaf->AlterDaftNestedObjectParentId($this->GetNestedObjectTreeRootId());
+            $leaf->SetDaftNestedObjectParentId($this->GetNestedObjectTreeRootId());
 
             return $this->StoreThenRetrieveFreshLeaf($leaf);
         }
@@ -473,8 +475,8 @@ trait WriteableTreeTrait
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : void {
-        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->ObtainDaftNestedObjectParentId());
-        $referenceLeaf->AlterDaftNestedObjectParentId($newLeaf->GetId());
+        $newLeaf->SetDaftNestedObjectParentId($referenceLeaf->GetDaftNestedObjectParentId());
+        $referenceLeaf->SetDaftNestedObjectParentId((array) $newLeaf->GetId());
 
         $this->StoreThenRetrieveFreshLeaf($newLeaf);
         $this->StoreThenRetrieveFreshLeaf($referenceLeaf);
@@ -488,7 +490,7 @@ trait WriteableTreeTrait
         DaftNestedWriteableObject $newLeaf,
         DaftNestedWriteableObject $referenceLeaf
     ) : void {
-        $newLeaf->AlterDaftNestedObjectParentId($referenceLeaf->GetId());
+        $newLeaf->SetDaftNestedObjectParentId((array) $referenceLeaf->GetId());
         $this->StoreThenRetrieveFreshLeaf($newLeaf);
     }
 
@@ -511,7 +513,7 @@ trait WriteableTreeTrait
         */
         $out = array_values(array_filter(
             $this->RecallDaftNestedObjectTreeWithId(
-                $referenceLeaf->ObtainDaftNestedObjectParentId(),
+                $referenceLeaf->GetDaftNestedObjectParentId(),
                 DaftNestedWriteableObjectTree::EXCLUDE_ROOT,
                 DaftNestedWriteableObjectTree::RELATIVE_DEPTH_SAME
             ),
@@ -527,25 +529,15 @@ trait WriteableTreeTrait
     }
 
     /**
-    * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
+    * @param scalar[] $replacementRoot
     *
     * @psalm-param T $rootObject
     */
     private function ModifyDaftNestedObjectTreeRemoveWithIdUsingRootObject(
-        $replacementRoot,
+        array $replacementRoot,
         DaftNestedWriteableObject $rootObject
     ) : ? int {
         if (
-            $this->CountDaftNestedObjectTreeWithObject(
-                $rootObject,
-                false,
-                null
-            ) > AbstractArrayBackedDaftNestedObject::COUNT_EXPECT_NON_EMPTY &&
-            is_null($replacementRoot)
-        ) {
-            throw new BadMethodCallException('Cannot leave orphan objects in a tree');
-        } elseif (
-            ! is_null($replacementRoot) &&
             $replacementRoot !== $this->GetNestedObjectTreeRootId()
         ) {
             /**
@@ -565,11 +557,6 @@ trait WriteableTreeTrait
                 $replacement
             );
         }
-
-        /**
-        * @var scalar|(scalar|array|object|null)[]
-        */
-        $replacementRoot = $replacementRoot;
 
         $this->UpdateRoots($rootObject, $replacementRoot);
 

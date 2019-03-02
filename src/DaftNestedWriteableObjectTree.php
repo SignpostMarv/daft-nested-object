@@ -72,14 +72,14 @@ interface DaftNestedWriteableObjectTree extends DaftNestedObjectTree
     ) : int;
 
     /**
-    * @param scalar|(scalar|array|object|null)[] $root
-    * @param scalar|(scalar|array|object|null)[]|null $replacementRoot
+    * @param scalar[] $root
+    * @param scalar[] $replacementRoot
     *
     * @throws \BadMethodCallException if $root has leaves without $replacementRoot specified
     *
     * @return int full tree count after removal
     */
-    public function ModifyDaftNestedObjectTreeRemoveWithId($root, $replacementRoot) : int;
+    public function ModifyDaftNestedObjectTreeRemoveWithId(array $root, array $replacementRoot) : int;
 
     /**
     * @psalm-param T $leaf
