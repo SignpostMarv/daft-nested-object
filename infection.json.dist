@@ -57,6 +57,11 @@
                 "SignpostMarv\\DaftObject\\WriteableTreeTrait::StoreThenRetrieveFreshLeaf"
             ]
         },
+        "NotIdentical": {
+            "ignore": [
+                "SignpostMarv\\DaftObject\\AbstractArrayBackedDaftNestedObject::DaftObjectExportableProperties"
+            ]
+        },
         "Plus": {
             "ignore": [
                 "SignpostMarv\\DaftObject\\DaftObjectMemoryTree::RecallDaftNestedObjectPathToObject",
