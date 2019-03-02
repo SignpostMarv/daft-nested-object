@@ -42,8 +42,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
     *
     * @param mixed ...$remainingTreeArgs
     *
-    * @psalm-param class-string<DaftNestedWriteableObjectTree> $treeClass
-    * @psalm-param class-string<DaftNestedWriteableObject> $leafClass
+    * @psalm-param class-string<TRepo> $treeClass
+    * @psalm-param class-string<T> $leafClass
     */
     public function testTreeModification(
         string $treeClass,
@@ -261,8 +261,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
     *
     * @param mixed ...$remainingTreeArgs
     *
-    * @psalm-param class-string<DaftNestedWriteableObjectTree> $treeClass
-    * @psalm-param class-string<DaftNestedWriteableObject> $leafClass
+    * @psalm-param class-string<TRepo> $treeClass
+    * @psalm-param class-string<T> $leafClass
     */
     public function testTreeRemovalFailure(
         bool $byObject,
@@ -303,8 +303,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
     *
     * @param mixed ...$remainingTreeArgs
     *
-    * @psalm-param class-string<DaftNestedWriteableObjectTree> $treeClass
-    * @psalm-param class-string<DaftNestedWriteableObject> $leafClass
+    * @psalm-param class-string<TRepo> $treeClass
+    * @psalm-param class-string<T> $leafClass
     */
     public function testTreeRemovalFailureDueToOrphan(
         string $treeClass,
@@ -367,7 +367,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
     }
 
     /**
-    * @psalm-return Generator<int, array{0:Closure, 1:Closure, 2:array<int, int>, 3:array<int, int>, 4:array<int, int>, 5:class-string<DaftNestedWriteableObjectTree>, 6:class-string<DaftNestedWriteableObject>}, mixed, void>
+    * @psalm-return Generator<int, array{0:Closure, 1:Closure, 2:array<int, int>, 3:array<int, int>, 4:array<int, int>, 5:class-string<TRepo>, 6:class-string<T>}, mixed, void>
     */
     public function DataProviderAdditionalTreeModification() : Generator
     {
@@ -383,7 +383,7 @@ class WriteableNestedTreeTest extends NestedTreeTest
                 );
 
                 /**
-                * @psalm-var array{0:Closure, 1:Closure, 2:array<int, int>, 3:array<int, int>, 4:array<int, int>, 5:class-string<DaftNestedWriteableObjectTree>, 6:class-string<DaftNestedWriteableObject>}
+                * @psalm-var array{0:Closure, 1:Closure, 2:array<int, int>, 3:array<int, int>, 4:array<int, int>, 5:class-string<TRepo>, 6:class-string<T>}
                 */
                 $args = $args;
 
@@ -398,8 +398,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
     * @param array<int, int> $level
     * @param mixed ...$remainingTreeArgs
     *
-    * @psalm-param class-string<DaftNestedWriteableObjectTree> $treeClass
-    * @psalm-param class-string<DaftNestedWriteableObject> $leafClass
+    * @psalm-param class-string<TRepo> $treeClass
+    * @psalm-param class-string<T> $leafClass
     *
     * @dataProvider DataProviderAdditionalTreeModification
     */

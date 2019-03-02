@@ -22,10 +22,6 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\WriteableNestedTreeTest.php">
-    <InvalidArgument occurrences="2">
-      <code>@dataProvider DataProviderArgs</code>
-      <code>@dataProvider DataProviderArgs</code>
-    </InvalidArgument>
     <UnusedParam occurrences="5">
       <code>$leafClass</code>
       <code>$leafClass</code>
