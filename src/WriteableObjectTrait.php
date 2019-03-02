@@ -43,13 +43,6 @@ trait WriteableObjectTrait
         */
         $props = static::DaftNestedObjectParentIdProperties();
 
-        $propsAndVals = array_combine($props, $value);
-
-        /**
-        * @var array<string, scalar>
-        */
-        $propsAndVals = $propsAndVals;
-
         foreach (static::DaftNestedObjectParentIdProperties() as $i => $prop) {
             $this->NudgePropertyValue($prop, $value[$i] ?? null);
         }
