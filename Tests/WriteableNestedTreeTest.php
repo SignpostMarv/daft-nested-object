@@ -253,8 +253,8 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $leaves = $this->setupTestTreeRemovalFailure($leafClass, $repo);
 
         if ($byObject) {
-        $this->expectException(BadMethodCallException::class);
-        $this->expectExceptionMessage('Cannot leave orphan objects in a tree');
+            $this->expectException(BadMethodCallException::class);
+            $this->expectExceptionMessage('Cannot leave orphan objects in a tree');
 
             $repo->ModifyDaftNestedObjectTreeRemoveWithObject($leaves[0], null);
         } else {
