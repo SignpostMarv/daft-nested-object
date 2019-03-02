@@ -308,6 +308,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
         $repo->ModifyDaftNestedObjectTreeRemoveWithId($leaves[0]->GetId(), 11);
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:bool, 1:class-string<TRepo>, 2:class-string<T>}, mixed, void>
+    */
     public function DataProviderArgsTreeRemovalFailure() : Generator
     {
         foreach ([true, false] as $bool) {
@@ -317,22 +320,36 @@ class WriteableNestedTreeTest extends NestedTreeTest
             foreach ($this->DataProviderArgs() as $args) {
                 array_unshift($args, $bool);
 
+                /**
+                * @psalm-var array{0:bool, 1:class-string<TRepo>, 2:class-string<T>}
+                */
+                $args = $args;
+
                 yield $args;
             }
         }
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:Closure, 1:Closure, 2:array<int, int>, 3:array<int, int>, 4:array<int, int>, 5:class-string<DaftNestedWriteableObjectTree>, 6:class-string<DaftNestedWriteableObject>}, mixed, void>
+    */
     public function DataProviderAdditionalTreeModification() : Generator
     {
-        /**
-        * @var array
-        */
         foreach ($this->DataProviderAdditionalArgs() as $additionalArgs) {
-            /**
-            * @var string[]
-            */
             foreach ($this->DataProviderArgs() as $args) {
-                array_unshift($args, ...$additionalArgs);
+                array_unshift(
+                    $args,
+                    $additionalArgs[0],
+                    $additionalArgs[1],
+                    $additionalArgs[2],
+                    $additionalArgs[3],
+                    $additionalArgs[4]
+                );
+
+                /**
+                * @psalm-var array{0:Closure, 1:Closure, 2:array<int, int>, 3:array<int, int>, 4:array<int, int>, 5:class-string<DaftNestedWriteableObjectTree>, 6:class-string<DaftNestedWriteableObject>}
+                */
+                $args = $args;
 
                 yield $args;
             }
@@ -445,6 +462,9 @@ class WriteableNestedTreeTest extends NestedTreeTest
         return $leaves;
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:Closure, 1:Closure, 2:array<int, int>, 3:array<int, int>, 4:array<int, int>}, mixed, void>
+    */
     protected function DataProviderAdditionalArgs() : Generator
     {
         yield from [

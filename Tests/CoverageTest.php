@@ -24,6 +24,9 @@ use SignpostMarv\DaftObject\Tests\TestCase as Base;
 */
 class CoverageTest extends Base
 {
+    /**
+    * @psalm-return Generator<int, array{0:Fixtures\ThrowingMemoryTree}, mixed, void>
+    */
     public function DataProviderCoverageNonWriteableRepo() : Generator
     {
         /**
@@ -36,6 +39,9 @@ class CoverageTest extends Base
         yield [$repo];
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:Fixtures\DaftWriteableNestedObjectIntTree|Fixtures\ThrowingWriteableMemoryTree}, mixed, void>
+    */
     public function DataProviderCoverageWriteableRepo() : Generator
     {
         /**
@@ -57,6 +63,9 @@ class CoverageTest extends Base
         yield [$repo];
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:Fixtures\DaftObjectWriteableThrowingTree}, mixed, void>
+    */
     public function DataProviderCoverageWriteableRepoWithThrowingTree() : Generator
     {
         /**
@@ -64,26 +73,33 @@ class CoverageTest extends Base
         */
         foreach ($this->DataProviderCoverageWriteableRepo() as $args) {
             if ($args[0] instanceof Fixtures\DaftObjectWriteableThrowingTree) {
+                /**
+                * @psalm-var array{0:Fixtures\DaftObjectWriteableThrowingTree}
+                */
+                $args = $args;
+
                 yield $args;
             }
         }
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:Fixtures\DaftWriteableNestedObjectIntTree|Fixtures\ThrowingWriteableMemoryTree, 1:bool, 2:bool|null}, mixed, void>
+    */
     public function DataProviderInsertArgs() : Generator
     {
         foreach ([true, false] as $before) {
             foreach ([null, true, false] as $above) {
-                /**
-                * @var array
-                */
                 foreach ($this->DataProviderCoverageWriteableRepo() as $repoArgs) {
-                    list($repo) = $repoArgs;
-                    yield [$repo, $before, $above];
+                    yield [$repoArgs[0], $before, $above];
                 }
             }
         }
     }
 
+    /**
+    * @psalm-return Generator<int, array{0:Fixtures\DaftObjectWriteableThrowingTree, 1:bool, 2:bool|null}, mixed, void>
+    */
     public function DataProviderInsertArgsWithThrowingTree() : Generator
     {
         /**
@@ -91,6 +107,11 @@ class CoverageTest extends Base
         */
         foreach ($this->DataProviderInsertArgs() as $args) {
             if ($args[0] instanceof Fixtures\DaftObjectWriteableThrowingTree) {
+                /**
+                * @psalm-var array{0:Fixtures\DaftObjectWriteableThrowingTree, 1:bool, 2:bool|null}
+                */
+                $args = $args;
+
                 yield $args;
             }
         }

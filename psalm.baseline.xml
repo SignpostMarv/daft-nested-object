@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files>
   <file src="Tests\CoverageTest.php">
-    <PossiblyUnusedMethod occurrences="8">
+    <PossiblyUnusedMethod occurrences="1">
       <code>public function DataProviderCoverageNonWriteableRepo() : Generator</code>
-      <code>public function DataProviderCoverageWriteableRepoWithThrowingTree() : Generator</code>
-      <code>public function DataProviderInsertArgsWithThrowingTree() : Generator</code>
-      <code>public function testModifyDaftNestedObjectTreeInsertFailsRelativeToSelf(</code>
-      <code>public function testStoreThenRetrieveFreshLeafFails(</code>
-      <code>public function testModifyDaftNestedObjectTreeInsertFailsToRetrieveLeaf(</code>
-      <code>public function testModifyDaftNestedObjectTreeInsertLooseDoesNotAllowRootAsArgOne(</code>
-      <code>public function testModifyDaftNestedObjectTreeInsertAdjacentFailsWithNonSibling(</code>
     </PossiblyUnusedMethod>
     <UnusedParam occurrences="1">
       <code>$id</code>
     </UnusedParam>
-  </file>
-  <file src="Tests\DaftNestedWriteableObjectTree\DaftNestedWriteableObjectTreeTest.php">
-    <UnusedClass occurrences="1">
-      <code>class DaftNestedWriteableObjectTreeTest extends DaftObjectMemoryRepositoryTest</code>
-    </UnusedClass>
   </file>
   <file src="Tests\Fixtures\DaftNestedIntObject.php">
     <PossiblyUnusedMethod occurrences="1">
@@ -32,19 +20,21 @@
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\NestedTreeTest.php">
-    <PossiblyUnusedMethod occurrences="1">
-      <code>public function testRecallFullTree(</code>
-    </PossiblyUnusedMethod>
+    <TooFewArguments occurrences="1">
+      <code>@dataProvider DataProviderArgs</code>
+    </TooFewArguments>
   </file>
   <file src="Tests\WriteableNestedTreeTest.php">
-    <PossiblyUnusedMethod occurrences="6">
-      <code>public function testTreeModification(</code>
-      <code>public function testTreeRemovalFailure(</code>
-      <code>public function testTreeRemovalFailureDueToOrphan(</code>
-      <code>public function DataProviderArgsTreeRemovalFailure() : Generator</code>
-      <code>public function DataProviderAdditionalTreeModification() : Generator</code>
-      <code>public function testTreeModificationAdditionalArgs(</code>
-    </PossiblyUnusedMethod>
+    <InvalidArgument occurrences="2">
+      <code>@dataProvider DataProviderArgs</code>
+      <code>@dataProvider DataProviderArgs</code>
+    </InvalidArgument>
+    <TooFewArguments occurrences="4">
+      <code>@dataProvider DataProviderArgs</code>
+      <code>@dataProvider DataProviderArgsTreeRemovalFailure</code>
+      <code>@dataProvider DataProviderArgs</code>
+      <code>@dataProvider DataProviderAdditionalTreeModification</code>
+    </TooFewArguments>
     <UnusedParam occurrences="5">
       <code>$leafClass</code>
       <code>$leafClass</code>

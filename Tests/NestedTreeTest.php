@@ -22,6 +22,9 @@ use SignpostMarv\DaftObject\Tests\TestCase as Base;
 */
 class NestedTreeTest extends Base
 {
+    /**
+    * @psalm-return Generator<int, array{0:class-string<TRepo>, 1:class-string<T>}, mixed, void>
+    */
     public function DataProviderArgs() : Generator
     {
         yield from [
@@ -331,11 +334,17 @@ class NestedTreeTest extends Base
         static::assertSame(0, $repo->CountDaftNestedObjectTreeWithId($b->GetId(), false, 0));
     }
 
+    /**
+    * @psalm-return class-string<T>
+    */
     protected static function leafClass() : string
     {
         return DaftNestedIntObject::class;
     }
 
+    /**
+    * @psalm-return class-string<TRepo>
+    */
     protected static function treeClass() : string
     {
         return DaftNestedObjectIntTree::class;
