@@ -38,11 +38,6 @@ trait WriteableObjectTrait
     */
     public function SetDaftNestedObjectParentId(array $value) : void
     {
-        /**
-        * @var string[]
-        */
-        $props = static::DaftNestedObjectParentIdProperties();
-
         foreach (static::DaftNestedObjectParentIdProperties() as $i => $prop) {
             $this->NudgePropertyValue($prop, $value[$i] ?? null);
         }
