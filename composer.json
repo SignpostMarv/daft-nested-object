@@ -53,8 +53,8 @@
     },
     "require": {
         "php": "^7.1",
-        "signpostmarv/daft-object": "^2.2",
-        "signpostmarv/daft-object-repository": "^1.2"
+        "signpostmarv/daft-object": "^2.3,>=2.3.4",
+        "signpostmarv/daft-object-repository": "^1.3"
     },
     "require-dev": {
         "infection/infection": "^0.12.2",
