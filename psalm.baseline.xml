@@ -2,15 +2,12 @@
 <files>
   <file src="Tests\CoverageTest.php">
     <PossiblyUnusedMethod occurrences="1">
-      <code>public function DataProviderCoverageNonWriteableRepo() : Generator</code>
+      <code>DataProviderCoverageNonWriteableRepo</code>
     </PossiblyUnusedMethod>
-    <UnusedParam occurrences="1">
-      <code>$id</code>
-    </UnusedParam>
   </file>
   <file src="Tests\Fixtures\DaftNestedIntObject.php">
     <PossiblyUnusedMethod occurrences="1">
-      <code>public function GetIntNestedParentId() : int</code>
+      <code>GetIntNestedParentId</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\Fixtures\DaftNestedWriteableIntObject.php">
@@ -18,21 +15,21 @@
       <code>$id</code>
     </MoreSpecificImplementedParamType>
     <PossiblyUnusedMethod occurrences="1">
-      <code>public function SetId(int $value) : void</code>
+      <code>SetId</code>
     </PossiblyUnusedMethod>
   </file>
   <file src="Tests\WriteableNestedTreeTest.php">
-    <UnusedParam occurrences="5">
+    <UnusedClosureParam occurrences="5">
       <code>$leafClass</code>
       <code>$leafClass</code>
       <code>$leafClass</code>
       <code>$leafClass</code>
       <code>$leafClass</code>
-    </UnusedParam>
+    </UnusedClosureParam>
   </file>
   <file src="src\DaftNestedObject.php">
     <PossiblyUnusedMethod occurrences="1">
-      <code>public static function DaftNestedObjectParentIdProperties() : array;</code>
+      <code>DaftNestedObjectParentIdProperties</code>
     </PossiblyUnusedMethod>
   </file>
 </files>

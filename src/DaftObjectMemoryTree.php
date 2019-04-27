@@ -279,7 +279,12 @@ abstract class DaftObjectMemoryTree extends DaftObjectMemoryRepository implement
     */
     public function RecallDaftObject($id) : ? SuitableForRepositoryType
     {
-        return parent::RecallDaftObject($id);
+        /**
+        * @psalm-var T|null
+        */
+        $out = parent::RecallDaftObject($id);
+
+        return $out;
     }
 
     /**
