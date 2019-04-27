@@ -41,7 +41,7 @@
         "tests": [
             "phpunit -vvvv --stop-on-error --stop-on-warning --stop-on-failure",
             "phpstan analyse -c ./phpstan.neon .php_cs.dist src Tests",
-            "psalm --find-dead-code",
+            "psalm --find-dead-code --shepherd",
             "@other-tests"
         ],
         "other-tests": [
